@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ch.fhnw.algdemo.control.MainController"
+      fx:id="mainPane">
+
+    <ChoiceBox fx:id="algorithmChoiceBox"
+               layoutX="10" layoutY="10"
+               prefWidth="150" prefHeight="50"/>
+
+</Pane>
