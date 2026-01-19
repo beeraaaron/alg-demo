@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root styleClass="history-element" type="javafx.scene.layout.GridPane"
+         xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css" prefHeight="50">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="80.0" />
+        <ColumnConstraints percentWidth="20.0" />
+    </columnConstraints>
+    <VBox GridPane.columnIndex="0">
+        <Label fx:id="commandLabel"/>
+        <Label fx:id="resultLabel" wrapText="true"/>
+    </VBox>
+    <Button fx:id="copyButton" text="Copy" GridPane.columnIndex="1"/>
+</fx:root>

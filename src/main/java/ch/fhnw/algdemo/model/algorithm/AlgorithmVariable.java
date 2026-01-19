@@ -11,19 +11,12 @@ public class AlgorithmVariable<T> {
         this.value = value;
     }
 
-    public T getTypedValue() {
-        return value;
-    }
-
     public void setValueFromObject(Object newValue) {
-        if (newValue == null) {
-            this.value = null;
-        } else if (type.isInstance(newValue)) {
-            this.value = type.cast(newValue);
-        } else {
+        if (!type.isInstance(newValue)) {
             throw new IllegalArgumentException(
-                    "Cannot assign " + newValue.getClass() + " to variable of type " + type
+                    "Cannot assign " + newValue + " to variable of type " + type
             );
         }
+        this.value = type.cast(newValue);
     }
 }

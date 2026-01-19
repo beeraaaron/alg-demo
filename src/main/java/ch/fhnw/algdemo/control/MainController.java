@@ -1,5 +1,6 @@
 package ch.fhnw.algdemo.control;
 
+import ch.fhnw.algdemo.control.history.HistoryController;
 import ch.fhnw.algdemo.control.variable.VariableController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.control.algorithm.binarysearch.BinarySearchController;
@@ -9,11 +10,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 
+import java.awt.*;
 import java.util.List;
 
 public class MainController {
@@ -30,14 +31,16 @@ public class MainController {
     private VBox variable;
 
     @FXML
-    private Pane midBox;
+    private VBox midBox;
     @FXML
     private ComboBox<String> commandInput;
     @FXML
     private Button sendCommandButton;
 
     @FXML
-    private VBox rightBox;
+    private ScrollPane history;
+    @FXML
+    private HistoryController historyController;
 
     private final List<AlgorithmController> algorithms = List.of(new BinarySearchController(), new MergeSortController());
     private AlgorithmController selectedAlgorithm;
@@ -45,9 +48,16 @@ public class MainController {
     @FXML
     public void initialize() {
         configureSendCommandButton();
+        configureCopyCommand();
         configureChoiceBox();
         algorithmChoiceBox.prefWidthProperty().bind(leftBox.widthProperty());
         variable.prefWidthProperty().bind(leftBox.widthProperty());
+    }
+
+    private void configureCopyCommand() {
+        historyController.setOnCommandCopied(command -> {
+            commandInput.getEditor().setText(command);
+        });
     }
 
     private void configureSendCommandButton() {
@@ -78,9 +88,11 @@ public class MainController {
 
     private void sendCommand() {
         String command = commandInput.getEditor().getText();
-        var variables = selectedAlgorithm.applyCommand(command);
+        selectedAlgorithm.applyCommand(command);
         variableController.clear();
-        variableController.initializeVariables(variables);
+        variableController.initializeVariables(selectedAlgorithm.getVariables());
+        historyController.clear();
+        historyController.initializeHistory(selectedAlgorithm.getCommandHistory());
         commandInput.getEditor().clear();
     }
 
@@ -88,15 +100,18 @@ public class MainController {
         this.selectedAlgorithm = newValue;
 
         variableController.clear();
+        historyController.clear();
         midBox.getChildren().clear();
         commandInput.getItems().clear();
         if (newValue instanceof BinarySearchController bsc) {
             variableController.initializeVariables(bsc.getVariables());
+            historyController.initializeHistory(bsc.getCommandHistory());
             bsc.prefWidthProperty().bind(midBox.widthProperty());
             midBox.getChildren().addAll(bsc);
             commandInput.getItems().addAll(bsc.getCommandSuggestions());
         } else if (newValue instanceof MergeSortController msc) {
             variableController.initializeVariables(msc.getVariables());
+            historyController.initializeHistory(msc.getCommandHistory());
             msc.prefWidthProperty().bind(midBox.widthProperty());
             midBox.getChildren().addAll(msc);
             commandInput.getItems().addAll(msc.getCommandSuggestions());

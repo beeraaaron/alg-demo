@@ -24,13 +24,11 @@
             <RowConstraints percentHeight="90" />
             <RowConstraints percentHeight="10" />
         </rowConstraints>
-        <Pane fx:id="midBox" GridPane.rowIndex="0"/>
+        <VBox fx:id="midBox" alignment="CENTER" GridPane.rowIndex="0"/>
         <HBox GridPane.rowIndex="1" >
             <ComboBox fx:id="commandInput" editable="true" />
             <Button fx:id="sendCommandButton" text="Execute" />
         </HBox>
     </GridPane>
-    <VBox fx:id="rightBox" GridPane.columnIndex="2">
-    </VBox>
-
+    <fx:include fx:id="history" source="history/history.fxml" GridPane.columnIndex="2"/>
 </GridPane>

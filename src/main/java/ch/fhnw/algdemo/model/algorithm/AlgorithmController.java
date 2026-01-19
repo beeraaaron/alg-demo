@@ -5,6 +5,7 @@ import java.util.List;
 public interface AlgorithmController {
     String getName();
     List<AlgorithmVariable<?>> getVariables();
+    List<Command> getCommandHistory();
     List<String> getCommandSuggestions();
-    List<AlgorithmVariable<?>> applyCommand(String command);
+    void applyCommand(String command);
 }

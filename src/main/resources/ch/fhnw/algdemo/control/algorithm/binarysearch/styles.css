@@ -1,0 +1,17 @@
+.default-text-field {
+    -fx-control-inner-background: #ffffff;
+}
+
+.min-text-field {
+    -fx-control-inner-background: #0066CC;
+}
+
+.max-text-field {
+    -fx-control-inner-background: #FFD700;
+}
+
+.variable-label {
+    -fx-text-fill: #e50000;
+    -fx-font-weight: bold;
+}
+

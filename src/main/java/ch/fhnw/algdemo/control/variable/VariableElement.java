@@ -7,13 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import lombok.SneakyThrows;
 
-public class VariableDetail extends Pane {
+public class VariableElement extends Pane {
     @FXML
     private Label overviewLabel;
 
     private final AlgorithmVariable<?> variable;
 
-    public VariableDetail(AlgorithmVariable<?> variable) {
+    public VariableElement(AlgorithmVariable<?> variable) {
         this.variable = variable;
         loadFxController();
     }
@@ -30,17 +30,9 @@ public class VariableDetail extends Pane {
         return "null";
     }
 
-    private void handleX() {
-        if (variable.value instanceof Integer) {
-            Integer intValue = (Integer) variable.value;
-        } else if (variable.value instanceof String) {
-            String strValue = (String) variable.value;
-        }
-    }
-
     @SneakyThrows
     private void loadFxController() {
-        var loader = new FXMLLoader(getClass().getResource("variable-detail.fxml"));
+        var loader = new FXMLLoader(getClass().getResource("variable-element.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         loader.load();

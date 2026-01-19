@@ -54,8 +54,16 @@
   - Durch Klicken auf das Kopier-Icon eines History Elements den verwendeten Command in das Textfeld einfügen.
 
 ## ToDos
+- [ ] How to Feedbackmarkt
+- [ ] How to Doku
+- [ ] Doku up-to-date bringen
+- [ ] Commands können durch Enter-Taste auf Button oder Textfield abgesetzt werden.
+- [ ] Binary Search ist Horizontal in der Mitte
+- [ ] Es können Commands mit Variablen, +, (), / genutzt werden.
+- [ ] In der History gibt es einen Eintrag für den Initialzustand.
+- [ ] Der Zustand des Algorithmus kann durch die History verändert werden.
 - [ ] Binary Search Algorithmus
-    - [ ] Der Zustand des Algorithmus wird angezeigt.
+    - [x] Der Zustand des Algorithmus wird angezeigt.
     - [ ] Commands können auf den Algorithmus angewendet werden.
     - [ ] Das Array vom BinarySearch kann bearbeitet werden.
     - [ ] Das Bearbeiten des Arrays wird validiert.
@@ -63,16 +71,16 @@
     - [ ] Der Zustand des Algorithmus kann gespeichert werden.
     - [ ] Der Zustand des Algorithmus kann aus dem gespeicherten Zustand wiederhergestellt werden.
 - [ ] Commands
-    - [ ] Es gibt Commandvorschläge, welche ausgewählt werden können.
-    - [ ] Commands können selbst eingegeben werden.
-    - [ ] Commands können abgesetzt werden.
+    - [x] Es gibt Commandvorschläge, welche ausgewählt werden können.
+    - [x] Commands können selbst eingegeben werden.
+    - [x] Commands können abgesetzt werden.
     - [ ] Commands werden überprüft.
 - [ ] History
-    - [ ] Die History wird angezeigt.
+    - [x] Die History wird angezeigt.
     - [ ] In der History gibt es einen Eintrag für den Initialzustand.
-    - [ ] Für jeden abgesetzten Command wird ein Historyeintrag erstellt.
-    - [ ] Überläuft die History den Bildschirm, so ist sie scrollable.
-    - [ ] Commands aus der History können kopiert werden. 
+    - [x] Für jeden abgesetzten Command wird ein Historyeintrag erstellt.
+    - [x] Überläuft die History den Bildschirm, so ist sie scrollable.
+    - [x] Commands aus der History können kopiert werden. 
     - [ ] Der Zustand des Algorithmus kann durch die History verändert werden.
 
 ## Fragen & Antworten
