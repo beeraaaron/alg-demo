@@ -1,10 +1,41 @@
 # alg-demo
 ## Mockups
-### Initialzustand
-![img_2.png](img_2.png)
 
-### In der Interaktion
-![img_3.png](img_3.png)
+<details>
+  <summary>Command durch Auswahl wählen:</summary>
+  <img src="images/command-1.png" alt="Command 1"/>
+  <img src="images/command-2.png" alt="Command 2"/>
+  <img src="images/command-3.png" alt="Command 3"/>
+</details>
+
+
+<details>
+  <summary>Fehlerhafter Command ausführen:</summary>
+  <img src="images/command-error-1.png" alt="Fehlerhafter Command 1"/>
+  <img src="images/command-error-2.png" alt="Fehlerhafter Command 2"/>
+  <img src="images/command-error-3.png" alt="Fehlerhafter Command 3"/>
+  <img src="images/command-error-4.png" alt="Fehlerhafter Command 4"/>
+</details>
+
+
+<details>
+  <summary>Durch History zurückspringen:</summary>
+  <img src="images/history-1.png" alt="History 1"/>
+  <img src="images/history-2.png" alt="History 2"/>
+  <img src="images/history-3.png" alt="History 3"/>
+  <img src="images/history-4.png" alt="History 4"/>
+  <img src="images/history-5.png" alt="History 5"/>
+</details>
+
+
+<details>
+  <summary>Durch History zurückspringen (abbrechen):</summary>
+  <img src="images/history-1.png" alt="History abbrechen 1"/>
+  <img src="images/history-2.png" alt="History abbrechen 2"/>
+  <img src="images/history-3.png" alt="History abbrechen 3"/>
+  <img src="images/history-abort-1.png" alt="History abbrechen 4"/>
+  <img src="images/history-abort-2.png" alt="History abbrechen 5"/>
+</details>
 
 ### Funktionalitäten
 - Switch zwischen verschiedenen Algorithmen möglich.
