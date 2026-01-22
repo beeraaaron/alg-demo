@@ -8,4 +8,6 @@ public interface AlgorithmController {
     List<Command> getCommandHistory();
     List<String> getCommandSuggestions();
     void applyCommand(String command);
+    void updateAlgorithmState(int selectedCommandId);
+    int getHighestCommandId();
 }

@@ -5,13 +5,15 @@ public class Command {
     public String result;
     public String variableName;
     public String value;
+    public int id;
     public boolean success;
 
-    public Command(String command, String result, String variableName, String value, boolean success) {
+    public Command(String command, String result, String variableName, String value, int id, boolean success) {
         this.command = command;
         this.result = result;
         this.variableName = variableName;
         this.value = value;
+        this.id = id;
         this.success = success;
     }
 

@@ -1,3 +1,3 @@
 <?import javafx.scene.layout.HBox?>
-<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
+<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
 </fx:root>

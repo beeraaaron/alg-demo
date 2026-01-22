@@ -2,7 +2,13 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml" fitToWidth="true" hbarPolicy="NEVER" fx:controller="ch.fhnw.algdemo.control.history.HistoryController">
-    <VBox fx:id="historyBox" >
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="ch.fhnw.algdemo.control.history.HistoryController"
+            fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" styleClass="history-parent"
+            stylesheets="@styles.css">
+    <VBox>
+        <Label fx:id="initialStateLabel" text="Initial State" prefWidth="Infinity"
+               styleClass="initial-history-element"/>
+        <VBox fx:id="historyBox" />
     </VBox>
+
 </ScrollPane>

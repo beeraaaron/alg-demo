@@ -7,10 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import lombok.SneakyThrows;
 
-public class VariableElement extends Pane {
-    @FXML
-    private Label overviewLabel;
-
+public class VariableElement extends Label {
     private final AlgorithmVariable<?> variable;
 
     public VariableElement(AlgorithmVariable<?> variable) {
@@ -20,7 +17,7 @@ public class VariableElement extends Pane {
 
     @FXML
     public void initialize() {
-        this.overviewLabel.setText(variable.name + " = " + getVariableValue());
+        this.setText(variable.name + " = " + getVariableValue());
     }
 
     private String getVariableValue() {

@@ -62,4 +62,14 @@ public class MergeSortController extends Pane implements AlgorithmController {
     public void applyCommand(String command) {
         return;
     }
+
+    @Override
+    public void updateAlgorithmState(int selectedCommandId) {
+        return;
+    }
+
+    @Override
+    public int getHighestCommandId() {
+        return 0;
+    }
 }

@@ -20,8 +20,8 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     );
 
     List<Command> commandHistory = new ArrayList<>();
-
     List<BinarySearchColumn> columns = new ArrayList<>();
+    int highestCommandId = 2;
 
     public BinarySearchController() {
         loadFxController();
@@ -30,14 +30,6 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     @FXML
     public void initialize() {
         resetAlgorithmState();
-    }
-
-    @SneakyThrows
-    private void loadFxController() {
-        var loader = new FXMLLoader(getClass().getResource("binary-search.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
-        loader.load();
     }
 
     @Override
@@ -57,9 +49,9 @@ public class BinarySearchController extends HBox implements AlgorithmController 
 
     @Override
     public List<String> getCommandSuggestions() {
-        return variables.stream()
-                .map(v -> v.name + " = 0;")
-                .toList();
+        return List.of(variables.getFirst().name + " = 0;",
+                variables.get(1).name + " = " + (data.size() - 1) + ";",
+                variables.get(2).name + " = " + (data.size() / 2) + ";");
     }
 
     @Override
@@ -68,24 +60,24 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         try {
             var validCommand = createCommand(command);
             commandHistory.add(validCommand);
-            updateAlgorithmState();
+            updateAlgorithmState(highestCommandId);
         } catch (IllegalArgumentException e) {
             commandHistory.add(new Command(command, e.getMessage(), false));
         }
     }
 
-    private void deleteUnsuccessfulCommands() {
-        this.commandHistory.removeIf(command -> !command.success);
-    }
-
-    private void updateAlgorithmState() {
+    @Override
+    public void updateAlgorithmState(int selectedCommandId) {
         resetAlgorithmState();
-        for (var command : commandHistory) {
+        var x = 1;
+        while (x + 1 < selectedCommandId) {
+            var command =  commandHistory.get(x - 1);
             var variable = variables.stream()
                     .filter(v -> v.name.equals(command.variableName))
                     .findFirst().orElseThrow();
             // TODO determine new value of variable if its not just a number
             variable.setValueFromObject(Integer.parseInt(command.value));
+            x++;
         }
         var i = variables.getFirst();
         var j = variables.get(1);
@@ -110,12 +102,25 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         }
     }
 
+    @Override
+    public int getHighestCommandId() {
+        return highestCommandId;
+    }
+
+    private void deleteUnsuccessfulCommands() {
+        commandHistory.removeIf(command -> !command.success);
+    }
+
+
     private void resetAlgorithmState() {
         this.getChildren().clear();
         for (var i = 0; i < data.size(); i++) {
             var column = new BinarySearchColumn(data.get(i), i);
             columns.add(column);
             this.getChildren().add(column);
+        }
+        for (var variable : variables) {
+            variable.value = null;
         }
     }
 
@@ -136,7 +141,11 @@ public class BinarySearchController extends HBox implements AlgorithmController 
             throw new IllegalArgumentException("Invalid variable '" + variableName + "'. Must be one of: " + variableNames);
         }
 
-        var value = parts[1].split(";")[0].trim();
+        var valueParts = parts[1].split(";");
+        if (valueParts.length < 1) {
+            throw new IllegalArgumentException("No value provided");
+        }
+        var value = valueParts[0].trim();
         var variable = optionalVariable.get();
 
         //TODO: if value is a number validate correctness
@@ -145,7 +154,12 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         if (value.isBlank() || !isInt(value)) {
             throw new IllegalArgumentException("Invalid value '" + value + "'. Must be of same type as variable " + variable.name);
         }
-        return new Command(command.trim(), variable.name + " = " + value, variable.name,  value, true);
+        return new Command(command.trim(), variable.name + " = " + value, variable.name,  value, getNextId(), true);
+    }
+
+    private int getNextId() {
+        highestCommandId++;
+        return highestCommandId;
     }
 
     public boolean isInt(String s) {
@@ -155,5 +169,13 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    @SneakyThrows
+    private void loadFxController() {
+        var loader = new FXMLLoader(getClass().getResource("binary-search.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        loader.load();
     }
 }

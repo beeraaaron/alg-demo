@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="mainGridPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="ch.fhnw.algdemo.control.MainController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12"
+          fx:controller="ch.fhnw.algdemo.control.MainController" stylesheets="@styles.css">
     <columnConstraints>
         <ColumnConstraints percentWidth="15.0" />
         <ColumnConstraints percentWidth="65.0" />
@@ -14,21 +15,28 @@
     </rowConstraints>
     <VBox fx:id="leftBox" GridPane.columnIndex="0">
         <ChoiceBox fx:id="algorithmChoiceBox" />
-        <fx:include fx:id="variable" source="variable/variables.fxml" />
+        <fx:include fx:id="variable" source="variable/variable.fxml" />
     </VBox>
     <GridPane GridPane.columnIndex="1">
         <columnConstraints>
             <ColumnConstraints percentWidth="100" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="90" />
-            <RowConstraints percentHeight="10" />
+            <RowConstraints percentHeight="92.5" />
+            <RowConstraints percentHeight="7.5" />
         </rowConstraints>
-        <VBox fx:id="midBox" alignment="CENTER" GridPane.rowIndex="0"/>
-        <HBox GridPane.rowIndex="1" >
-            <ComboBox fx:id="commandInput" editable="true" />
-            <Button fx:id="sendCommandButton" text="Execute" />
-        </HBox>
+        <VBox fx:id="midBox" alignment="CENTER" GridPane.rowIndex="0" />
+        <GridPane GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="80" />
+                <ColumnConstraints percentWidth="20" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints percentHeight="100" />
+            </rowConstraints>
+            <ComboBox fx:id="commandInput" editable="true" prefWidth="Infinity" prefHeight="Infinity" GridPane.columnIndex="0"/>
+            <Button fx:id="sendCommandButton" text="Execute" prefWidth="Infinity" prefHeight="Infinity" GridPane.columnIndex="1"/>
+        </GridPane>
     </GridPane>
     <fx:include fx:id="history" source="history/history.fxml" GridPane.columnIndex="2"/>
 </GridPane>
