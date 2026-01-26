@@ -1,7 +1,7 @@
 package ch.fhnw.algdemo.model.algorithm;
 
 public class AlgorithmVariable<T> {
-    public String name;
+    public final String name;
     public final Class<T> type;
     public T value;
 
@@ -11,12 +11,34 @@ public class AlgorithmVariable<T> {
         this.value = value;
     }
 
-    public void setValueFromObject(Object newValue) {
-        if (!type.isInstance(newValue)) {
-            throw new IllegalArgumentException(
-                    "Cannot assign " + newValue + " to variable of type " + type
-            );
-        }
-        this.value = type.cast(newValue);
+    public void setValueFromString(String stringValue) {
+        this.value = parseValue(stringValue);
     }
+
+    public boolean isValidValue(String stringValue) {
+        if (stringValue == null) {
+            return true;
+        }
+
+        try {
+            parseValue(stringValue);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public T parseValue(String stringValue) {
+        if (stringValue == null) {
+            return null;
+        }
+
+        if (type == Integer.class) {
+            return (T) Integer.valueOf(stringValue);
+        }
+
+        throw new IllegalArgumentException("Unsupported type: " + type.getName());
+    }
+
 }

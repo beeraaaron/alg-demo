@@ -11,6 +11,8 @@ import lombok.SneakyThrows;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.fhnw.algdemo.util.CommandFactory.createCommand;
+
 public class BinarySearchController extends HBox implements AlgorithmController {
     List<Integer> data = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14));
     List<AlgorithmVariable<?>> variables =  List.of(
@@ -58,7 +60,7 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     public void applyCommand(String command) {
         deleteUnsuccessfulCommands();
         try {
-            var validCommand = createCommand(command);
+            var validCommand = createCommand(command, variables, this::getNextId);
             commandHistory.add(validCommand);
             updateAlgorithmState(highestCommandId);
         } catch (IllegalArgumentException e) {
@@ -75,8 +77,7 @@ public class BinarySearchController extends HBox implements AlgorithmController 
             var variable = variables.stream()
                     .filter(v -> v.name.equals(command.variableName))
                     .findFirst().orElseThrow();
-            // TODO determine new value of variable if its not just a number
-            variable.setValueFromObject(Integer.parseInt(command.value));
+            variable.setValueFromString(command.value);
             x++;
         }
         var i = variables.getFirst();
@@ -124,51 +125,9 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         }
     }
 
-    private Command createCommand(String command) throws IllegalArgumentException {
-        String error = null;
-        if (!command.contains("=")) {
-            throw new IllegalArgumentException("Command must contain '='");
-        }
-        if (!command.contains(";")) {
-            throw new IllegalArgumentException("Command must contain ';' at the end");
-        }
-
-        var parts = command.split("=");
-        var variableName = parts[0].trim();
-        var optionalVariable = variables.stream().filter(v -> v.name.equals(variableName)).findFirst();
-        if (variableName.isBlank() || optionalVariable.isEmpty()) {
-            var variableNames = variables.stream().map(v -> v.name).toList();
-            throw new IllegalArgumentException("Invalid variable '" + variableName + "'. Must be one of: " + variableNames);
-        }
-
-        var valueParts = parts[1].split(";");
-        if (valueParts.length < 1) {
-            throw new IllegalArgumentException("No value provided");
-        }
-        var value = valueParts[0].trim();
-        var variable = optionalVariable.get();
-
-        //TODO: if value is a number validate correctness
-        // if it's not a number, try to evaluate condition and then check correctness
-
-        if (value.isBlank() || !isInt(value)) {
-            throw new IllegalArgumentException("Invalid value '" + value + "'. Must be of same type as variable " + variable.name);
-        }
-        return new Command(command.trim(), variable.name + " = " + value, variable.name,  value, getNextId(), true);
-    }
-
-    private int getNextId() {
+    public int getNextId() {
         highestCommandId++;
         return highestCommandId;
-    }
-
-    public boolean isInt(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
     }
 
     @SneakyThrows
