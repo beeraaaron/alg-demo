@@ -38,12 +38,15 @@ public class HistoryElement extends GridPane {
 
     @FXML
     public void initialize() {
-        configureCopyButton();
-        configureChangeState();
-
         this.commandLabel.setText(">> " + command.command);
         this.resultLabel.setText(command.result);
-        if (!command.success) configureError();
+        if (!command.success) {
+            configureError();
+        } else {
+            configureCopyButton();
+            configureChangeState();
+            historyElement.getStyleClass().add("clickable-history-element");
+        }
         if (isSelected) configureSelected();
     }
 

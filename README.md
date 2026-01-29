@@ -145,9 +145,8 @@
   - Aus Benutzersicht Schritt für Schritt Ablauf aufschreiben (mit Gedanken)
 - [x] Tasks erstellen/ändern & priorisieren anhand der Erkenntnisse der User Szenarien
 - [x] Default Values in den Textboxen des BinarySearch unterscheidbarer von den Indexen machen.
-- [ ] Versuchen, ob ein Top-Down Event Handling funktioniert mit Funktionsaufruf mitgeben
-- [ ] Code Cleanup(Invarianten) & Review von Wolfgang anfordern
-- [ ] Fehler in der History sollen nicht angeklickt werden können.
+- [x] Code Cleanup(Invarianten) & Review von Wolfgang anfordern
+- [x] Fehler in der History sollen nicht angeklickt werden können.
 - [ ] Es können Commands mit Variablen +, -, (, ), / genutzt werden.
 - [ ] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
 - [ ] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht

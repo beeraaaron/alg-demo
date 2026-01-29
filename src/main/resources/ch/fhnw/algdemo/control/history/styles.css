@@ -11,6 +11,9 @@
     -fx-border-width: 0 0 0.5 0;
     -fx-border-style: solid;
     -fx-padding: 5px;
+}
+
+.clickable-history-element {
     -fx-cursor: hand;
 }
 
@@ -40,13 +43,13 @@
     -fx-font-size: 16;
 }
 
-#historyElement:focused, .initial-history-element:focused {
+.clickable-history-element:focused, .initial-history-element:focused {
     -fx-border-color: #039ED3;
     -fx-border-width: 0.75;
     -fx-background-color: rgba(3, 158, 211, 0.1);
 }
 
-#historyElement:hover, .initial-history-element:hover {
+.clickable-history-element:hover, .initial-history-element:hover {
     -fx-background-color: rgba(0, 0, 0, 0.05);
 }
 

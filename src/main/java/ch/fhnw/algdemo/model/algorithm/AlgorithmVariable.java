@@ -31,7 +31,7 @@ public class AlgorithmVariable<T> {
     @SuppressWarnings("unchecked")
     public T parseValue(String stringValue) {
         if (stringValue == null) {
-            return null;
+            throw new IllegalArgumentException("Null is not a supported value");
         }
 
         if (type == Integer.class) {
