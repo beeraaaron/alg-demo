@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -36,8 +35,6 @@ public class MainController {
     private Button sendCommandButton;
 
     @FXML
-    private ScrollPane history;
-    @FXML
     private HistoryController historyController;
 
     private final List<AlgorithmController> algorithms = List.of(new BinarySearchController(), new MergeSortController());
@@ -46,12 +43,7 @@ public class MainController {
     @FXML
     public void initialize() {
         configureSendCommandButton();
-        configureCopyCommand();
-        historyController.setOnStateClicked(id -> {
-            selectedAlgorithm.updateAlgorithmState(id);
-            variableController.clear();
-            variableController.initializeVariables(selectedAlgorithm.getVariables());
-        });
+        configureHistory();
         configureChoiceBox();
         configureCommandInput();
         variable.prefWidthProperty().bind(leftBox.widthProperty());
@@ -62,9 +54,12 @@ public class MainController {
         sendCommandButton.setOnKeyPressed(this::sendCommand);
     }
 
-    private void configureCopyCommand() {
-        historyController.setOnCommandCopied(command -> {
-            commandInput.getEditor().setText(command);
+    private void configureHistory() {
+        historyController.setOnCommandCopied(command -> commandInput.getEditor().setText(command));
+        historyController.setOnStateClicked(id -> {
+            selectedAlgorithm.updateAlgorithmState(id);
+            variableController.clear();
+            variableController.initializeVariables(selectedAlgorithm.getVariables());
         });
     }
 
@@ -82,9 +77,7 @@ public class MainController {
         });
         algorithmChoiceBox.getSelectionModel().selectedItemProperty().addListener(
                 (observable,
-                 oldValue, newValue) -> {
-                    changeAlgorithm(newValue);
-                }
+                 oldValue, newValue) -> changeAlgorithm(newValue)
         );
         algorithmChoiceBox.setItems(FXCollections.observableArrayList(algorithms));
         algorithmChoiceBox.prefWidthProperty().bind(leftBox.widthProperty());
@@ -117,7 +110,6 @@ public class MainController {
             selectedAlgorithm.applyCommand(command);
             variableController.clear();
             variableController.initializeVariables(selectedAlgorithm.getVariables());
-            historyController.clear();
             historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getHighestCommandId());
             commandInput.getEditor().clear();
         }
@@ -126,7 +118,6 @@ public class MainController {
     private void changeAlgorithm(AlgorithmController newValue) {
         this.selectedAlgorithm = newValue;
         variableController.clear();
-        historyController.clear();
         midBox.getChildren().clear();
         commandInput.getItems().clear();
         if (newValue instanceof BinarySearchController bsc) {

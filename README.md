@@ -53,78 +53,6 @@
   - Durch Klicken auf ein History-Element wird der Status nach dieses Commands wieder hergestellt und ist in der Mitte sichtbar. 
   - Durch Klicken auf das Kopier-Icon eines History Elements den verwendeten Command in das Textfeld einfügen.
 
-## Zielgruppe
-- Software-Entwickelnde Personen, welche die Algorithmen BinarySearch &/ MergeSort am Erlernen sind.
-- Sie kennen bereits die grundlegende Idee dieser Algorithmen.
-- Sie beherrschen bereits fundamentale Kenntnisse über die Softwareentwicklung in Java.
-- Sie wollen verschiedene Zustände der Algorithmen mit eignen Variablenzuweisungen spezifisch steuern und erkunden.
-- Sie wollen für jeden Zustand der Algorithmen jeweils eine sinnvolle Visualisierung haben.
-
-## User Scenarios
- - User persona: Including demographics, personal traits, and relevant habits 
- - Motivator: The problem or reason why users need a specific solution 
- - Intent: The goal the user wants to achieve 
- - Action: How the user will reach their goals, including the steps they'll follow 
- - Resolution: How the user reaches a solution and why they choose it
-
-Motivations/Goals:
- - BinarySearch &/ MergeSort besser verstehen zu wollen.
- - Unterstützung beim Programmieren von BinarySearch &/ MergeSort.
-
-1. Benutzer will herausfinden, wie BinarySearch programmiert werden könnte.
-   1. Benutzer möchte BinarySearch auswählen, weil er diesen erlernen/programmieren will.
-     - Fragen des Benutzers:
-       - Wo kann ich den Algorithmus BinarySearch auswählen?
-     - Resolution:
-       - Benutzer findet die ChoiceBox, um Algorithmen zu wechseln. Dort sieht der Benutzer, welche Algorithmen
-       es gibt und dass bereits BinarySearch ausgewählt ist.
-   2. Benutzer sieht den Initialzustand des Arrays, auf welchem BinarySearch sucht.
-      - Fragen des Benutzers:
-        - Kann ich etwas an den Daten ändern? Wie kann ich diese Änderungen vornehmen?
-        - Wie kann ich nun den Algorithmus steuern?
-        - Was bedeuten die bearbeitbaren Zahlen in den Kästen?
-      - Resolution:
-        - Benutzer versucht die Daten des Arrays zu ändern und merkt, dass dies möglich ist.
-        - Da die Indexzahlen von 0 an beginnen und die Wertezahlen in den Textboxen bearbeitbar sind, kommt der Benutzer
-        zum Entschluss das die bearbeitbaren Zahlen in den Kästen wohl die Arraywerte sind.
-   3. Benutzer möchte nun den Algorithmus steuern 
-
-
-Take Aways
- - Default Values in den Textboxen des BinarySearch unterscheidbarer von den Indexen machen.
- - 
-
-
-
-
-## ToDos
-- [x] How to Feedbackmarkt
-- [x] Commands können durch Enter-Taste auf Button oder Textfield abgesetzt werden.
-- [x] Binary Search ist Horizontal in der Mitte
-- [x] Scroll Pane in History scrollt automatisch zum neusten Element
-- [x] In der History gibt es einen Eintrag für den Initialzustand.
-- [x] Wrap error text in history when too long
-- [x] Der Zustand des Algorithmus kann durch die History verändert werden.
-- [x] Termine an Wolfgang für Mo 2.2 & Do 12.2 
-
-- [x] Zielgruppe ausführlich beschreiben
-- [ ] User Szenarien erstellen
-  - Aus Benutzersicht Schritt für Schritt Ablauf aufschreiben (mit Gedanken)
-- [ ] Mockups ändern anhand der Erkenntnisse der User Szenarien
-- [ ] Tasks erstellen/ändern & priorisieren anhand der Erkenntnisse der User Szenarien
-
-- [ ] Default Values in den Textboxen des BinarySearch unterscheidbarer von den Indexen machen.
-- [ ] Versuchen, ob ein Top-Down Event Handling funktioniert mit Funktionsaufruf mitgeben
-- [ ] Code Cleanup(Invarianten) & Review von Wolfgang anfordern
-- [ ] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
-- [ ] Es wird spezifisch nach einer Zahl gesucht und es kommt eine positive Rückmeldung, wenn diese gefunden wurde.
-- [ ] Fehler in der History sollen nicht angeklickt werden können.
-- [ ] Fix Bug where Focus is shifted away from VBox when Enter is pressed on it
-- [ ] Gedanken zu Doku machen
-- [ ] Es können Commands mit Variablen, +, -, (, ), / genutzt werden.
-- [ ] Wenn von einem Zustand aus, welcher nicht der aktuellste ist, ein neuer Command abgesetzt wird, wird die History von dort aus fortgesetzt. (Mit Pop-up & Bestätigung)
-- [ ] manuelle Test Szenarien Liste erstellen
-
 - [ ] Binary Search Algorithmus
     - [x] Der Zustand des Algorithmus wird angezeigt.
     - [x] Commands können auf den Algorithmus angewendet werden.
@@ -143,8 +71,93 @@ Take Aways
     - [x] In der History gibt es einen Eintrag für den Initialzustand.
     - [x] Für jeden abgesetzten Command wird ein Historyeintrag erstellt.
     - [x] Überläuft die History den Bildschirm, so ist sie scrollable.
-    - [x] Commands aus der History können kopiert werden. 
+    - [x] Commands aus der History können kopiert werden.
     - [x] Der Zustand des Algorithmus kann durch die History verändert werden.
+
+## Zielgruppe
+- Software-Entwickelnde Personen, welche die Algorithmen BinarySearch &/ MergeSort am Erlernen sind.
+- Sie kennen bereits die grundlegende Idee dieser Algorithmen.
+- Sie beherrschen bereits fundamentale Kenntnisse über die Softwareentwicklung in Java.
+- Sie wollen verschiedene Zustände der Algorithmen mit eignen Variablenzuweisungen spezifisch steuern und erkunden.
+- Sie wollen für jeden Zustand der Algorithmen jeweils eine sinnvolle Visualisierung haben.
+
+## User Scenarios
+### User Scenario 1: Ungültiges Suchintervall
+1. Aktion: Benutzer wählt in der gestarteten Applikation BinarySearch aus.
+    - Gedanken: Was geschieht, wenn der Index i grösser als der Index j wird?
+2. Aktion: Benutzer schickt die Commands i=4; j=7; m=6; jeweils einzeln, der Reihe nach ab.
+    - Gedanken: Mit einem normalen Suchintervall starten.
+3. Aktion: Benutzer beobachtet den Zustand des Algorithmus in der Visualisierung und schickt dann den Command i=8; ab.
+    - Gedanken: Das Suchintervall macht jetzt keinen Sinn mehr im Kontext von BinarySearch: i ist grösser als j.
+4. Aktion: Benutzer beobachtet den Zustand des Algorithmus in der Visualisierung in der Mitte.
+    - Gedanken: Ach so sieht es aus, wenn ein Command angewendet wurde, welcher das Suchintervall ungültig macht!
+5. Aktion: Benutzer klickt in der History auf den letzten gültigen abgesetzten Command.
+    - Gedanken: Ich will nochmals den Zustand nach dem letzten Schritt ansehen, um den Unterschied zu verstehen.
+
+### User Scenario 2: Schrittweise Binary Search verstehen
+1. Aktion: Benutzer wählt in der gestarteten Applikation BinarySearch aus und sieht das Standard-Array [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97]
+    - Gedanken: Ich suche nach dem Wert 16 bei Index 4.
+2. Aktion: Benutzer schickt die Commands i=0; j=14; m=(i+j)/2; jeweils einzeln, der Reihe nach ab.
+    - Gedanken: Ich sehe, dass nun m = 7 und der Wert bei Index 7 ist 45. Also ist 16 im linken Teil des Arrays.
+3. Aktion: Benutzer schickt die Commands j=m; m=(i+j)/2; jeweils einzeln, der Reihe nach ab.
+    - Gedanken: Ich sehe, dass nun j = 7 & m = 3 und der Wert bei Index 3 ist 12. Also ist 16 nun rechts von m.
+4. Aktion: Benutzer schickt die Commands i=m+1; m=(i+j)/2; jeweils einzeln, der Reihe nach ab.
+    - Gedanken: Ich sehe, dass nun i = 4 & m = 5 und der Wert bei Index 5 ist 23. Also ist 16 nun links von m.
+5. Aktion: Benutzer schickt die Commands j=m; m=(i+j)/2; jeweils einzeln, der Reihe nach ab.
+    - Gedanken: Ich sehe, dass nun j = 5 & m = 4 und der Wert bei Index 4 ist 16. Gefunden!
+6. Aktion: Benutzer klickt sich durch die Command History.
+    - Gedanken: Jetzt kann ich jeden Schritt noch einmal durchgehen und die Visualisierung des Zustandes in der Mitte verstehen.
+
+### User Scenario 3: In eigenem Array suchen
+1. Aktion: Benutzer wählt in der gestarteten Applikation BinarySearch aus und sieht das Standard-Array [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97]
+    - Gedanken: Ich möchte in meinem eigenen Array suchen, damit ich auch wirklich verstehen kann was im Algorithmus geschieht.
+2. Aktion: Benutzer gibt seine Arraywerte in den Textboxen der BinarySearch Visualisierung ein.
+    - Gedanken: Das Standard-Array ist zu lang! Mein Array hat nur eine länge von 10 und nicht von 14!
+3. Aktion: Benutzer ändert die Grösse des Arrays auf 10 durch das Textfeld, welches unten rechts im Bildschirm zu sehen ist.
+    - Gedanken: Perfekt! Nun stimmt die Grösse!
+4. Aktion: Benutzer klickt auf den Knopf oben rechts, um die aktuelle Konfiguration des Arrays zu speichern.
+    - Gedanken: Super jetzt kann ich das nächste Mal nach dem Starten des Algorithmus-Demonstrators direkt diese Konfiguration laden.
+
+### Key Take Aways
+  - Funktionalität in der Applikation, mit welcher der Benutzer entscheiden kann, welche Variable von i & j welchen
+    schon gesuchten Bereich abdeckt, wäre von Wert. Da somit verschiedene Varianten des BinarySearch im
+    Algorithmus-Demonstrator erlernt werden können.
+  - Wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall 
+    ungültig macht, dann sollte der Benutzer auf das hingewiesen werden.
+  - Die Default-Values in den Textboxen des BinarySearch sollten stärker unterscheidbarer von den Indexen sein.
+  - Eine Funktionalität, bei welcher der Benutzer die Zahl festlegen kann, welche er im Array suchen möchte, wäre toll.
+    Somit könnte der Algorithmus-Demonstrator auch rückmelden, wenn die gesuchte Zahl gefunden wurde.
+  - Funktionalität für die Arraygrösse zu verändern wäre auch von Wert.
+  - Funktionalität für die aktuelle Konfiguration des Arrays zu speichern und wieder zu laden wäre nice to have.
+    Wahrscheinlich jedoch nicht die höchste Priorität.
+
+## ToDos
+- [x] How to Feedbackmarkt
+- [x] Commands können durch Enter-Taste auf Button oder Textfield abgesetzt werden.
+- [x] Binary Search ist Horizontal in der Mitte
+- [x] Scroll Pane in History scrollt automatisch zum neusten Element
+- [x] In der History gibt es einen Eintrag für den Initialzustand.
+- [x] Wrap error text in history when too long
+- [x] Der Zustand des Algorithmus kann durch die History verändert werden.
+- [x] Termine an Wolfgang für Mo 2.2 & Do 12.2
+- [x] Zielgruppe ausführlich beschreiben
+- [x] User Szenarien erstellen
+  - Aus Benutzersicht Schritt für Schritt Ablauf aufschreiben (mit Gedanken)
+- [x] Tasks erstellen/ändern & priorisieren anhand der Erkenntnisse der User Szenarien
+- [x] Default Values in den Textboxen des BinarySearch unterscheidbarer von den Indexen machen.
+- [ ] Versuchen, ob ein Top-Down Event Handling funktioniert mit Funktionsaufruf mitgeben
+- [ ] Code Cleanup(Invarianten) & Review von Wolfgang anfordern
+- [ ] Fehler in der History sollen nicht angeklickt werden können.
+- [ ] Es können Commands mit Variablen +, -, (, ), / genutzt werden.
+- [ ] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
+- [ ] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
+- [ ] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
+- [ ] manuelle Test Szenarien Liste erstellen
+- [ ] Fix Bug where Focus is shifted away from VBox when Enter is pressed on it
+- [ ] Es wird spezifisch nach einer Zahl gesucht und es kommt eine positive Rückmeldung, wenn diese gefunden wurde.
+- [ ] Wenn von einem Zustand aus, welcher nicht der aktuellste ist, ein neuer Command abgesetzt wird, wird die History von dort aus fortgesetzt. (Mit Pop-up & Bestätigung)
+- [ ] Das Bearbeiten des Arrays wird validiert.
+- [ ] Die Arraygrösse kann verändert werden.
 
 ## Feedback Learnshop #1
   - HauptPart des Algorithmus noch grösser machen.

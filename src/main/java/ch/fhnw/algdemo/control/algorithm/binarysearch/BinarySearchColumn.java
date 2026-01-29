@@ -41,14 +41,6 @@ public class BinarySearchColumn extends VBox {
         this.indexLabel.setText(index.toString());
     }
 
-    @SneakyThrows
-    private void loadFxController() {
-        var loader = new FXMLLoader(getClass().getResource("binary-search-column.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
-        loader.load();
-    }
-
     public void setVariables(List<String> variables) {
         this.variables = variables;
         updateVariableLabels();
@@ -84,5 +76,13 @@ public class BinarySearchColumn extends VBox {
             this.variableLabelTwo.setText(variables.get(1));
             this.variableLabelThree.setText(variables.get(2));
         }
+    }
+
+    @SneakyThrows
+    private void loadFxController() {
+        var loader = new FXMLLoader(getClass().getResource("binary-search-column.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        loader.load();
     }
 }

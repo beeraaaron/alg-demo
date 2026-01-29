@@ -16,7 +16,6 @@ public class VariableController extends VBox {
         this.variables = variables;
         for (var variable : this.variables) {
             var variableDetail = new VariableElement(variable);
-            variableDetail.prefWidthProperty().bind(variablesBox.widthProperty());
             variablesBox.getChildren().add(variableDetail);
         }
     }

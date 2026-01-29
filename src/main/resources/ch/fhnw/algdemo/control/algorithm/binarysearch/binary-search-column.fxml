@@ -1,9 +1,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
-    <TextField fx:id="valueField" alignment="CENTER" prefWidth="40" prefHeight="40" />
-    <Label fx:id="indexLabel" alignment="CENTER" prefWidth="40" prefHeight="40" />
-    <Label styleClass="variable-label" fx:id="variableLabelOne" alignment="CENTER" prefWidth="40" prefHeight="40" />
-    <Label styleClass="variable-label" fx:id="variableLabelTwo" alignment="CENTER" prefWidth="40" prefHeight="40" />
-    <Label styleClass="variable-label" fx:id="variableLabelThree" alignment="CENTER" prefWidth="40" prefHeight="40" />
+    <TextField fx:id="valueField" alignment="CENTER" prefWidth="60" prefHeight="60" />
+    <Label fx:id="indexLabel" alignment="CENTER" prefWidth="60" prefHeight="60" />
+    <Label styleClass="variable-label" fx:id="variableLabelOne" alignment="CENTER" prefWidth="60" prefHeight="60" />
+    <Label styleClass="variable-label" fx:id="variableLabelTwo" alignment="CENTER" prefWidth="60" prefHeight="60" />
+    <Label styleClass="variable-label" fx:id="variableLabelThree" alignment="CENTER" prefWidth="60" prefHeight="60" />
 </fx:root>

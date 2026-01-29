@@ -11,6 +11,7 @@
     -fx-border-width: 0 0 0.5 0;
     -fx-border-style: solid;
     -fx-padding: 5px;
+    -fx-cursor: hand;
 }
 
 .history-parent {
@@ -27,6 +28,7 @@
     -fx-border-width: 0 0 0.5 0;
     -fx-border-style: solid;
     -fx-padding: 5px;
+    -fx-font-size: 16;
 }
 
 #copyButton {
@@ -35,16 +37,16 @@
 }
 
 #detailsBox {
-    -fx-cursor: hand;
+    -fx-font-size: 16;
 }
 
-#detailsBox:focused, .initial-history-element:focused {
+#historyElement:focused, .initial-history-element:focused {
     -fx-border-color: #039ED3;
     -fx-border-width: 0.75;
     -fx-background-color: rgba(3, 158, 211, 0.1);
 }
 
-#detailsBox:hover, .initial-history-element:hover {
+#historyElement:hover, .initial-history-element:hover {
     -fx-background-color: rgba(0, 0, 0, 0.05);
 }
 

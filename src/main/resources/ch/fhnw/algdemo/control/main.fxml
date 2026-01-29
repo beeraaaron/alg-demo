@@ -14,7 +14,7 @@
         <RowConstraints percentHeight="100" />
     </rowConstraints>
     <VBox fx:id="leftBox" GridPane.columnIndex="0">
-        <ChoiceBox fx:id="algorithmChoiceBox" />
+        <ChoiceBox fx:id="algorithmChoiceBox" prefHeight="40"/>
         <fx:include fx:id="variable" source="variable/variable.fxml" />
     </VBox>
     <GridPane GridPane.columnIndex="1">

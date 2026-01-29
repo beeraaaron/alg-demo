@@ -4,7 +4,6 @@ import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import lombok.SneakyThrows;
 
 public class VariableElement extends Label {

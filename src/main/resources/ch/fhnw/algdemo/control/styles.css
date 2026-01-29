@@ -3,3 +3,15 @@
     -fx-border-width: 0 0.5 0 0;
     -fx-border-style: solid;
 }
+
+#algorithmChoiceBox {
+    -fx-font-size: 18;
+}
+
+#commandInput {
+    -fx-font-size: 18;
+}
+
+#sendCommandButton {
+    -fx-font-size: 18;
+}

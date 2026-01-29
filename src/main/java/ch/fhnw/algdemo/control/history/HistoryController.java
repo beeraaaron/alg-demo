@@ -1,7 +1,6 @@
 package ch.fhnw.algdemo.control.history;
 
 import ch.fhnw.algdemo.model.algorithm.Command;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -29,9 +28,7 @@ public class HistoryController extends ScrollPane {
 
     @FXML
     public void initialize() {
-        historyBox.heightProperty().addListener((ob,ov,nv) -> {
-            scrollPane.setVvalue(1.0);
-        });
+        historyBox.heightProperty().addListener((ob,ov,nv) -> scrollPane.setVvalue(1.0));
         initialStateLabel.setFocusTraversable(true);
         initialStateLabel.setOnMouseClicked(event -> changeState(null));
         initialStateLabel.addEventFilter(KeyEvent.KEY_PRESSED, this::changeState);
@@ -40,7 +37,7 @@ public class HistoryController extends ScrollPane {
     private void changeState(KeyEvent keyEvent) {
         if (keyEvent == null || keyEvent.getCode() == KeyCode.ENTER) {
             onStateClicked.accept(1);
-            clear();
+            historyBox.getChildren().clear();
             initializeHistory(commandHistory, 1);
             if (keyEvent != null) {
                 keyEvent.consume();
@@ -50,6 +47,7 @@ public class HistoryController extends ScrollPane {
     }
 
     public void initializeHistory(List<Command> commandHistory, int selectedCommandId) {
+        historyBox.getChildren().clear();
         this.commandHistory = commandHistory;
         if (commandHistory.isEmpty() || selectedCommandId == 1) {
             initialStateLabel.getStyleClass().add("element-selected");
@@ -63,14 +61,10 @@ public class HistoryController extends ScrollPane {
             historyElement.setOnCommandCopied(c -> onCommandCopied.accept(c));
             historyElement.setOnStateClicked(id -> {
                 onStateClicked.accept(id);
-                clear();
+                historyBox.getChildren().clear();
                 initializeHistory(commandHistory, id);
             });
             historyBox.getChildren().add(historyElement);
         }
-    }
-
-    public void clear() {
-        historyBox.getChildren().clear();
     }
 }

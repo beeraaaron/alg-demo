@@ -21,22 +21,25 @@ public class CommandFactory {
 
         var parts = command.split("=");
         var variableName = parts[0].trim();
+        var validVariableNames = variables.stream().map(v -> v.name).toList();
+        if (variableName.isBlank()) {
+            throw new IllegalArgumentException("Variable to be assigned must not be blank. Must be one of: " + validVariableNames);
+        }
         var optionalVariable = variables.stream().filter(v -> v.name.equals(variableName)).findFirst();
-        if (variableName.isBlank() || optionalVariable.isEmpty()) {
-            var variableNames = variables.stream().map(v -> v.name).toList();
-            throw new IllegalArgumentException("Invalid variable '" + variableName + "'. Must be one of: " + variableNames);
+        if (optionalVariable.isEmpty()) {
+            throw new IllegalArgumentException("Invalid variable '" + variableName + "'. Must be one of: " + validVariableNames);
         }
 
         var valueParts = parts[1].split(";");
         if (valueParts.length < 1) {
             throw new IllegalArgumentException("No value provided");
         }
-        var value = valueParts[0].trim();
-        var variable = optionalVariable.get();
 
         //TODO: if value is a number validate correctness
-        // if it's not a number, try to evaluate condition and then check correctness
+        // if it's not a number, try to evaluate condition and check correctness
 
+        var value = valueParts[0].trim();
+        var variable = optionalVariable.get();
         if (value.isBlank()) {
             throw new IllegalArgumentException("Value must not be blank");
         } else if (!isInt(value)) {

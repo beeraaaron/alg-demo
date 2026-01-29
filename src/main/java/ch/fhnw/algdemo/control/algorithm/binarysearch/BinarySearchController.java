@@ -14,7 +14,7 @@ import java.util.List;
 import static ch.fhnw.algdemo.util.CommandFactory.createCommand;
 
 public class BinarySearchController extends HBox implements AlgorithmController {
-    List<Integer> data = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14));
+    List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
     List<AlgorithmVariable<?>> variables =  List.of(
             new AlgorithmVariable<>("i", Integer.class, null),
             new AlgorithmVariable<>("j", Integer.class, null),
@@ -111,7 +111,6 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     private void deleteUnsuccessfulCommands() {
         commandHistory.removeIf(command -> !command.success);
     }
-
 
     private void resetAlgorithmState() {
         this.getChildren().clear();
