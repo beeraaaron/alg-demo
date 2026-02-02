@@ -147,7 +147,9 @@
 - [x] Default Values in den Textboxen des BinarySearch unterscheidbarer von den Indexen machen.
 - [x] Code Cleanup(Invarianten) & Review von Wolfgang anfordern
 - [x] Fehler in der History sollen nicht angeklickt werden können.
-- [ ] Es können Commands mit Variablen +, -, (, ), / genutzt werden.
+- [x] Es können Commands mit Variablen +, -, (, ), / genutzt werden.
+- [x] 'recursive descent parser' anschauen & implementieren
+- [ ] Unit Tests schreiben, um sicherzugehen, dass command parsing korrekt funktioniert
 - [ ] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
 - [ ] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
 - [ ] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.

@@ -4,6 +4,7 @@ import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import ch.fhnw.algdemo.model.algorithm.Command;
 import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
+import ch.fhnw.algdemo.util.CommandParser;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
@@ -11,8 +12,6 @@ import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static ch.fhnw.algdemo.util.CommandFactory.createCommand;
 
 public class BinarySearchController extends HBox implements AlgorithmController {
     List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
@@ -58,14 +57,15 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     }
 
     @Override
-    public void applyCommand(String command) {
+    public void applyCommand(String commandExpression) {
         deleteUnsuccessfulCommands();
         try {
-            var validCommand = createCommand(command, variables, this::getNextId);
-            commandHistory.add(validCommand);
+            var commandParser = new CommandParser(variables);
+            var command = commandParser.createCommand(commandExpression, this::getNextId);
+            commandHistory.add(command);
             updateAlgorithmState(highestCommandId);
         } catch (IllegalArgumentException e) {
-            commandHistory.add(new Command(command, e.getMessage(), false));
+            commandHistory.add(new Command(commandExpression, e.getMessage(), false));
         }
     }
 

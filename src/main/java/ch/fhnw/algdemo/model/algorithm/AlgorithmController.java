@@ -7,7 +7,7 @@ public interface AlgorithmController {
     List<AlgorithmVariable<?>> getVariables();
     List<Command> getCommandHistory();
     List<String> getCommandSuggestions();
-    void applyCommand(String command);
+    void applyCommand(String commandExpression);
     void updateAlgorithmState(int selectedCommandId);
     int getHighestCommandId();
 }

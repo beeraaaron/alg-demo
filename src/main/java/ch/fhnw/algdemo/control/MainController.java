@@ -106,8 +106,8 @@ public class MainController {
 
     private void sendCommand(KeyEvent event) {
         if (event == null || event.getCode() == KeyCode.ENTER) {
-            String command = commandInput.getEditor().getText();
-            selectedAlgorithm.applyCommand(command);
+            String commandExpression = commandInput.getEditor().getText();
+            selectedAlgorithm.applyCommand(commandExpression);
             variableController.clear();
             variableController.initializeVariables(selectedAlgorithm.getVariables());
             historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getHighestCommandId());

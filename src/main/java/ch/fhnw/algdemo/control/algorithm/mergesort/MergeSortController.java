@@ -60,7 +60,7 @@ public class MergeSortController extends Pane implements AlgorithmController {
     }
 
     @Override
-    public void applyCommand(String command) {
+    public void applyCommand(String commandExpression) {
         return;
     }
 
