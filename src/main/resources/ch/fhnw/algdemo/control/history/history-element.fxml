@@ -5,8 +5,8 @@
 <fx:root fx:id="historyElement" type="javafx.scene.layout.GridPane"
          xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
     <columnConstraints>
-        <ColumnConstraints percentWidth="80.0" />
-        <ColumnConstraints percentWidth="20.0" />
+        <ColumnConstraints percentWidth="75.0" />
+        <ColumnConstraints percentWidth="25.0" />
     </columnConstraints>
     <VBox fx:id="detailsBox" GridPane.columnIndex="0">
         <Label fx:id="commandLabel"/>

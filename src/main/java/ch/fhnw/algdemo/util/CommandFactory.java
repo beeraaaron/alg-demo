@@ -17,9 +17,6 @@ public class CommandFactory {
         if (!command.contains("=")) {
             throw new IllegalArgumentException("Command must contain '='");
         }
-        if (!command.contains(";")) {
-            throw new IllegalArgumentException("Command must contain ';' at the end");
-        }
 
         var parts = command.split("=");
         var variableName = parts[0].trim();
@@ -27,22 +24,17 @@ public class CommandFactory {
         if (variableName.isBlank()) {
             throw new IllegalArgumentException("Variable to be assigned must not be blank. Must be one of: " + validVariableNames);
         }
-        var optionalVariable = variables.stream().filter(v -> v.name.equals(variableName)).findFirst();
-        if (optionalVariable.isEmpty()) {
+        int idx = validVariableNames.indexOf(variableName);
+        if  (idx == -1) {
             throw new IllegalArgumentException("Invalid variable to be assigned '" + variableName + "'. Must be one of: " + validVariableNames);
         }
 
-        var valueParts = parts[1].split(";");
-        if (valueParts.length < 1) {
-            throw new IllegalArgumentException("No value provided");
-        }
-
-        var expression = valueParts[0].trim();
-        var variable = optionalVariable.get();
+        var expression = parts[1].trim();
         if (expression.isBlank()) {
-            throw new IllegalArgumentException("Value must not be blank");
+            throw new IllegalArgumentException("Expression must not be blank");
         }
 
+        var variable = variables.get(idx);
         if (isInt(expression)) {
             return new Command(command.trim(), variable.name + " = " + expression, variable.name, expression, nextCommandId.get(), true);
         } else {
@@ -74,10 +66,9 @@ public class CommandFactory {
                     it.next();
                 }
                 var variableName = sb.toString();
-                if (validVariableNames.contains(variableName)) {
-                    var variable = variables.stream()
-                            .filter(v -> v.name.equals(variableName))
-                            .findFirst().orElseThrow();
+                int idx = validVariableNames.indexOf(variableName);
+                if  (idx != -1) {
+                    var variable = variables.get(idx);
                     if (variable.value != null) {
                         parsedExpression = parsedExpression.replaceFirst(variableName, variable.value.toString());
                         lastChar = variableName.charAt(variableName.length() - 1);

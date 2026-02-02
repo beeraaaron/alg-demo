@@ -1,9 +1,9 @@
 #valueField {
-    -fx-font-size: 18;
+    -fx-font-size: 16;
 }
 
 #indexLabel {
-    -fx-font-size: 18;
+    -fx-font-size: 16;
 }
 
 .default-text-field {
@@ -21,6 +21,6 @@
 .variable-label {
     -fx-text-fill: #e50000;
     -fx-font-weight: bold;
-    -fx-font-size: 18;
+    -fx-font-size: 16;
 }
 

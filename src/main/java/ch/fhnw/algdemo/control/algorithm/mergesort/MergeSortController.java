@@ -3,6 +3,7 @@ package ch.fhnw.algdemo.control.algorithm.mergesort;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import ch.fhnw.algdemo.model.algorithm.Command;
+import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -16,7 +17,7 @@ public class MergeSortController extends Pane implements AlgorithmController {
     private Label label;
 
     private List<AlgorithmVariable<?>> variables = List.of(
-            new AlgorithmVariable<>("someName", Integer.class, null)
+            new IntegerAlgorithmVariable("someName", null)
     );
 
     public MergeSortController() {
@@ -54,7 +55,7 @@ public class MergeSortController extends Pane implements AlgorithmController {
     @Override
     public List<String> getCommandSuggestions() {
         return variables.stream()
-                .map(v -> v.name + " = 0;")
+                .map(v -> v.name + " = 0")
                 .toList();
     }
 

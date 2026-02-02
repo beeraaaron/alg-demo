@@ -59,23 +59,9 @@ public class BinarySearchColumn extends VBox {
     }
 
     private void updateVariableLabels() {
-        if (variables.isEmpty()) {
-            this.variableLabelOne.setText("");
-            this.variableLabelTwo.setText("");
-            this.variableLabelThree.setText("");
-        } else if (variables.size() == 1) {
-            this.variableLabelOne.setText(variables.getFirst());
-            this.variableLabelTwo.setText("");
-            this.variableLabelThree.setText("");
-        } else if (variables.size() == 2) {
-            this.variableLabelOne.setText(variables.getFirst());
-            this.variableLabelTwo.setText(variables.get(1));
-            this.variableLabelThree.setText("");
-        } else if (variables.size() == 3) {
-            this.variableLabelOne.setText(variables.getFirst());
-            this.variableLabelTwo.setText(variables.get(1));
-            this.variableLabelThree.setText(variables.get(2));
-        }
+        this.variableLabelOne.setText(!variables.isEmpty() ? variables.get(0) : "");
+        this.variableLabelTwo.setText(variables.size() > 1 ? variables.get(1) : "");
+        this.variableLabelThree.setText(variables.size() > 2 ? variables.get(2) : "");
     }
 
     @SneakyThrows

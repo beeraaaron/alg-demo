@@ -3,6 +3,7 @@ package ch.fhnw.algdemo.control.algorithm.binarysearch;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import ch.fhnw.algdemo.model.algorithm.Command;
+import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
@@ -16,9 +17,9 @@ import static ch.fhnw.algdemo.util.CommandFactory.createCommand;
 public class BinarySearchController extends HBox implements AlgorithmController {
     List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
     List<AlgorithmVariable<?>> variables =  List.of(
-            new AlgorithmVariable<>("i", Integer.class, null),
-            new AlgorithmVariable<>("j", Integer.class, null),
-            new AlgorithmVariable<>("m", Integer.class, null)
+            new IntegerAlgorithmVariable("i",  null),
+            new IntegerAlgorithmVariable("j", null),
+            new IntegerAlgorithmVariable("m", null)
     );
 
     List<Command> commandHistory = new ArrayList<>();
@@ -51,9 +52,9 @@ public class BinarySearchController extends HBox implements AlgorithmController 
 
     @Override
     public List<String> getCommandSuggestions() {
-        return List.of(variables.getFirst().name + " = 0;",
-                variables.get(1).name + " = " + (data.size() - 1) + ";",
-                variables.get(2).name + " = " + (data.size() / 2) + ";");
+        return List.of(variables.getFirst().name + " = 0",
+                variables.get(1).name + " = " + (data.size() - 1),
+                variables.get(2).name + " = " + (data.size() / 2));
     }
 
     @Override
