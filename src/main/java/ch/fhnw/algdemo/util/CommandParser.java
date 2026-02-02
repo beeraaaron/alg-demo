@@ -4,12 +4,9 @@ import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import ch.fhnw.algdemo.model.algorithm.Command;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class CommandParser {
-    private static final Set<Character> validOperators = Set.of('+', '-', '/', '*');
-
     private final List<AlgorithmVariable<?>> variables;
     private final List<String> variableNames;
     private String input;
@@ -35,7 +32,7 @@ public class CommandParser {
 
         if (pos < input.length()) {
             throw new IllegalArgumentException("Unexpected characters in expression. Allowed are whitespaces, variables, " +
-                    "whole numbers, '(', ')' and operators: " + validOperators);
+                    "whole numbers, '(', ')' and operators: '+', '-', '/', '*'");
         }
 
         return new Command(expression, variable.name + " = " + value, variable.name, String.valueOf(value), nextCommandId.get(), true);
@@ -61,17 +58,29 @@ public class CommandParser {
     }
 
     private int parseExpression() throws IllegalArgumentException {
-        int result = parseFactor();
+        int result = parseTerm();
 
-        while (pos < input.length() && validOperators.contains(peek())) {
+        while (pos < input.length() && (peek() == '+' || peek() == '-')) {
             char op = consume();
-            int right = parseFactor();
+            int right = parseTerm();
 
             if (op == '+') {
                 result = result + right;
-            } else if (op == '-') {
+            } else {
                 result = result - right;
-            } else if (op == '*') {
+            }
+        }
+        return result;
+    }
+
+    private int parseTerm() throws IllegalArgumentException {
+        int result = parseFactor();
+
+        while (pos < input.length() && (peek() == '*' || peek() == '/')) {
+            char op = consume();
+            int right = parseFactor();
+
+            if (op == '*') {
                 result = result * right;
             } else {
                 if (right == 0) {
@@ -135,10 +144,7 @@ public class CommandParser {
     }
 
     private char peek() {
-        if (pos >= input.length()) {
-            return '\0';
-        }
-        return input.charAt(pos);
+        return pos < input.length() ? input.charAt(pos) : '\0';
     }
 
     private char consume() {

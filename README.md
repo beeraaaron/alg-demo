@@ -149,10 +149,15 @@
 - [x] Fehler in der History sollen nicht angeklickt werden können.
 - [x] Es können Commands mit Variablen +, -, (, ), / genutzt werden.
 - [x] 'recursive descent parser' anschauen & implementieren
-- [ ] Unit Tests schreiben, um sicherzugehen, dass command parsing korrekt funktioniert
+- [x] Unit Tests schreiben, um sicherzugehen, dass command parsing korrekt funktioniert
 - [ ] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
+- [ ] Dokumentation für Freeze:
+  - [ ] Was muss ich mir aufschreiben, damit ich im August noch weiss, was ich gemacht habe?
+  - [ ] Was muss ich mir aufzeichnen/aufschreiben, damit man schnell weiss, wo man hin muss für etwas zu ändern? 
+  - [ ] Packet/Komponenten Diagramm + Leseanleitung: Welches package hat welche Aufgabe. Welche Klasse ist in welchem package.
 - [ ] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
 - [ ] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
+  - [ ] zuerst herausfinden was die verschiedenen Möglichkeiten sind
 - [ ] manuelle Test Szenarien Liste erstellen
 - [ ] Fix Bug where Focus is shifted away from VBox when Enter is pressed on it
 - [ ] Es wird spezifisch nach einer Zahl gesucht und es kommt eine positive Rückmeldung, wenn diese gefunden wurde.
