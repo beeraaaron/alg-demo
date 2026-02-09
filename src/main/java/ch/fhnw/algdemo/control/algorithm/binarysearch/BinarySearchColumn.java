@@ -33,6 +33,7 @@ public class BinarySearchColumn extends VBox {
         this.index = index;
         this.variables = new ArrayList<>();
         loadFxController();
+        disableValueField();
     }
 
     @FXML
@@ -55,11 +56,26 @@ public class BinarySearchColumn extends VBox {
     }
 
     public void removeColors() {
+        valueField.getStyleClass().remove("max-text-field");
+        valueField.getStyleClass().remove("min-text-field");
+
+    }
+
+    public void disableValueField() {
+        valueField.setDisable(true);
+        valueField.setFocusTraversable(false);
+        valueField.getStyleClass().add("disabled-value-field");
+    }
+
+    public void enableValueField() {
+        valueField.setDisable(false);
+        valueField.setFocusTraversable(true);
+        valueField.getStyleClass().remove("disabled-value-field");
         valueField.getStyleClass().add("default-text-field");
     }
 
     private void updateVariableLabels() {
-        this.variableLabelOne.setText(!variables.isEmpty() ? variables.get(0) : "");
+        this.variableLabelOne.setText(variables.size() > 0 ? variables.get(0) : "");
         this.variableLabelTwo.setText(variables.size() > 1 ? variables.get(1) : "");
         this.variableLabelThree.setText(variables.size() > 2 ? variables.get(2) : "");
     }

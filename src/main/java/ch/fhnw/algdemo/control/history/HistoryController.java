@@ -1,6 +1,6 @@
 package ch.fhnw.algdemo.control.history;
 
-import ch.fhnw.algdemo.model.algorithm.Command;
+import ch.fhnw.algdemo.model.command.Command;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;

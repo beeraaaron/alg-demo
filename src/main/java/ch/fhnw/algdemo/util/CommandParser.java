@@ -1,15 +1,21 @@
 package ch.fhnw.algdemo.util;
 
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
-import ch.fhnw.algdemo.model.algorithm.Command;
+import ch.fhnw.algdemo.model.command.Command;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class CommandParser {
+    @Getter
     private final List<AlgorithmVariable<?>> variables;
     private final List<String> variableNames;
+    @Setter
+    @Getter
     private String input;
+    @Setter
+    @Getter
     private int pos;
 
     public CommandParser(List<AlgorithmVariable<?>> variables) {
@@ -17,10 +23,9 @@ public class CommandParser {
         this.variableNames = variables.stream().map(v -> v.name).toList();
     }
 
-    public Command createCommand(String expression, Supplier<Integer> nextCommandId) throws IllegalArgumentException {
-        input = expression.replaceAll("\\s+", "");
-        pos = 0;
-
+    public Command createCommand(String expression) throws IllegalArgumentException {
+        setInput(expression.replaceAll("\\s+", ""));
+        setPos(0);
         var variable = parseVariable();
 
         if (!(peek() == '=')) {
@@ -30,15 +35,15 @@ public class CommandParser {
 
         var value = parseExpression();
 
-        if (pos < input.length()) {
+        if (getPos() < getInput().length()) {
             throw new IllegalArgumentException("Unexpected characters in expression. Allowed are whitespaces, variables, " +
                     "whole numbers, '(', ')' and operators: '+', '-', '/', '*'");
         }
 
-        return new Command(expression, variable.name + " = " + value, variable.name, String.valueOf(value), nextCommandId.get(), true);
+        return new Command(expression, variable.name + " = " + value, variable.name, String.valueOf(value), true);
     }
 
-    private AlgorithmVariable<?> parseVariable() throws IllegalArgumentException {
+    public AlgorithmVariable<?> parseVariable() throws IllegalArgumentException {
         if (pos >= input.length() || !isAsciiLetter(peek())) {
             throw new IllegalArgumentException("Invalid variable to be assigned. Must be one of: " + variableNames);
         }
@@ -57,7 +62,7 @@ public class CommandParser {
         return variables.get(idx);
     }
 
-    private int parseExpression() throws IllegalArgumentException {
+    public int parseExpression() throws IllegalArgumentException {
         int result = parseTerm();
 
         while (pos < input.length() && (peek() == '+' || peek() == '-')) {
@@ -73,7 +78,7 @@ public class CommandParser {
         return result;
     }
 
-    private int parseTerm() throws IllegalArgumentException {
+    public int parseTerm() throws IllegalArgumentException {
         int result = parseFactor();
 
         while (pos < input.length() && (peek() == '*' || peek() == '/')) {
@@ -92,7 +97,7 @@ public class CommandParser {
         return result;
     }
 
-    private int parseFactor() throws IllegalArgumentException {
+    public int parseFactor() throws IllegalArgumentException {
         if (peek() == '(') {
             consume();
             int result = parseExpression();
@@ -111,7 +116,7 @@ public class CommandParser {
         throw new IllegalArgumentException("Expression is invalid. Expected number, variable, or '(' at position " + pos);
     }
 
-    private int parseVariableValue() throws IllegalArgumentException {
+    public int parseVariableValue() throws IllegalArgumentException {
         var variable = parseVariable();
 
         if (variable.value == null) {
@@ -121,7 +126,7 @@ public class CommandParser {
         return (Integer) variable.value;
     }
 
-    private int parseNumber() throws IllegalArgumentException {
+    public int parseNumber() throws IllegalArgumentException {
         int start = pos;
 
         while (pos < input.length() && isAsciiNumber(peek())) {
@@ -140,14 +145,14 @@ public class CommandParser {
     }
 
     private boolean isAsciiNumber(char c) {
-        return c >= '0' && c <= '9';
+        return (c >= '0' && c <= '9') || c == '-' || c == '+';
     }
 
-    private char peek() {
+    public char peek() {
         return pos < input.length() ? input.charAt(pos) : '\0';
     }
 
-    private char consume() {
+    public char consume() {
         return input.charAt(pos++);
     }
 }

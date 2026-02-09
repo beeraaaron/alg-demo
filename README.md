@@ -1,4 +1,9 @@
 # alg-demo
+## Klassendiagramm
+<img src="images/Alg-Demo%20Class%20Diagram.drawio.png" alt="Klassendiagramm"/>
+
+- Die grau eingefärbten Klassen sind Java FX Controller und haben jeweils eine assozierte .fxml Datei.
+
 ## Mockups
 
 <details>
@@ -61,11 +66,11 @@
     - [ ] Die Arraygrösse kann verändert werden.
     - [ ] Der Zustand des Algorithmus kann gespeichert werden.
     - [ ] Der Zustand des Algorithmus kann aus dem gespeicherten Zustand wiederhergestellt werden.
-- [ ] Commands
+- [x] Commands
     - [x] Es gibt Command vorschläge, welche ausgewählt werden können.
     - [x] Commands können selbst eingegeben werden.
     - [x] Commands können abgesetzt werden.
-    - [ ] Commands werden überprüft.
+    - [x] Commands werden überprüft.
 - [x] History
     - [x] Die History wird angezeigt.
     - [x] In der History gibt es einen Eintrag für den Initialzustand.
@@ -150,18 +155,19 @@
 - [x] Es können Commands mit Variablen +, -, (, ), / genutzt werden.
 - [x] 'recursive descent parser' anschauen & implementieren
 - [x] Unit Tests schreiben, um sicherzugehen, dass command parsing korrekt funktioniert
-- [ ] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
-- [ ] Dokumentation für Freeze:
-  - [ ] Was muss ich mir aufschreiben, damit ich im August noch weiss, was ich gemacht habe?
-  - [ ] Was muss ich mir aufzeichnen/aufschreiben, damit man schnell weiss, wo man hin muss für etwas zu ändern? 
-  - [ ] Packet/Komponenten Diagramm + Leseanleitung: Welches package hat welche Aufgabe. Welche Klasse ist in welchem package.
-- [ ] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
-- [ ] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
-  - [ ] zuerst herausfinden was die verschiedenen Möglichkeiten sind
+- [x] Mehr die Sicht eines Computers einnehmen -> es sind nur die Werte sichtbar, bei welchen m schon war.
+- [x] Wenn von einem Zustand aus, welcher nicht der aktuellste ist, ein neuer Command abgesetzt wird, wird die History von dort aus fortgesetzt. (Mit Pop-up & Bestätigung)
+- [x] Dokumentation für Freeze: 
+  - [x] Was muss ich mir aufschreiben, damit ich im August noch weiss, was ich gemacht habe?
+    - Mithilfe dieses Readme.md & der angewendeten Struktur des Projektes ist dies für mich gegeben.
+  - [x] Was muss ich mir aufzeichnen/aufschreiben, damit man schnell weiss, wo man hin muss für etwas zu ändern? 
+    - Klassendiagramm mit den notwendigsten Beziehungen erstellen.
+  - [x] Packet/Komponenten Diagramm + Leseanleitung: Welches package hat welche Aufgabe. Welche Klasse ist in welchem package.
+- [x] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
+- [x] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
+  - [x] zuerst herausfinden was die verschiedenen Möglichkeiten sind
+      - <details><summary>Möglichkeiten</summary><img src="images/binary-search-options.jpeg" alt="Options"/></details>
 - [ ] manuelle Test Szenarien Liste erstellen
-- [ ] Fix Bug where Focus is shifted away from VBox when Enter is pressed on it
-- [ ] Es wird spezifisch nach einer Zahl gesucht und es kommt eine positive Rückmeldung, wenn diese gefunden wurde.
-- [ ] Wenn von einem Zustand aus, welcher nicht der aktuellste ist, ein neuer Command abgesetzt wird, wird die History von dort aus fortgesetzt. (Mit Pop-up & Bestätigung)
 - [ ] Das Bearbeiten des Arrays wird validiert.
 - [ ] Die Arraygrösse kann verändert werden.
 

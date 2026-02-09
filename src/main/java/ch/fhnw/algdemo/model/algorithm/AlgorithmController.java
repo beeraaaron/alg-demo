@@ -1,5 +1,7 @@
 package ch.fhnw.algdemo.model.algorithm;
 
+import ch.fhnw.algdemo.model.command.Command;
+
 import java.util.List;
 
 public interface AlgorithmController {

@@ -80,14 +80,32 @@ public class MainController {
                  oldValue, newValue) -> changeAlgorithm(newValue)
         );
         algorithmChoiceBox.setItems(FXCollections.observableArrayList(algorithms));
+        algorithmChoiceBox.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateChoiceBox);
         algorithmChoiceBox.prefWidthProperty().bind(leftBox.widthProperty());
         algorithmChoiceBox.getSelectionModel().select(0);
     }
 
+    private void navigateChoiceBox(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (!algorithmChoiceBox.isShowing()) {
+                algorithmChoiceBox.show();
+            } else {
+                algorithmChoiceBox.hide();
+            }
+            event.consume();
+        } else if (event.getCode() == KeyCode.ESCAPE && algorithmChoiceBox.isShowing()) {
+            algorithmChoiceBox.hide();
+            event.consume();
+        }
+    }
+
 
     private void configureCommandInput() {
-        commandInput.setOnAction(event -> {});
         commandInput.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateComboBox);
+        commandInput.setOnShowing(event -> {
+            commandInput.getItems().clear();
+            commandInput.getItems().addAll(selectedAlgorithm.getCommandSuggestions());
+        });
     }
 
     private void navigateComboBox(KeyEvent event) {
@@ -125,13 +143,13 @@ public class MainController {
             historyController.initializeHistory(bsc.getCommandHistory(), bsc.getHighestCommandId());
             midBox.getChildren().addAll(bsc);
             bsc.prefWidthProperty().bind(midBox.widthProperty());
-            commandInput.getItems().addAll(bsc.getCommandSuggestions());
+            bsc.prefHeightProperty().bind(midBox.heightProperty());
         } else if (newValue instanceof MergeSortController msc) {
             variableController.initializeVariables(msc.getVariables());
             historyController.initializeHistory(msc.getCommandHistory(), msc.getHighestCommandId());
             midBox.getChildren().addAll(msc);
             msc.prefWidthProperty().bind(midBox.widthProperty());
-            commandInput.getItems().addAll(msc.getCommandSuggestions());
+            msc.prefHeightProperty().bind(midBox.heightProperty());
         }
     }
 }

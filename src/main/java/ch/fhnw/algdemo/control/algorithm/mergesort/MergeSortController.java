@@ -2,7 +2,7 @@ package ch.fhnw.algdemo.control.algorithm.mergesort;
 
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
-import ch.fhnw.algdemo.model.algorithm.Command;
+import ch.fhnw.algdemo.model.command.Command;
 import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
