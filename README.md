@@ -58,6 +58,7 @@
   - Durch Klicken auf ein History-Element wird der Status nach dieses Commands wieder hergestellt und ist in der Mitte sichtbar. 
   - Durch Klicken auf das Kopier-Icon eines History Elements den verwendeten Command in das Textfeld einfügen.
 
+
 - [ ] Binary Search Algorithmus
     - [x] Der Zustand des Algorithmus wird angezeigt.
     - [x] Commands können auf den Algorithmus angewendet werden.
@@ -86,8 +87,8 @@
 - Sie wollen verschiedene Zustände der Algorithmen mit eignen Variablenzuweisungen spezifisch steuern und erkunden.
 - Sie wollen für jeden Zustand der Algorithmen jeweils eine sinnvolle Visualisierung haben.
 
-## User Scenarios
-### User Scenario 1: Ungültiges Suchintervall
+## User Szenarien
+### User Szenario 1: Ungültiges Suchintervall
 1. Aktion: Benutzer wählt in der gestarteten Applikation BinarySearch aus.
     - Gedanken: Was geschieht, wenn der Index i grösser als der Index j wird?
 2. Aktion: Benutzer schickt die Commands i=4; j=7; m=6; jeweils einzeln, der Reihe nach ab.
@@ -99,7 +100,7 @@
 5. Aktion: Benutzer klickt in der History auf den letzten gültigen abgesetzten Command.
     - Gedanken: Ich will nochmals den Zustand nach dem letzten Schritt ansehen, um den Unterschied zu verstehen.
 
-### User Scenario 2: Schrittweise Binary Search verstehen
+### User Szenario 2: Schrittweise Binary Search verstehen
 1. Aktion: Benutzer wählt in der gestarteten Applikation BinarySearch aus und sieht das Standard-Array [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97]
     - Gedanken: Ich suche nach dem Wert 16 bei Index 4.
 2. Aktion: Benutzer schickt die Commands i=0; j=14; m=(i+j)/2; jeweils einzeln, der Reihe nach ab.
@@ -113,7 +114,7 @@
 6. Aktion: Benutzer klickt sich durch die Command History.
     - Gedanken: Jetzt kann ich jeden Schritt noch einmal durchgehen und die Visualisierung des Zustandes in der Mitte verstehen.
 
-### User Scenario 3: In eigenem Array suchen
+### User Szenario 3: In eigenem Array suchen
 1. Aktion: Benutzer wählt in der gestarteten Applikation BinarySearch aus und sieht das Standard-Array [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97]
     - Gedanken: Ich möchte in meinem eigenen Array suchen, damit ich auch wirklich verstehen kann was im Algorithmus geschieht.
 2. Aktion: Benutzer gibt seine Arraywerte in den Textboxen der BinarySearch Visualisierung ein.
@@ -135,6 +136,256 @@
   - Funktionalität für die Arraygrösse zu verändern wäre auch von Wert.
   - Funktionalität für die aktuelle Konfiguration des Arrays zu speichern und wieder zu laden wäre nice to have.
     Wahrscheinlich jedoch nicht die höchste Priorität.
+
+## Test Szenarien
+### Test Szenario 1: Initialer Zustand
+1. Aktion: Benutzer startet die Algorithmus-Demonstrator Applikation neu.
+    - Resultat:
+      - In der ChoiceBox oben links ist der Algorithmus BinarySearch ausgewählt.
+      - In der linken Spalte sind die Variablen i, j & m zu sehen. ALle haben den Value null zugewiesen.
+      - In der mittleren Spalte ist ein indexiertes Array von Integer Values zu sehen. Darunter steht "Variable Options" und in der ChoiceBox rechts von diesem Text ist der Value "1: i=0,j=n-1" ausgewählt.
+      - In der mittleren Spalte ganz unten ist ein leeres Textfeld und der Button "Execute" zu sehen.
+      - in der rechten Spalte gibt es ein Element mit dem Text "Initial State", welches leicht grau angefärbt ist.
+
+### Test Szenario 2: Commands absetzen
+1. Aktion: Benutzer startet die Algorithmus-Demonstrator Applikation neu.
+2. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = 0" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable i nun "i = 0".
+      - Im Array auf der Mitte des Bildschirmes sind nun alle Werte ausgegraut und unter dem Index 0 steht ein rotes i.
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command. 
+        Es steht ">> i = 0" und darunter "i = 0". Rechts davon hat es einen Button mit dem Text "Copy".
+        Dieses neue Element ist leicht grau angefärbt.
+3. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = 13" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable j nun "j = 13".
+        - Im Array auf der Mitte des Bildschirmes unter dem Index 13 steht ein rotes j.
+        - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> j = 13" und darunter "j = 13". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+4. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable m nun "m = 6".
+        - Im Array auf der Mitte des Bildschirmes sieht man nun die Zahl beim Index 6 und darunter steht ein rotes m.
+        - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> m = (i + j) / 2" und darunter "m = 6". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+5. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = m + 1" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable i nun "i = 7".
+        - Im Array auf der Mitte des Bildschirmes ist unter dem Index 7 nun das rote i zu sehen. Unter dem Index 0 ist kein rotes i mehr zu sehen.
+          Alle Elemente des Arrays bis und mit Index 6 sind blau eingefärbt.
+        - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> i = m + 1" und darunter "i = 7". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+6. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable m nun "m = 10".
+        - Im Array auf der Mitte des Bildschirmes sieht man nun die Zahl beim Index 10 und darunter steht ein rotes m.
+          Unter dem Index 6 ist kein rotes m mehr zu sehen.
+        - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> m = (i + j) / 2" und darunter "m = 10". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+7. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = m" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable j nun "j = 10".
+        - Im Array auf der Mitte des Bildschirmes ist unter dem Index 10 nun zusätzlich zum roten i auch das m zu sehen. Unter dem Index 13 ist kein rotes j mehr zu sehen.
+          Alle Elemente des Arrays von Index 11 bis und mit Index 13 sind dunkelgelb eingefärbt.
+        - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> j = m" und darunter "j = 10". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+8. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der linken Seite des Bildschirms steht bei der Variable m nun "m = 8".
+        - Im Array auf der Mitte des Bildschirmes sieht man nun die Zahl beim Index 8 und darunter steht ein rotes m.
+          Unter dem Index 10 ist kein rotes m mehr zu sehen.
+        - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> m = (i + j) / 2" und darunter "m = 8". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+
+### Test Szenario 3: History Navigation
+1. Aktion: Benutzer startet die Algorithmus-Demonstrator Applikation neu.
+2. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = 0" ein und klickt auf "Execute".
+3. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = 13" ein und klickt auf "Execute".
+4. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+5. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = m" ein und klickt auf "Execute".
+6. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+7. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = m + 1" ein und klickt auf "Execute".
+8. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der linken Seite des Bildschirms stehen die folgenden Einträge:
+        - "i = 4"
+        - "j = 6"
+        - "m = 5"
+      - Im Array auf der Mitte des Bildschirmes sieht man:
+        - Unter Index 4 ein rotes i.
+        - Unter Index 5 ein rotes m.
+        - Unter Index 6 ein rotes j.
+        - Die aufgedeckten Zahlen bei Index 3, 5 & 6.
+        - Alle Elemente des Arrays von Index 0 bis und mit 3 sind blau eingefärbt. 
+        - Alle Elemente des Arrays von Index 7 bis und mit 13 sind dunkelgelb eingefärbt. 
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es für jeden abgesetzten Command ein Element in der Historie.
+        Das neueste Element ist leicht grau angefärbt.
+9. Aktion: Benutzer klickt in der Command-History in der rechten Spalte des Bildschirmes auf das 5. Element ">> j = m". 
+    - Resultat: 
+      - Im Mitte des Bildschirms sieht man nun den Zustand bis und mit zum Command des gerade angeklickten History-Elementes:
+        - In der Spalte auf der linken Seite des Bildschirms stehen die folgenden Einträge:
+          - "i = 0"
+          - "j = 6"
+          - "m = 6"
+        - Im Array auf der Mitte des Bildschirmes sieht man:
+            - Unter Index 0 ein rotes i.
+            - Unter Index 6 ein rotes j & m.
+            - Die aufgedeckte Zahl bei Index 6.
+            - Alle Elemente des Arrays von Index 7 bis und mit 13 sind dunkelgelb eingefärbt.
+      - In der rechten Spalte des Bildschirmes ist das 5. Element der Historie ">> j = m" leicht grau angefärbt.
+10. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = m + 1" ein und klickt auf "Execute".
+    - Resultat:
+        - Vom zuvor ausgewählten Zustand aus wird nun der neue Command angewendet.
+          In der Spalte auf der rechten Seite des Bildschirmes wurden alle Elemente nach dem 5. Element ">> j = m" gelöscht.
+          An 6. Stelle steht nun ">> m = (i + j) / 2" und darunter "m = 3". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+        - In der Mitte des Bildschirmes wird dieser neue Zustand des Algorithmus abgebildet:
+          - In der Spalte auf der linken Seite des Bildschirms stehen die folgenden Einträge:
+                 - "i = 0"
+                 - "j = 6"
+                 - "m = m"
+          - Im Array auf der Mitte des Bildschirmes sieht man:
+              - Unter Index 0 ein rotes i.
+              - Unter Index 3 ein rotes m.
+              - Unter Index 6 ein rotes j.
+              - Die aufgedeckten Zahlen bei Index 3 & 6.
+              - Alle Elemente des Arrays von Index 7 bis und mit 13 sind dunkelgelb eingefärbt.
+11. Aktion: Benutzer klickt in der Command-History in der rechten Spalte des Bildschirmes auf das 1. Element "Initial State".
+    - Resultat:
+        - Im Mitte des Bildschirms sieht man nun den Initialen Zustand:
+            - In der Spalte auf der linken Seite des Bildschirms stehen die folgenden Einträge:
+                - "i = null"
+                - "j = null"
+                - "m = null"
+            - Im Array auf der Mitte des Bildschirmes sieht man nun wieder alle Values des Arrays aufgedeckt.
+              Es sind keine roten Variablen zu sehen und keine Stellen des Arrays sind eingefärbt.
+        - In der rechten Spalte des Bildschirmes ist das 1. Element der Historie "Initial State" leicht grau angefärbt.
+
+### Test Szenario 4: Variable Optionen
+1. Aktion: Benutzer startet die Algorithmus-Demonstrator Applikation neu.
+2. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = 1" ein und klickt auf "Execute".
+3. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = 12" ein und klickt auf "Execute".
+    - Resultat:
+        - Das Element bei Index 0 des Arrays ist blau eingefärbt.
+        - Das Element bei Index 13 des Arrays ist dunkelgelb eingefärbt.
+4. Aktion: Benutzer wählt bei der ChoiceBox rechts von "Variable Options" die Option "2: i=0, j=n".
+   - Resultat:
+     - Das Element bei Index 0 des Arrays ist blau eingefärbt.
+     - Die Elemente bei Index 12 & 13 des Arrays sind dunkelgelb eingefärbt.
+5. Aktion: Benutzer wählt bei der ChoiceBox rechts von "Variable Options" die Option "3: i=-1, j=n-1".
+    - Resultat:
+        - Die Elemente bei Index 0 & 1 des Arrays sind blau eingefärbt.
+        - Das Element bei Index 13 des Arrays ist dunkelgelb eingefärbt.
+6. Aktion: Benutzer wählt bei der ChoiceBox rechts von "Variable Options" die Option "4: i=-1, j=n".
+    - Resultat:
+        - Die Elemente bei Index 0 & 1 des Arrays sind blau eingefärbt.
+        - Die Elemente bei Index 12 & 13 des Arrays sind dunkelgelb eingefärbt.
+
+### Test Szenario 5: Benutzerführung
+1. Aktion: Benutzer startet die Algorithmus-Demonstrator Applikation neu.
+2. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = 0" ein und klickt auf "Execute".
+3. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = 13" ein und klickt auf "Execute".
+4. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+5. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = m" ein und klickt auf "Execute".
+6. Aktion: Benutzer klickt beim 4. Element der Command Historie "m = (i + j) / 2" auf den "Copy" Button.
+    - Resultat:
+      - Im Textfeld unten in der Mitte erscheint der Text "m = (i + j) / 2".
+7. Aktion: Benutzer klickt auf "Execute".
+8. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = m + 1" ein und klickt auf "Execute".
+9. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+10. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = i - 1" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+        Es steht ">> j = i - 1" und darunter steht in Rot die Meldung: "Assignment seems illogical. Variable j should not be smaller than Variable i"
+        Bei diesem Element hat es rechts keinen Button mit dem Text "Copy".
+        Dieses neue Element ist auch nicht leicht grau angefärbt, sondern das letzte erfolgreiche Element.
+11. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = j + 1" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+        Es steht ">> i = j + 1" und darunter steht in Rot die Meldung: "Assignment seems illogical. Variable i should not be greater than Variable j"
+        Bei diesem Element hat es rechts keinen Button mit dem Text "Copy".
+        Dieses neue Element ist auch nicht leicht grau angefärbt, sondern das letzte erfolgreiche Element.
+12. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = 22" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+        Es steht ">> i = 22" und darunter steht in Rot die Meldung: "Assignment seems illogical. Value 22 should be between -1 and 14"
+        Bei diesem Element hat es rechts keinen Button mit dem Text "Copy".
+        Dieses neue Element ist auch nicht leicht grau angefärbt, sondern das letzte erfolgreiche Element.
+13. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = j + 1" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+        Es steht ">> m = j + 1" und darunter steht in Rot die Meldung: "Assignment seems illogical. Variable m should be between Variables i & j"
+        Bei diesem Element hat es rechts keinen Button mit dem Text "Copy".
+        Dieses neue Element ist auch nicht leicht grau angefärbt, sondern das letzte erfolgreiche Element.
+14. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = i - 1" ein und klickt auf "Execute".
+    - Resultat:
+      - In der Spalte auf der rechten Seite des Bildschirmes hat es ein neues Element zum gerade abgesetzten Command.
+        Es steht ">> m = i - 1" und darunter steht in Rot die Meldung: "Assignment seems illogical. Variable m should be between Variables i & j"
+        Bei diesem Element hat es rechts keinen Button mit dem Text "Copy".
+        Dieses neue Element ist auch nicht leicht grau angefärbt, sondern das letzte erfolgreiche Element.
+15. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "m = (i + j) / 2" ein und klickt auf "Execute".
+    - Resultat:
+        - In der Spalte auf der rechten Seite des Bildschirmes ist die Fehlermeldung der letzten Aktion aus der Historie verschwunden.
+          Es hat jedoch nun anstelle des Fehlers ein neues Element zum gerade abgesetzten Command.
+          Es steht ">> m = (i + j) / 2" und darunter "m = 5". Rechts davon hat es einen Button mit dem Text "Copy".
+          Dieses neue Element ist leicht grau angefärbt.
+
+### Test Szenario 6: Tastatursteuerung
+1. Aktion: Benutzer startet die Algorithmus-Demonstrator Applikation neu.
+    - Resultat:
+      - Die Choicebox oben links in der Ecke ist ausgewählt und hat einen dünnen blauen Rand um dies ersichtlich zu machen. 
+2. Aktion: Benutzer klickt so viele mal auf den Tab Key der Tastatur, bis wieder die Choicebox oben links in der Ecke ausgewählt ist.
+    - Resultat:
+      - Zuerst navigiert man mit tab durch alle Textfield-Elemente des Arrays in der Mitte des Bildschirms.
+        Diese haben jeweils einen dünnen blauen Rand um die momentane Selection ersichtlich zu machen.
+      - Anschliessend wird die ChoiceBox rechts von "Variable Options" ausgewählt und hat einen dünnen blauen Rand um dies ersichtlich zu machen.
+      - Anschliessend wird das TextField unten in der Mitte ausgewählt und hat einen dünnen blauen Rand um dies ersichtlich zu machen.
+      - Anschliessend wird der Button "Execute" ausgewählt und hat einen dünnen blauen Rand um dies ersichtlich zu machen.
+      - Zum Schluss wird das History Element "Initial State" ausgewählt und hat einen dünnen blauen Rand & eine blaue Hintergrundfarbe um dies ersichtlich zu machen.
+3. Aktion: Benutzer navigiert mit dem Tab Key der Tastatur, bis die ChoiceBox rechts von "Variable Options" ausgewählt ist. Der Benutzer klickt auf die Enter Taste.
+    - Resultat:
+        - Es werden alle Optionen dieser ChoiceBox angezeigt.
+4. Aktion: Benutzer klickt die Escape Taste der Tastatur.
+    - Resultat:
+        - Die Optionen der Choicebox verschwinden wieder.
+5. Aktion: Benutzer navigiert mit dem Tab Key der Tastatur, bis das TextField unten in der Mitte ausgewählt ist. Der Benutzer klickt auf die Enter Taste.
+    - Resultat:
+        - Es werden Command Vorschläge für jede Variable angezeigt. 
+6. Aktion: Benutzer navigiert mit den Pfeiltasten zu dem Commandvorschlag "m = (i + j) / 2" und klickt die Enter Taste
+    - Resultat:
+        - Im TextField unten in der Mitte erscheint der Text "m = (i + j) / 2".
+        - Die Command Vorschläge werden nicht mehr angezeigt.
+7. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "i = 0" ein und klickt auf "Execute".
+8. Aktion: Benutzer gibt im Textfeld unten in der Mitte den Text "j = 13" ein. Benutzer navigiert mit dem Tab Key der Tastatur, bis das TextField unten in der Mitte ausgewählt ist. Der Benutzer klickt auf die Enter Taste.
+    - Resultat:
+      - In der Mitte des Bildschirms sieht man nun den Zustand bis und mit zum neusten Command in der Command History:
+          - In der Spalte auf der linken Seite des Bildschirms stehen die folgenden Einträge:
+              - "i = 0"
+              - "j = 13"
+              - "m = null"
+          - Im Array auf der Mitte des Bildschirmes sieht man:
+              - Unter Index 0 ein rotes i.
+              - Unter Index 13 ein rotes j.
+          - In der rechten Spalte des Bildschirmes ist das 3. Element der Historie ">> j = 13" leicht grau angefärbt.
+9. Aktion: Benutzer navigiert mit dem Tab Key der Tastatur, bis das 2. History Element ">> i = 0" ausgewählt ist. Der Benutzer klickt auf die Enter Taste.
+    - Resultat:
+      - In der Mitte des Bildschirms sieht man nun den Zustand bis und mit zum 2. Command in der Command History:
+        - In der Spalte auf der linken Seite des Bildschirms stehen die folgenden Einträge:
+            - "i = 0"
+            - "j = null"
+            - "m = null"
+        - Im Array auf der Mitte des Bildschirmes sieht man:
+            - Unter Index 0 ein rotes i.
+        - In der rechten Spalte des Bildschirmes ist das 2. Element der Historie ">> i = 0" leicht grau angefärbt.
+10. Aktion: Benutzer navigiert mit dem Tab Key der Tastatur, bis der "Copy" Button des 3. History Elementes "j = 13" ausgewählt ist. Der Benutzer klickt auf die Enter Taste.
+    - Resultat:
+        - Im TextField unten in der Mitte erscheint der Text "j = 13".
 
 ## ToDos
 - [x] How to Feedbackmarkt
@@ -167,9 +418,11 @@
 - [x] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
   - [x] zuerst herausfinden was die verschiedenen Möglichkeiten sind
       - <details><summary>Möglichkeiten</summary><img src="images/binary-search-options.jpeg" alt="Options"/></details>
-- [ ] manuelle Test Szenarien Liste erstellen
+- [x] Manuelle Test Szenarien Liste erstellen
 - [ ] Das Bearbeiten des Arrays wird validiert.
 - [ ] Die Arraygrösse kann verändert werden.
+
+
 
 ## Feedback Learnshop #1
   - HauptPart des Algorithmus noch grösser machen.

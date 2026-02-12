@@ -1,6 +1,7 @@
 package ch.fhnw.algdemo.control.history;
 
 import ch.fhnw.algdemo.model.command.Command;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -58,7 +59,14 @@ public class HistoryElement extends GridPane {
     private void configureChangeState() {
         historyElement.setFocusTraversable(true);
         historyElement.setOnMouseClicked(event -> changeState(null));
-        historyElement.addEventFilter(KeyEvent.KEY_PRESSED, this::changeState);
+        historyElement.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    changeState(event);
+                }
+            }
+        });
     }
 
     private void configureError() {
@@ -73,6 +81,9 @@ public class HistoryElement extends GridPane {
     private void copyCommand(KeyEvent keyEvent) {
         if (keyEvent == null || keyEvent.getCode() == KeyCode.ENTER) {
             onCommandCopied.accept(command.command);
+            if (keyEvent != null) {
+                keyEvent.consume();
+            }
         }
     }
 
