@@ -4,6 +4,15 @@
 
 - Die grau eingefärbten Klassen sind Java FX Controller und haben jeweils eine assozierte .fxml Datei.
 
+| Package                           | Description                                                                                                                                                                  |
+|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ch.fhnw.algdemo.control           | Beinhaltete alle Java FX Controller. Jede Klasse hat eine entsprechende UI Definition in einem .fxml File im Ordner resources. Dort ist die selbe Ordnerstruktur angewendet. |
+| ch.fhnw.algdemo.control.algorithm | Beinhaltet die FX Controller für die verschiedenen Algorithmen, welche in diesem Algorithmen Demonstrator genutzt werden können.                                             |
+| ch.fhnw.algdemo.control.history   | Beinhaltet die FX Controller für die Command History, welche in der Applikation auf der rechten Seite ersichtlich ist.                                                       |
+| ch.fhnw.algdemo.control.variable  | Beinhaltet die FX Controller für die Variablen-Übersicht, welche in der Applikation auf der linken Seite ersichtlich ist.                                                    |
+| ch.fhnw.algdemo.model             | Beinhaltet die applikationsspezifischen Datenmodelle, welche der Algorithmen Demonstrator verwendet.                                                                         |
+| ch.fhnw.algdemo.util              | Beinhaltet Helferklassen wie z.B. CommandParser.                                                                                                                             |
+
 ## Mockups
 
 <details>
@@ -419,6 +428,9 @@
   - [x] zuerst herausfinden was die verschiedenen Möglichkeiten sind
       - <details><summary>Möglichkeiten</summary><img src="images/binary-search-options.jpeg" alt="Options"/></details>
 - [x] Manuelle Test Szenarien Liste erstellen
+- [ ] Package Diagramm - oder Tabelle. Was ist für was zuständig.
+- [ ] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation.
+- [ ] Wieder auf Wolfgang zugehen im August.
 - [ ] Das Bearbeiten des Arrays wird validiert.
 - [ ] Die Arraygrösse kann verändert werden.
 
