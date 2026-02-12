@@ -1,0 +1,7 @@
+.variable-label {
+    -fx-font-size: 16;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 0.5 0;
+    -fx-border-style: solid;
+    -fx-padding: 5px;
+}

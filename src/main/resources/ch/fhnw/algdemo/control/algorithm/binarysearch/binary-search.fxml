@@ -1,0 +1,22 @@
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
+    <GridPane alignment="BOTTOM_CENTER" >
+        <columnConstraints>
+            <ColumnConstraints percentWidth="100" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="85" />
+            <RowConstraints percentHeight="15" />
+        </rowConstraints>
+        <HBox fx:id="columnBox" alignment="CENTER" GridPane.rowIndex="0"/>
+        <HBox fx:id="optionsBox" alignment="CENTER_LEFT" GridPane.rowIndex="1" translateX="25">
+            <Label fx:id="optionsLabel" text="Variable Options"/>
+            <ChoiceBox fx:id="optionsChoiceBox" prefHeight="30" prefWidth="150"/>
+        </HBox>
+    </GridPane>
+</fx:root>

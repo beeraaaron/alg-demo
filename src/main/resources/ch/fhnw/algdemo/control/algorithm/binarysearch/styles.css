@@ -1,0 +1,44 @@
+#valueField {
+    -fx-font-size: 16;
+}
+
+#indexLabel {
+    -fx-font-size: 16;
+}
+
+#columnRoot {
+    -fx-padding: 100px 0;
+}
+
+#optionsLabel {
+    -fx-padding: 0 10px;
+    -fx-font-size: 16;
+}
+
+#optionsChoiceBox {
+    -fx-font-size: 16;
+}
+
+.disabled-value-field {
+    -fx-text-fill: transparent;
+    -fx-control-inner-background: rgba(84, 84, 84, 0.8);
+}
+
+.default-text-field {
+    -fx-control-inner-background: #ffffff;
+}
+
+.min-text-field {
+    -fx-control-inner-background: #0066CC;
+}
+
+.max-text-field {
+    -fx-control-inner-background: #FFD700;
+}
+
+.variable-label {
+    -fx-text-fill: #e50000;
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+

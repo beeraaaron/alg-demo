@@ -1,0 +1,241 @@
+package ch.fhnw.algdemo.control.algorithm.binarysearch;
+
+import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
+import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
+import ch.fhnw.algdemo.model.command.Command;
+import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
+import ch.fhnw.algdemo.util.BinarySearchCommandParser;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import lombok.SneakyThrows;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class BinarySearchController extends HBox implements AlgorithmController {
+    List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
+    List<AlgorithmVariable<?>> variables =  List.of(
+            new IntegerAlgorithmVariable("i",  null),
+            new IntegerAlgorithmVariable("j", null),
+            new IntegerAlgorithmVariable("m", null)
+    );
+    List<String> algorithmOptions = List.of(
+            "1: i=0, j=n-1",
+            "2: i=0, j=n",
+            "3: i=-1, j=n-1",
+            "4: i=-1, j=n"
+    );
+    int selectedAlgorithmOption = 1;
+
+    List<Command> commandHistory = new ArrayList<>();
+    List<BinarySearchColumn> columns = new ArrayList<>();
+    Set<Integer> searchedIndexes = new HashSet<>();
+    int selectedCommandId = 1;
+    int highestCommandId = 1;
+
+    @FXML
+    HBox columnBox;
+    @FXML
+    ChoiceBox<String> optionsChoiceBox;
+
+    public BinarySearchController() {
+        loadFxController();
+        configureChoiceBox();
+        columnBox.prefWidthProperty().bind(this.widthProperty());
+    }
+
+    @FXML
+    public void initialize() {
+        resetAlgorithmState();
+    }
+
+    @Override
+    public String getName() {
+        return "Binary Search";
+    }
+
+    @Override
+    public List<AlgorithmVariable<?>> getVariables() {
+        return variables;
+    }
+
+    @Override
+    public List<Command> getCommandHistory() {
+        return commandHistory;
+    }
+
+    @Override
+    public List<String> getCommandSuggestions() {
+        var suggestions = new ArrayList<String>();
+        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) {
+            suggestions.add(variables.getFirst().name + " = 0");
+        } else {
+            suggestions.add(variables.getFirst().name + " = -1");
+        }
+
+        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) {
+            suggestions.add(variables.get(1).name + " = " + (data.size() - 1));
+        } else {
+            suggestions.add(variables.get(1).name + " = " + data.size());
+        }
+        suggestions.add(variables.get(2).name + " = (" + variables.getFirst().name + " + " + variables.get(1).name + ") / 2");
+        return suggestions;
+    }
+
+    @Override
+    public void applyCommand(String commandExpression) {
+        deleteUnsuccessfulCommands();
+        try {
+            updateStateToSelectedCommand();
+            var commandParser = new BinarySearchCommandParser(variables, data);
+            var command = commandParser.createCommand(commandExpression);
+            if (selectedCommandId < highestCommandId) {
+                commandHistory.removeIf(c -> selectedCommandId < c.id);
+                highestCommandId = selectedCommandId + 1;
+            } else {
+                highestCommandId++;
+            }
+            command.id = highestCommandId;
+            commandHistory.add(command);
+            updateAlgorithmState(highestCommandId);
+        } catch (IllegalArgumentException e) {
+            if (selectedCommandId < highestCommandId) {
+                commandHistory.removeIf(c -> selectedCommandId < c.id);
+                highestCommandId = selectedCommandId;
+            }
+            commandHistory.add(new Command(commandExpression, e.getMessage(), false));
+        }
+    }
+
+    @Override
+    public void updateAlgorithmState(int selectedCommandId) {
+        this.selectedCommandId = selectedCommandId;
+        resetAlgorithmState();
+        updateStateToSelectedCommand();
+
+        var m = variables.get(2);
+        for (var column : columns) {
+            var filteredVariables = variables.stream()
+                    .filter(v -> column.getIndex().equals(v.value))
+                    .map(v -> v.name)
+                    .toList();
+            column.setVariables(filteredVariables);
+
+            defineColumnColor(column);
+
+            if (m.value != null && searchedIndexes.contains(column.getIndex())) {
+                column.enableValueField();
+            } else {
+                column.disableValueField();
+            }
+        }
+
+        if (selectedCommandId == 1) {
+            for (var column : columns) {
+                column.enableValueField();
+            }
+        }
+    }
+
+    private void defineColumnColor(BinarySearchColumn column) {
+        var i = variables.getFirst();
+        var j = variables.get(1);
+
+        if ((selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) &&
+                i.value != null && column.getIndex() < (Integer) i.value) {
+            column.setMinColor();
+        } else if ((selectedAlgorithmOption == 3 || selectedAlgorithmOption == 4) &&
+                i.value != null && column.getIndex() <= (Integer) i.value) {
+            column.setMinColor();
+        } else if ((selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) &&
+                j.value != null && column.getIndex() > (Integer) j.value) {
+            column.setMaxColor();
+        } else if ((selectedAlgorithmOption == 2 || selectedAlgorithmOption == 4) &&
+                j.value != null && column.getIndex() >= (Integer) j.value) {
+            column.setMaxColor();
+        } else {
+            column.removeColors();
+        }
+    }
+
+    @Override
+    public int getHighestCommandId() {
+        return highestCommandId;
+    }
+
+    private void deleteUnsuccessfulCommands() {
+        commandHistory.removeIf(command -> !command.success);
+    }
+
+    private void updateStateToSelectedCommand() {
+        searchedIndexes = new HashSet<>();
+        var x = 1;
+        while (x < selectedCommandId) {
+            var command =  commandHistory.get(x - 1);
+            var variable = variables.stream()
+                    .filter(v -> v.name.equals(command.variableName))
+                    .findFirst().orElseThrow();
+            variable.setValueFromString(command.value);
+            if (variable.name.equals(variables.get(2).name)) {
+                searchedIndexes.add((Integer) variable.value);
+            }
+            x++;
+        }
+    }
+
+    private void resetAlgorithmState() {
+        columnBox.getChildren().clear();
+        for (var i = 0; i < data.size(); i++) {
+            var column = new BinarySearchColumn(data.get(i), i);
+            columns.add(column);
+            column.enableValueField();
+            columnBox.getChildren().add(column);
+        }
+        for (var variable : variables) {
+            variable.value = null;
+        }
+    }
+
+    private void configureChoiceBox() {
+        optionsChoiceBox.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> changeAlgorithmOptions(newValue)
+        );
+        optionsChoiceBox.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateOptionsChoiceBox);
+        optionsChoiceBox.setItems(FXCollections.observableArrayList(algorithmOptions));
+        optionsChoiceBox.getSelectionModel().select(0);
+    }
+
+    private void navigateOptionsChoiceBox(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (!optionsChoiceBox.isShowing()) {
+                optionsChoiceBox.show();
+            } else {
+                optionsChoiceBox.hide();
+            }
+            event.consume();
+        } else if (event.getCode() == KeyCode.ESCAPE && optionsChoiceBox.isShowing()) {
+            optionsChoiceBox.hide();
+            event.consume();
+        }
+    }
+
+    private void changeAlgorithmOptions(String newValue) {
+        this.selectedAlgorithmOption = Integer.parseInt(newValue.split(":")[0]);
+        updateAlgorithmState(selectedCommandId);
+    }
+
+    @SneakyThrows
+    private void loadFxController() {
+        var loader = new FXMLLoader(getClass().getResource("binary-search.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        loader.load();
+    }
+}

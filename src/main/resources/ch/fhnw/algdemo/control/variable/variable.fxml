@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="ch.fhnw.algdemo.control.variable.VariableController" stylesheets="@styles.css">
+    <Label prefHeight="30" prefWidth="Infinity" text="Variables" styleClass="variable-label"/>
+    <VBox fx:id="variablesBox" prefWidth="Infinity"/>
+</VBox>

@@ -1,0 +1,55 @@
+.error-message {
+    -fx-text-fill: #e50000;
+}
+
+.element-selected {
+    -fx-background-color: rgba(84, 84, 84, 0.1);
+}
+
+#historyElement {
+    -fx-border-color: black;
+    -fx-border-width: 0 0 0.5 0;
+    -fx-border-style: solid;
+    -fx-padding: 5px;
+}
+
+.clickable-history-element {
+    -fx-cursor: hand;
+}
+
+.history-parent {
+    -fx-border-color: black;
+    -fx-border-width: 0 0 0 0.5;
+    -fx-border-style: solid;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.initial-history-element {
+    -fx-cursor: hand;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 0.5 0;
+    -fx-border-style: solid;
+    -fx-padding: 5px;
+    -fx-font-size: 16;
+}
+
+#copyButton {
+    -fx-focus-color: #039ED3;
+    -fx-faint-focus-color: #039ED322;
+}
+
+#detailsBox {
+    -fx-font-size: 16;
+}
+
+.clickable-history-element:focused, .initial-history-element:focused {
+    -fx-border-color: #039ED3;
+    -fx-border-width: 0.75;
+    -fx-background-color: rgba(3, 158, 211, 0.1);
+}
+
+.clickable-history-element:hover, .initial-history-element:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+}
+

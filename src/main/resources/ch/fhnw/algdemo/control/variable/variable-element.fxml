@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<fx:root type="javafx.scene.control.Label" xmlns:fx="http://javafx.com/fxml" fx:id="overviewLabel" prefHeight="30" prefWidth="Infinity" styleClass="variable-label" stylesheets="@styles.css" />
