@@ -14,9 +14,9 @@ import java.util.List;
 
 public class MergeSortController extends Pane implements AlgorithmController {
     @FXML
-    private Label label;
+    Label label;
 
-    private List<AlgorithmVariable<?>> variables = List.of(
+    private final List<AlgorithmVariable<?>> variables = List.of(
             new IntegerAlgorithmVariable("someName", null)
     );
 
@@ -55,18 +55,16 @@ public class MergeSortController extends Pane implements AlgorithmController {
     @Override
     public List<String> getCommandSuggestions() {
         return variables.stream()
-                .map(v -> v.name + " = 0")
+                .map(v -> v.getName() + " = 0")
                 .toList();
     }
 
     @Override
     public void applyCommand(String commandExpression) {
-        return;
     }
 
     @Override
     public void updateAlgorithmState(int selectedCommandId) {
-        return;
     }
 
     @Override

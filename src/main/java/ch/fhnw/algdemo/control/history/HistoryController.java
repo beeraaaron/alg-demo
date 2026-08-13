@@ -14,17 +14,17 @@ import java.util.function.Consumer;
 
 public class HistoryController extends ScrollPane {
     @FXML
-    private VBox historyBox;
+    VBox historyBox;
     @FXML
-    private Label initialStateLabel;
+    Label initialStateLabel;
     @FXML
-    private ScrollPane scrollPane;
+    ScrollPane scrollPane;
 
     @Setter
     private Consumer<String> onCommandCopied;
     @Setter
     private Consumer<Integer> onStateClicked;
-    List<Command> commandHistory;
+    private List<Command> commandHistory;
 
     @FXML
     public void initialize() {
@@ -56,7 +56,7 @@ public class HistoryController extends ScrollPane {
         }
 
         for (var command : this.commandHistory) {
-            var historyElement = new HistoryElement(command, command.id == selectedCommandId);
+            var historyElement = new HistoryElement(command, command.getId() == selectedCommandId);
             historyElement.prefWidthProperty().bind(historyBox.widthProperty());
             historyElement.setOnCommandCopied(c -> onCommandCopied.accept(c));
             historyElement.setOnStateClicked(id -> {

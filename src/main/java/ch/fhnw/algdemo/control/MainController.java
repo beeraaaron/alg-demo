@@ -19,23 +19,21 @@ import java.util.List;
 
 public class MainController {
     @FXML
-    private VBox leftBox;
+    VBox leftBox;
     @FXML
-    private ChoiceBox<AlgorithmController> algorithmChoiceBox;
+    ChoiceBox<AlgorithmController> algorithmChoiceBox;
     @FXML
-    private VariableController variableController;
+    VariableController variableController;
     @FXML
-    private VBox variable;
-
+    VBox variable;
     @FXML
-    private VBox midBox;
+    VBox midBox;
     @FXML
-    private ComboBox<String> commandInput;
+    ComboBox<String> commandInput;
     @FXML
-    private Button sendCommandButton;
-
+    Button sendCommandButton;
     @FXML
-    private HistoryController historyController;
+    HistoryController historyController;
 
     private final List<AlgorithmController> algorithms = List.of(new BinarySearchController(), new MergeSortController());
     private AlgorithmController selectedAlgorithm;

@@ -16,13 +16,13 @@ import java.util.function.Consumer;
 
 public class HistoryElement extends GridPane {
     @FXML
-    private GridPane historyElement;
+    GridPane historyElement;
     @FXML
-    private Label commandLabel;
+    Label commandLabel;
     @FXML
-    private Label resultLabel;
+    Label resultLabel;
     @FXML
-    private Button copyButton;
+    Button copyButton;
 
     @Setter
     private Consumer<String> onCommandCopied;
@@ -39,9 +39,9 @@ public class HistoryElement extends GridPane {
 
     @FXML
     public void initialize() {
-        this.commandLabel.setText(">> " + command.command);
-        this.resultLabel.setText(command.result);
-        if (!command.success) {
+        this.commandLabel.setText(">> " + command.getCommand());
+        this.resultLabel.setText(command.getResult());
+        if (!command.isSuccess()) {
             configureError();
         } else {
             configureCopyButton();
@@ -59,12 +59,9 @@ public class HistoryElement extends GridPane {
     private void configureChangeState() {
         historyElement.setFocusTraversable(true);
         historyElement.setOnMouseClicked(event -> changeState(null));
-        historyElement.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    changeState(event);
-                }
+        historyElement.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                changeState(event);
             }
         });
     }
@@ -80,7 +77,7 @@ public class HistoryElement extends GridPane {
 
     private void copyCommand(KeyEvent keyEvent) {
         if (keyEvent == null || keyEvent.getCode() == KeyCode.ENTER) {
-            onCommandCopied.accept(command.command);
+            onCommandCopied.accept(command.getCommand());
             if (keyEvent != null) {
                 keyEvent.consume();
             }
@@ -89,7 +86,7 @@ public class HistoryElement extends GridPane {
 
     private void changeState(KeyEvent keyEvent) {
         if (keyEvent == null || keyEvent.getCode() == KeyCode.ENTER) {
-            onStateClicked.accept(command.id);
+            onStateClicked.accept(command.getId());
             if (keyEvent != null) {
                 keyEvent.consume();
             }

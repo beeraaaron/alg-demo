@@ -8,13 +8,10 @@ import java.util.List;
 
 public class VariableController extends VBox {
     @FXML
-    private VBox variablesBox;
-
-    List<AlgorithmVariable<?>> variables;
+    VBox variablesBox;
 
     public void initializeVariables(List<AlgorithmVariable<?>> variables) {
-        this.variables = variables;
-        for (var variable : this.variables) {
+        for (var variable : variables) {
             var variableDetail = new VariableElement(variable);
             variablesBox.getChildren().add(variableDetail);
         }

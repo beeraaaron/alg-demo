@@ -15,40 +15,69 @@
 
 ## Mockups
 
+### Merge Sort
+
+<details>
+  <summary>Merge Sort:</summary>
+  <img src="images/merge-sort/merge-sort-top-down-1.png" alt="MergeSort 1"/>
+  <img src="images/merge-sort/merge-sort-top-down-2.png" alt="MergeSort 2"/>
+  <img src="images/merge-sort/merge-sort-top-down-3.png" alt="MergeSort 3"/>
+  <img src="images/merge-sort/merge-sort-top-down-4.png" alt="MergeSort 4"/>
+  <img src="images/merge-sort/merge-sort-top-down-5.png" alt="MergeSort 5"/>
+  <img src="images/merge-sort/merge-sort-top-down-6.png" alt="MergeSort 6"/>
+  <img src="images/merge-sort/merge-sort-top-down-7.png" alt="MergeSort 7"/>
+  <img src="images/merge-sort/merge-sort-top-down-8.png" alt="MergeSort 8"/>
+  <img src="images/merge-sort/merge-sort-top-down-9.png" alt="MergeSort 9"/>
+  <img src="images/merge-sort/merge-sort-top-down-10.png" alt="MergeSort 10"/>
+  <img src="images/merge-sort/merge-sort-top-down-11.png" alt="MergeSort 11"/>
+  <img src="images/merge-sort/merge-sort-top-down-12.png" alt="MergeSort 12"/>
+  <img src="images/merge-sort/merge-sort-top-down-13.png" alt="MergeSort 13"/>
+  <img src="images/merge-sort/merge-sort-top-down-14.png" alt="MergeSort 14"/>
+  <img src="images/merge-sort/merge-sort-top-down-15.png" alt="MergeSort 15"/>
+  <img src="images/merge-sort/merge-sort-top-down-16.png" alt="MergeSort 16"/>
+  <img src="images/merge-sort/merge-sort-top-down-17.png" alt="MergeSort 17"/>
+  <img src="images/merge-sort/merge-sort-top-down-18.png" alt="MergeSort 18"/>
+  <img src="images/merge-sort/merge-sort-top-down-19.png" alt="MergeSort 19"/>
+  <img src="images/merge-sort/merge-sort-top-down-20.png" alt="MergeSort 20"/>
+  <img src="images/merge-sort/merge-sort-top-down-21.png" alt="MergeSort 21"/>
+</details>
+
+### Binary Search
+
 <details>
   <summary>Command durch Auswahl wählen:</summary>
-  <img src="images/command-1.png" alt="Command 1"/>
-  <img src="images/command-2.png" alt="Command 2"/>
-  <img src="images/command-3.png" alt="Command 3"/>
+  <img src="images/binary-search/command-1.png" alt="Command 1"/>
+  <img src="images/binary-search/command-2.png" alt="Command 2"/>
+  <img src="images/binary-search/command-3.png" alt="Command 3"/>
 </details>
 
 
 <details>
   <summary>Fehlerhafter Command ausführen:</summary>
-  <img src="images/command-error-1.png" alt="Fehlerhafter Command 1"/>
-  <img src="images/command-error-2.png" alt="Fehlerhafter Command 2"/>
-  <img src="images/command-error-3.png" alt="Fehlerhafter Command 3"/>
-  <img src="images/command-error-4.png" alt="Fehlerhafter Command 4"/>
+  <img src="images/binary-search/command-error-1.png" alt="Fehlerhafter Command 1"/>
+  <img src="images/binary-search/command-error-2.png" alt="Fehlerhafter Command 2"/>
+  <img src="images/binary-search/command-error-3.png" alt="Fehlerhafter Command 3"/>
+  <img src="images/binary-search/command-error-4.png" alt="Fehlerhafter Command 4"/>
 </details>
 
 
 <details>
   <summary>Durch History zurückspringen:</summary>
-  <img src="images/history-1.png" alt="History 1"/>
-  <img src="images/history-2.png" alt="History 2"/>
-  <img src="images/history-3.png" alt="History 3"/>
-  <img src="images/history-4.png" alt="History 4"/>
-  <img src="images/history-5.png" alt="History 5"/>
+  <img src="images/binary-search/history-1.png" alt="History 1"/>
+  <img src="images/binary-search/history-2.png" alt="History 2"/>
+  <img src="images/binary-search/history-3.png" alt="History 3"/>
+  <img src="images/binary-search/history-4.png" alt="History 4"/>
+  <img src="images/binary-search/history-5.png" alt="History 5"/>
 </details>
 
 
 <details>
   <summary>Durch History zurückspringen (abbrechen):</summary>
-  <img src="images/history-1.png" alt="History abbrechen 1"/>
-  <img src="images/history-2.png" alt="History abbrechen 2"/>
-  <img src="images/history-3.png" alt="History abbrechen 3"/>
-  <img src="images/history-abort-1.png" alt="History abbrechen 4"/>
-  <img src="images/history-abort-2.png" alt="History abbrechen 5"/>
+  <img src="images/binary-search/history-1.png" alt="History abbrechen 1"/>
+  <img src="images/binary-search/history-2.png" alt="History abbrechen 2"/>
+  <img src="images/binary-search/history-3.png" alt="History abbrechen 3"/>
+  <img src="images/binary-search/history-abort-1.png" alt="History abbrechen 4"/>
+  <img src="images/binary-search/history-abort-2.png" alt="History abbrechen 5"/>
 </details>
 
 ### Funktionalitäten
@@ -426,14 +455,40 @@
 - [x] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
 - [x] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
   - [x] zuerst herausfinden was die verschiedenen Möglichkeiten sind
-      - <details><summary>Möglichkeiten</summary><img src="images/binary-search-options.jpeg" alt="Options"/></details>
+      - <details><summary>Möglichkeiten</summary><img src="images/binary-search/binary-search-options.jpeg" alt="Options"/></details>
 - [x] Manuelle Test Szenarien Liste erstellen
-- [ ] Package Diagramm - oder Tabelle. Was ist für was zuständig.
-- [ ] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation.
-- [ ] Wieder auf Wolfgang zugehen im August.
+- [x] Package Diagramm - oder Tabelle. Was ist für was zuständig.
+- [x] Wieder auf Wolfgang zugehen im August.
+- [ ] Refactor Applikation
+  - [ ] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
+  - [ ] SOLID Principles: Wo werden diese violated?
+    - [x] Models haben viele Variablen mit Sichtbarkeit public -> zu private ändern und benötigte Accessors implementieren
+    - [ ] Interface AlgorithmController hat zu viele Responsibilities -> in kleinere Interfaces mit einzelnen Responsibilities schneiden
+    - [ ] 
+- [ ] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation?
 - [ ] Das Bearbeiten des Arrays wird validiert.
 - [ ] Die Arraygrösse kann verändert werden.
 
+- [ ] Was will ich nun machen mit welcher Priorität?
+  - Applikation refactoren, so dass sie optimal bereit ist um den neuen Algorithmus MergeSort zu implementieren.
+  - MergeSort Demonstrator Top-Down implementieren.
+  - (Merge Sort Demonstrator Bottom-Up implementieren.)
+- [ ] Was will ich vom nächsten Feedbackmarkt mitnehmen?
+    - Feedback zum BinarySearch Demonstrator einholen.
+      - Was ist nicht intuitiv? Was erscheint unlogisch? (& müsste geändert werden)?
+      - Feedback zu Usability & Experience?
+- [ ] Macht MergeSort zum Demonstrieren überhaupt Sinn? Welche Aspekte davon vielleicht mehr und welche weniger?
+  - Operationen:
+    - int m = (beg + end) / 2;
+    - int i = 0, j = beg, k = m;
+    - var b = new double[end - beg];
+    - b[i++] = a[j++];
+    - b[i++] = a[k++];
+    - a[y] = b[i];
+  - Ich möchte bei MergeSort eher ein Veranschaulichen der verschiedenen Varianten Top-Down und Bottom-Up Merge Sort
+    implementieren. Selbst die Länge des Arrays bestimmen können und die eigenen Zahlen vorgeben, aber dann durchklicken
+    und schauen was geschieht bei jedem Schritt. DIe History soll auch mit integriert werden, um bei den verschiedenen Schritten
+    zurückspulen zu können.
 
 
 ## Feedback Learnshop #1

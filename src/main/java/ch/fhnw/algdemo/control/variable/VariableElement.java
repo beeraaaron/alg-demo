@@ -16,12 +16,12 @@ public class VariableElement extends Label {
 
     @FXML
     public void initialize() {
-        this.setText(variable.name + " = " + getVariableValue());
+        this.setText(variable.getName() + " = " + getVariableValue());
     }
 
     private String getVariableValue() {
-        if (variable.value != null) {
-            return variable.value.toString();
+        if (variable.getValue() != null) {
+            return variable.getValue().toString();
         }
         return "null";
     }

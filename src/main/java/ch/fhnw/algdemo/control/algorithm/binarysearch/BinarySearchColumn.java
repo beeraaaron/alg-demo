@@ -13,19 +13,19 @@ import java.util.List;
 
 public class BinarySearchColumn extends VBox {
     @FXML
-    private TextField valueField;
+    TextField valueField;
     @FXML
-    private Label indexLabel;
+    Label indexLabel;
     @FXML
-    private Label variableLabelOne;
+    Label variableLabelOne;
     @FXML
-    private Label variableLabelTwo;
+    Label variableLabelTwo;
     @FXML
-    private Label variableLabelThree;
+    Label variableLabelThree;
 
-    private Integer value;
+    private final Integer value;
     @Getter
-    private Integer index;
+    private final Integer index;
     private List<String> variables;
 
     public BinarySearchColumn(Integer value, Integer index) {
