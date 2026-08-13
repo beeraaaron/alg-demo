@@ -459,15 +459,17 @@
 - [x] Manuelle Test Szenarien Liste erstellen
 - [x] Package Diagramm - oder Tabelle. Was ist für was zuständig.
 - [x] Wieder auf Wolfgang zugehen im August.
+- [x] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation?
+- [x] Bottom-Up Merge Sort Mockups erstellen, um herauszufinden ob besser als eigener Algorithmus behandeln oder als Variante.
+  - Als eigener Algorithmus macht mehr Sinn. -> Applikation umsetzen, so dass es einfach erweiterbar ist.
+- [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
+- [ ] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
 - [ ] Refactor Applikation
   - [ ] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
   - [ ] SOLID Principles: Wo werden diese violated?
     - [x] Models haben viele Variablen mit Sichtbarkeit public -> zu private ändern und benötigte Accessors implementieren
     - [ ] Interface AlgorithmController hat zu viele Responsibilities -> in kleinere Interfaces mit einzelnen Responsibilities schneiden
-    - [ ] 
-- [ ] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation?
-- [ ] Das Bearbeiten des Arrays wird validiert.
-- [ ] Die Arraygrösse kann verändert werden.
+- [ ] 
 
 - [ ] Was will ich nun machen mit welcher Priorität?
   - Applikation refactoren, so dass sie optimal bereit ist um den neuen Algorithmus MergeSort zu implementieren.
@@ -490,8 +492,9 @@
     und schauen was geschieht bei jedem Schritt. DIe History soll auch mit integriert werden, um bei den verschiedenen Schritten
     zurückspulen zu können.
 
+## Feedback HS25
 
-## Feedback Learnshop #1
+### Feedback Learnshop #1
   - HauptPart des Algorithmus noch grösser machen.
   - Es ist nicht wirklich klar was für Commands eingesetzt werden können.
     Eine weitere Hilfe wäre toll!
@@ -509,10 +512,26 @@
     Zahl gefunden wurde.
   - Es kann ausgewählt werden ob i &/ j inklusiv/exklusiv des momentanen Indexes sind.
   - Mehr Gameification: Es soll mehr Spass machen. User soll mehr zum Handeln motiviert sein.
+
+### Feedback Wolfgang
+
 <details>
   <summary>Feedback Wolfgang</summary>
   <img src="images/feedback.png" alt="Feedback"/>
 </details>
+
+## Feedback FS26
+
+### Feedback Wolfgang Sync Nr.1
+- Binary Search:
+  - Der Button für Variable-Options zu bestimmen, wurde als eine andere Funktion interpretiert vom Aussehen & Platzierung her.
+    Vielleicht könnte man es klarer Darstellen mit entsprechenden Bildern, welche Inklusiv & Exklusiv darstellen.
+- Merge Sort:
+  - Die Zahlen in den gesplitteten Blöcken, welche bereits verglichen wurden, leeren. Damit nicht rote & schwarze Zahlen im selben Block stehen und es die Wahrheit im Rechenspeicher besser widerspiegelt. 
+  - Evt. macht es Sinn die Zahlen im Ursprungsarray für die Visualisierung anders zu behandeln. Dass man bspw. immer den aktuellen Stand des Ursprungsarray sieht.
+  - Da Bottom-Up Merge Sort recht stark in der Visualisierung vom Top-Down Merge Sort abweicht, sollte man ihn besser als eignen Algorithmus behandeln und nicht mit einem Varianten-Drop-Down wechseln können.
+  - In der Variable-View den Rekursionsstack der genutzen Variablen ersichtlich machen. Z.B. durch Einrücken oder faltbarkeit.
+- Feedbackmarkt: Mockups mit bestimmten Fragestellungen mitnehmen und so Feedback einholen.
 
 ## Fragen & Antworten
 ### Was kann der Benutzer machen, was falsch ist? Wie reagiert das System?
