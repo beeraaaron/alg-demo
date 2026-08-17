@@ -531,8 +531,12 @@
 
 ### Feedback Learnshop
 - Welche Elemente des MergeSorts sind nicht klar oder vielleicht auch verwirrend?
+  - evt. History benennen
 - Was müsste anders sein, dass dir diese Applikation hilft, den MergeSort optimal zu verstehen?
+  - Die Variablen, welche auf Indexe der Arrays zeigen, sollten auch visualisiert werden. x2
 - Wie gross ist der Mehrwert der angezeigten Variablen (da der Applikationscode des Algorithmus nicht ersichtlich ist)?
+  - Hilft etwas, vor allem wenn die Indexe auch unter den Arrays visualisiert werden.
+    - -> evt. nur die Variablen anzeigen, welche auch visualisiert werden.
 
 
 ## Fragen & Antworten
