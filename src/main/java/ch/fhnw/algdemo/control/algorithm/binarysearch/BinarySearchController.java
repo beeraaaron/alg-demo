@@ -1,5 +1,6 @@
 package ch.fhnw.algdemo.control.algorithm.binarysearch;
 
+import ch.fhnw.algdemo.control.MainController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import ch.fhnw.algdemo.model.command.Command;
@@ -8,9 +9,12 @@ import ch.fhnw.algdemo.util.BinarySearchCommandParser;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import lombok.SneakyThrows;
 
@@ -19,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BinarySearchController extends HBox implements AlgorithmController {
+public class BinarySearchController extends GridPane implements AlgorithmController {
     private final List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
     private final List<AlgorithmVariable<?>> variables =  List.of(
             new IntegerAlgorithmVariable("i",  null),
@@ -39,12 +43,19 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     private int selectedCommandId = 1;
     private int highestCommandId = 1;
 
+    private final MainController mainController;
+
     @FXML
     HBox columnBox;
     @FXML
     ChoiceBox<String> optionsChoiceBox;
+    @FXML
+    ComboBox<String> commandInput;
+    @FXML
+    Button sendCommandButton;
 
-    public BinarySearchController() {
+    public BinarySearchController(MainController mainController) {
+        this.mainController = mainController;
         loadFxController();
         configureChoiceBox();
         columnBox.prefWidthProperty().bind(this.widthProperty());
@@ -52,6 +63,8 @@ public class BinarySearchController extends HBox implements AlgorithmController 
 
     @FXML
     public void initialize() {
+        configureSendCommandButton();
+        configureCommandInput();
         resetAlgorithmState();
     }
 
@@ -71,46 +84,8 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     }
 
     @Override
-    public List<String> getCommandSuggestions() {
-        var suggestions = new ArrayList<String>();
-        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) {
-            suggestions.add(variables.getFirst().getName() + " = 0");
-        } else {
-            suggestions.add(variables.getFirst().getName() + " = -1");
-        }
-
-        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) {
-            suggestions.add(variables.get(1).getName() + " = " + (data.size() - 1));
-        } else {
-            suggestions.add(variables.get(1).getName() + " = " + data.size());
-        }
-        suggestions.add(variables.get(2).getName() + " = (" + variables.getFirst().getName() + " + " + variables.get(1).getName() + ") / 2");
-        return suggestions;
-    }
-
-    @Override
-    public void applyCommand(String commandExpression) {
-        deleteUnsuccessfulCommands();
-        try {
-            updateStateToSelectedCommand();
-            var commandParser = new BinarySearchCommandParser(variables, data);
-            var command = commandParser.createCommand(commandExpression);
-            if (selectedCommandId < highestCommandId) {
-                commandHistory.removeIf(c -> selectedCommandId < c.getId());
-                highestCommandId = selectedCommandId + 1;
-            } else {
-                highestCommandId++;
-            }
-            command.setId(highestCommandId);
-            commandHistory.add(command);
-            updateAlgorithmState(highestCommandId);
-        } catch (IllegalArgumentException e) {
-            if (selectedCommandId < highestCommandId) {
-                commandHistory.removeIf(c -> selectedCommandId < c.getId());
-                highestCommandId = selectedCommandId;
-            }
-            commandHistory.add(new Command(commandExpression, e.getMessage(), false));
-        }
+    public void onCommandCopied(String commandExpression) {
+        commandInput.getEditor().setText(commandExpression);
     }
 
     @Override
@@ -146,6 +121,83 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     @Override
     public int getHighestCommandId() {
         return highestCommandId;
+    }
+
+    private void configureSendCommandButton() {
+        sendCommandButton.setOnMouseClicked(event -> sendCommand(null));
+        sendCommandButton.setOnKeyPressed(this::sendCommand);
+    }
+
+    private void configureCommandInput() {
+        commandInput.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateComboBox);
+        commandInput.setOnShowing(event -> {
+            commandInput.getItems().clear();
+            commandInput.getItems().addAll(getCommandSuggestions());
+        });
+    }
+
+    private void navigateComboBox(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (!commandInput.isShowing()) {
+                commandInput.show();
+            } else {
+                commandInput.hide();
+            }
+            event.consume();
+        } else if (event.getCode() == KeyCode.ESCAPE && commandInput.isShowing()) {
+            commandInput.hide();
+            event.consume();
+        }
+    }
+
+    private void sendCommand(KeyEvent event) {
+        if (event == null || event.getCode() == KeyCode.ENTER) {
+            String commandExpression = commandInput.getEditor().getText();
+            applyCommand(commandExpression);
+            mainController.applyCommand();
+            commandInput.getEditor().clear();
+        }
+    }
+
+    private List<String> getCommandSuggestions() {
+        var suggestions = new ArrayList<String>();
+        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) {
+            suggestions.add(variables.getFirst().getName() + " = 0");
+        } else {
+            suggestions.add(variables.getFirst().getName() + " = -1");
+        }
+
+        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) {
+            suggestions.add(variables.get(1).getName() + " = " + (data.size() - 1));
+        } else {
+            suggestions.add(variables.get(1).getName() + " = " + data.size());
+        }
+        suggestions.add(variables.get(2).getName() + " = (" + variables.getFirst().getName() + " + " + variables.get(1).getName() + ") / 2");
+        return suggestions;
+    }
+
+    private void applyCommand(String commandExpression) {
+        deleteUnsuccessfulCommands();
+        try {
+            updateStateToSelectedCommand();
+            var commandParser = new BinarySearchCommandParser(variables, data);
+            var command = commandParser.createCommand(commandExpression);
+            if (selectedCommandId < highestCommandId) {
+                commandHistory.removeIf(c -> selectedCommandId < c.getId());
+                highestCommandId = selectedCommandId + 1;
+            } else {
+                highestCommandId++;
+            }
+            command.setId(highestCommandId);
+            commandHistory.add(command);
+            updateAlgorithmState(highestCommandId);
+        } catch (IllegalArgumentException e) {
+            if (selectedCommandId < highestCommandId) {
+                commandHistory.removeIf(c -> selectedCommandId < c.getId());
+                highestCommandId = selectedCommandId;
+            }
+            commandHistory.add(new Command(commandExpression, e.getMessage(), false));
+        }
     }
 
     private void defineColumnColor(BinarySearchColumn column) {

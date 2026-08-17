@@ -53,17 +53,6 @@ public class MergeSortController extends Pane implements AlgorithmController {
     }
 
     @Override
-    public List<String> getCommandSuggestions() {
-        return variables.stream()
-                .map(v -> v.getName() + " = 0")
-                .toList();
-    }
-
-    @Override
-    public void applyCommand(String commandExpression) {
-    }
-
-    @Override
     public void updateAlgorithmState(int selectedCommandId) {
     }
 
@@ -71,4 +60,7 @@ public class MergeSortController extends Pane implements AlgorithmController {
     public int getHighestCommandId() {
         return 0;
     }
+
+    @Override
+    public void onCommandCopied(String commandExpression) {}
 }

@@ -19,6 +19,14 @@
     -fx-font-size: 16;
 }
 
+#commandInput {
+    -fx-font-size: 18;
+}
+
+#sendCommandButton {
+    -fx-font-size: 18;
+}
+
 .disabled-value-field {
     -fx-text-fill: transparent;
     -fx-control-inner-background: rgba(84, 84, 84, 0.8);
