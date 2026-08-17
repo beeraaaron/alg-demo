@@ -3,6 +3,7 @@ package ch.fhnw.algdemo.control.algorithm.binarysearch;
 import ch.fhnw.algdemo.control.MainController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 import ch.fhnw.algdemo.model.command.Command;
 import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
 import ch.fhnw.algdemo.util.BinarySearchCommandParser;
@@ -196,7 +197,7 @@ public class BinarySearchController extends GridPane implements AlgorithmControl
                 commandHistory.removeIf(c -> selectedCommandId < c.getId());
                 highestCommandId = selectedCommandId;
             }
-            commandHistory.add(new Command(commandExpression, e.getMessage(), false));
+            commandHistory.add(new BinarySearchCommand(commandExpression, e.getMessage(), false));
         }
     }
 
@@ -222,14 +223,14 @@ public class BinarySearchController extends GridPane implements AlgorithmControl
     }
 
     private void deleteUnsuccessfulCommands() {
-        commandHistory.removeIf(command -> !command.isSuccess());
+        commandHistory.removeIf(command -> !((BinarySearchCommand) command).isSuccess());
     }
 
     private void updateStateToSelectedCommand() {
         searchedIndexes = new HashSet<>();
         var x = 1;
         while (x < selectedCommandId) {
-            var command =  commandHistory.get(x - 1);
+            var command = (BinarySearchCommand) commandHistory.get(x - 1);
             var variable = variables.stream()
                     .filter(v -> v.getName().equals(command.getVariableName()))
                     .findFirst().orElseThrow();

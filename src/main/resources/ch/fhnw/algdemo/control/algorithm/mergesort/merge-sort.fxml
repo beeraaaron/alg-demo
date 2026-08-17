@@ -1,5 +1,31 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml">
-    <Label fx:id="label"/>
+<?import javafx.scene.layout.*?>
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="85" />
+        <RowConstraints percentHeight="15" />
+    </rowConstraints>
+    <HBox fx:id="columnBox" alignment="CENTER" GridPane.rowIndex="0"/>
+    <GridPane GridPane.rowIndex="1">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="65" />
+            <ColumnConstraints percentWidth="35" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="100" />
+        </rowConstraints>
+        <HBox GridPane.columnIndex="0" alignment="CENTER">
+            <Button fx:id="stopButton" text="Stop" minWidth="100" />
+            <Button fx:id="startButton" text="Start" minWidth="100" />
+        </HBox>
+        <HBox fx:id="arraySizeBox" GridPane.columnIndex="1" alignment="CENTER">
+            <Label fx:id="arraySizeLabel" text="Array Size"/>
+            <ChoiceBox fx:id="arraySizeChoiceBox" prefHeight="30" prefWidth="150"/>
+        </HBox>
+    </GridPane>
 </fx:root>

@@ -461,7 +461,7 @@
 - [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
 - [x] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
 - [ ] Refactor Applikation
-  - [ ] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
+  - [x] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
   - [ ] SOLID Principles: Wo werden diese violated?
     - [x] Models haben viele Variablen mit Sichtbarkeit public -> zu private ändern und benötigte Accessors implementieren
     - [ ] Interface AlgorithmController hat zu viele Responsibilities -> in kleinere Interfaces mit einzelnen Responsibilities schneiden
@@ -538,6 +538,10 @@
   - Hilft etwas, vor allem wenn die Indexe auch unter den Arrays visualisiert werden.
     - -> evt. nur die Variablen anzeigen, welche auch visualisiert werden.
 
+### Feedback Wolfgang Sync Nr.1
+- Im MergeSort soll das Ursprungsarray auf der obersten Ebene immer den aktuellen Stand des Arrays widerspiegeln (so wie dies im Speicher des Algos in echt auch der Fall ist).
+- Arrays in der Visualisierung benennen mit a & b.
+- Historyeinträge mit Referenzen auf die Arrays a & b benennen (so wie dies im Algo in echt auch der Fall ist).
 
 ## Fragen & Antworten
 ### Was kann der Benutzer machen, was falsch ist? Wie reagiert das System?

@@ -1,0 +1,13 @@
+#arraySizeLabel {
+    -fx-padding: 0 10px;
+    -fx-font-size: 16;
+}
+
+#arraySizeChoiceBox {
+    -fx-font-size: 16;
+}
+
+#startButton, #stopButton {
+    -fx-font-size: 18;
+}
+

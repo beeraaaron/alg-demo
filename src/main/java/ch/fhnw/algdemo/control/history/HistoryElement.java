@@ -1,7 +1,7 @@
 package ch.fhnw.algdemo.control.history;
 
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 import ch.fhnw.algdemo.model.command.Command;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -40,9 +40,15 @@ public class HistoryElement extends GridPane {
     @FXML
     public void initialize() {
         this.commandLabel.setText(">> " + command.getCommand());
-        this.resultLabel.setText(command.getResult());
-        if (!command.isSuccess()) {
-            configureError();
+        if (command instanceof BinarySearchCommand bsc) {
+            if (!bsc.isSuccess()) {
+                configureError();
+            } else {
+                configureCopyButton();
+                configureChangeState();
+                historyElement.getStyleClass().add("clickable-history-element");
+            }
+            this.resultLabel.setText(bsc.getResult());
         } else {
             configureCopyButton();
             configureChangeState();

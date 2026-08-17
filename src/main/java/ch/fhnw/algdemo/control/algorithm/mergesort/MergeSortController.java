@@ -6,16 +6,12 @@ import ch.fhnw.algdemo.model.command.Command;
 import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.GridPane;
 import lombok.SneakyThrows;
 
 import java.util.List;
 
-public class MergeSortController extends Pane implements AlgorithmController {
-    @FXML
-    Label label;
-
+public class MergeSortController extends GridPane implements AlgorithmController {
     private final List<AlgorithmVariable<?>> variables = List.of(
             new IntegerAlgorithmVariable("someName", null)
     );
@@ -26,7 +22,7 @@ public class MergeSortController extends Pane implements AlgorithmController {
 
     @FXML
     public void initialize() {
-        this.label.setText(getName());
+
     }
 
     @SneakyThrows

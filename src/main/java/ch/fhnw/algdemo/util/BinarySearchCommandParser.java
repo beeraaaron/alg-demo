@@ -1,7 +1,7 @@
 package ch.fhnw.algdemo.util;
 
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
-import ch.fhnw.algdemo.model.command.Command;
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ public class BinarySearchCommandParser extends CommandParser{
         this.data = data;
     }
 
-    public Command createCommand(String expression) throws IllegalArgumentException {
+    public BinarySearchCommand createCommand(String expression) throws IllegalArgumentException {
         var command = super.createCommand(expression);
         parseVariableAssignment(command);
         return command;
     }
 
 
-    private void parseVariableAssignment(Command command) throws IllegalArgumentException {
+    private void parseVariableAssignment(BinarySearchCommand command) throws IllegalArgumentException {
         int value = Integer.parseInt(command.getValue());
         if (value < -1 || value > data.size()) {
             throw new IllegalArgumentException("Assignment seems illogical. Value " + value + " should be between -1 and " +  data.size());

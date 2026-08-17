@@ -68,7 +68,7 @@ public class MainController {
         algorithmChoiceBox.setItems(FXCollections.observableArrayList(algorithms));
         algorithmChoiceBox.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateChoiceBox);
         algorithmChoiceBox.prefWidthProperty().bind(leftBox.widthProperty());
-        algorithmChoiceBox.getSelectionModel().select(0);
+        algorithmChoiceBox.getSelectionModel().select(1);
     }
 
     private void navigateChoiceBox(KeyEvent event) {

@@ -1,7 +1,7 @@
 package ch.fhnw.algdemo.util;
 
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
-import ch.fhnw.algdemo.model.command.Command;
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 import lombok.Getter;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class CommandParser {
         this.variableNames = variables.stream().map(AlgorithmVariable::getName).toList();
     }
 
-    public Command createCommand(String expression) throws IllegalArgumentException {
+    public BinarySearchCommand createCommand(String expression) throws IllegalArgumentException {
         input = expression.replaceAll("\\s+", "");
         pos = 0;
         var variable = parseVariable();
@@ -35,7 +35,7 @@ public class CommandParser {
                     "whole numbers, '(', ')' and operators: '+', '-', '/', '*'");
         }
 
-        return new Command(expression, variable.getName() + " = " + value, variable.getName(), String.valueOf(value), true);
+        return new BinarySearchCommand(expression, variable.getName() + " = " + value, variable.getName(), String.valueOf(value), true);
     }
 
     public AlgorithmVariable<?> parseVariable() throws IllegalArgumentException {
