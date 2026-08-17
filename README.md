@@ -459,7 +459,7 @@
 - [x] Bottom-Up Merge Sort Mockups erstellen, um herauszufinden ob besser als eigener Algorithmus behandeln oder als Variante.
   - Als eigener Algorithmus macht mehr Sinn. -> Applikation umsetzen, so dass es einfach erweiterbar ist.
 - [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
-- [ ] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
+- [x] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
 - [ ] Refactor Applikation
   - [ ] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
   - [ ] SOLID Principles: Wo werden diese violated?
@@ -490,7 +490,7 @@
 
 ## Feedback HS25
 
-### Feedback Learnshop #1
+### Feedback Learnshop
   - HauptPart des Algorithmus noch grösser machen.
   - Es ist nicht wirklich klar was für Commands eingesetzt werden können.
     Eine weitere Hilfe wäre toll!
@@ -528,6 +528,12 @@
   - Da Bottom-Up Merge Sort recht stark in der Visualisierung vom Top-Down Merge Sort abweicht, sollte man ihn besser als eignen Algorithmus behandeln und nicht mit einem Varianten-Drop-Down wechseln können.
   - In der Variable-View den Rekursionsstack der genutzen Variablen ersichtlich machen. Z.B. durch Einrücken oder faltbarkeit.
 - Feedbackmarkt: Mockups mit bestimmten Fragestellungen mitnehmen und so Feedback einholen.
+
+### Feedback Learnshop
+- Welche Elemente des MergeSorts sind nicht klar oder vielleicht auch verwirrend?
+- Was müsste anders sein, dass dir diese Applikation hilft, den MergeSort optimal zu verstehen?
+- Wie gross ist der Mehrwert der angezeigten Variablen (da der Applikationscode des Algorithmus nicht ersichtlich ist)?
+
 
 ## Fragen & Antworten
 ### Was kann der Benutzer machen, was falsch ist? Wie reagiert das System?
