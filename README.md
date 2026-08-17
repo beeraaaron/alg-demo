@@ -36,10 +36,6 @@
   <img src="images/merge-sort/merge-sort-top-down-15.png" alt="MergeSort 15"/>
   <img src="images/merge-sort/merge-sort-top-down-16.png" alt="MergeSort 16"/>
   <img src="images/merge-sort/merge-sort-top-down-17.png" alt="MergeSort 17"/>
-  <img src="images/merge-sort/merge-sort-top-down-18.png" alt="MergeSort 18"/>
-  <img src="images/merge-sort/merge-sort-top-down-19.png" alt="MergeSort 19"/>
-  <img src="images/merge-sort/merge-sort-top-down-20.png" alt="MergeSort 20"/>
-  <img src="images/merge-sort/merge-sort-top-down-21.png" alt="MergeSort 21"/>
 </details>
 
 ### Binary Search
