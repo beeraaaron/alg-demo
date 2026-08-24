@@ -460,6 +460,19 @@
   - Als eigener Algorithmus macht mehr Sinn. -> Applikation umsetzen, so dass es einfach erweiterbar ist.
 - [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
 - [x] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
+- [ ] MergeSort Veranschaulichung mit CommandHistory umsetzen
+  - [ ] CommandHistory visualisieren
+    - [ ] Add End-State
+    - [ ] Fix SelectedCommandId Highlighting
+    - [ ] Hide Copy Button for MergeSort 
+  - [ ] MergeSort mit schrittweiser Veranschaulichung implementieren
+    - [ ] fix Behaviour of Buttons: Stop, Start, Previous & Next
+    - [ ] Only Show Cells that are in Tree of Action
+    - [ ] Add Yellow Highlights in Cells that are being compared.
+- [ ] Zahlen im initialen Array veränderbar machen. Alle anderen Arrays unbearbeitbar machen.  
+- [ ] Trennlinie zwischen dem obersten Array und den anderen implementieren
+- [ ] Index Variablen unter den Arrays veranschaulichen
+- [ ] Variable-View für MergeSort umsetzen
 - [ ] Refactor Applikation
   - [x] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
   - [ ] SOLID Principles: Wo werden diese violated?

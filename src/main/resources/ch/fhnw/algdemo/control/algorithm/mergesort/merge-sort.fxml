@@ -7,10 +7,14 @@
         <ColumnConstraints percentWidth="100" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints percentHeight="85" />
-        <RowConstraints percentHeight="15" />
+        <RowConstraints percentHeight="90" />
+        <RowConstraints percentHeight="10" />
     </rowConstraints>
-    <HBox fx:id="columnBox" alignment="CENTER" GridPane.rowIndex="0"/>
+    <GridPane fx:id="mergeSortGridPane" GridPane.rowIndex="0" >
+        <columnConstraints>
+            <ColumnConstraints percentWidth="100" />
+        </columnConstraints>
+    </GridPane>
     <GridPane GridPane.rowIndex="1">
         <columnConstraints>
             <ColumnConstraints percentWidth="65" />
@@ -19,9 +23,11 @@
         <rowConstraints>
             <RowConstraints percentHeight="100" />
         </rowConstraints>
-        <HBox GridPane.columnIndex="0" alignment="CENTER">
-            <Button fx:id="stopButton" text="Stop" minWidth="100" />
-            <Button fx:id="startButton" text="Start" minWidth="100" />
+        <HBox GridPane.columnIndex="0" alignment="CENTER" spacing="10">
+            <Button fx:id="stopButton" text="Stop" minWidth="100"/>
+            <Button fx:id="startButton" text="Start" minWidth="100"/>
+            <Button fx:id="prevButton" text="Prev" minWidth="100" visible="false" managed="false" />
+            <Button fx:id="nextButton" text="Next" minWidth="100" visible="false" managed="false" />
         </HBox>
         <HBox fx:id="arraySizeBox" GridPane.columnIndex="1" alignment="CENTER">
             <Label fx:id="arraySizeLabel" text="Array Size"/>

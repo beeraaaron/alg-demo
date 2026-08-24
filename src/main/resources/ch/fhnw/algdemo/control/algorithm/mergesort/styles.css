@@ -7,7 +7,15 @@
     -fx-font-size: 16;
 }
 
-#startButton, #stopButton {
+#startButton, #stopButton, #nextButton, #prevButton {
     -fx-font-size: 18;
+    -fx-end-margin: 20;
 }
 
+#valueField {
+    -fx-padding: 0;
+}
+
+.compare-highlight {
+    -fx-control-inner-background: yellow;
+}

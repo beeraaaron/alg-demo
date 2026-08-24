@@ -1,0 +1,6 @@
+<?import javafx.scene.layout.RowConstraints?>
+<fx:root type="javafx.scene.layout.GridPane" fx:id="rootGridPane" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
+    <rowConstraints>
+        <RowConstraints percentHeight="100" />
+    </rowConstraints>
+</fx:root>

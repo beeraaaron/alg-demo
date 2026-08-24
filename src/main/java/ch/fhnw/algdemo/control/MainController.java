@@ -30,7 +30,7 @@ public class MainController {
     HistoryController historyController;
 
     private final List<AlgorithmController> algorithms = List.of(
-            new BinarySearchController(this), new MergeSortController());
+            new BinarySearchController(this), new MergeSortController(this));
     private AlgorithmController selectedAlgorithm;
 
     @FXML
