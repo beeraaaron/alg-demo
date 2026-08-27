@@ -16,6 +16,6 @@
     -fx-padding: 0;
 }
 
-.compare-highlight {
+.cell-highlight {
     -fx-control-inner-background: yellow;
 }

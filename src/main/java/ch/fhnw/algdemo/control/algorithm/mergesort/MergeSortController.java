@@ -9,6 +9,7 @@ import ch.fhnw.algdemo.model.command.MergeSortCommand;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,9 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MergeSortController extends GridPane implements AlgorithmController {
+    private MergeSortTreeState treeState;
+
     private final List<Command> commandHistory = new ArrayList<>();
     private final ObservableList<MergeSortCommand> fullCommandHistory = FXCollections.observableArrayList();
-    private final SimpleIntegerProperty selectedCommandId = new SimpleIntegerProperty(0);
+    private final SimpleIntegerProperty selectedCommandId = new SimpleIntegerProperty(1);
+    private final SimpleObjectProperty<MergeSortCommand> selectedCommand = new SimpleObjectProperty<>();
+    private MergeSortCommand initialCommand;
     private int highestCommandId = 0;
 
     private final List<AlgorithmVariable<?>> variables = List.of(
@@ -38,7 +43,6 @@ public class MergeSortController extends GridPane implements AlgorithmController
     private Integer selectedArraySize = 16;
 
     private final List<Integer> initialMergeSortArray = new ArrayList<>(List.of(16, 15, 14, 13, 12 ,11 ,10 ,9, 8, 7, 6, 5, 4, 3, 2, 1));
-    private final List<SimpleIntegerProperty> updatedMergeSortArray = new ArrayList<>();
 
     private final SimpleBooleanProperty stopClicked = new SimpleBooleanProperty(true);
 
@@ -66,17 +70,18 @@ public class MergeSortController extends GridPane implements AlgorithmController
     public void initialize() {
         configureArraySizeChoiceBox();
         configureNavigationButtons();
-        initializeMergeSortArray();
         arraySizeChoiceBox.getSelectionModel().select(4);
     }
 
     @Override
     public void updateAlgorithmState(int selectedCommandId) {
         if (selectedCommandId == 0) {
-            updateBindings(initialMergeSortArray.subList(0, selectedArraySize));
+            this.selectedCommand.set(initialCommand);
         } else {
             var command = commandHistory.get(selectedCommandId - 1);
-            if (command instanceof MergeSortCommand msc) updateBindings(msc.getSnapshot());
+            if (command instanceof MergeSortCommand msc) {
+                selectedCommand.set(msc);
+            }
         }
         this.selectedCommandId.set(selectedCommandId);
     }
@@ -108,26 +113,27 @@ public class MergeSortController extends GridPane implements AlgorithmController
 
         for (int i = 0; i < mergeSortDepth; i++) {
             var rc = new RowConstraints();
-            rc.setPercentHeight(100.0/mergeSortDepth);
+            rc.setPercentHeight(100.0 / mergeSortDepth);
             mergeSortGridPane.getRowConstraints().add(rc);
-            var row = new MergeSortRow(updatedMergeSortArray, i, mergeSortDepth);
+
+            var row = new MergeSortRow(selectedCommand, selectedArraySize, i, mergeSortDepth);
             mergeSortGridPane.add(row, 0, i);
         }
     }
 
     private void changeArraySize(String newValue) {
         var newArraySize = Integer.parseInt(newValue);
-        changeArraySizes(newArraySize);
+        /*changeArraySizes(newArraySize);*/
         selectedArraySize = newArraySize;
 
         stopClicked.set(true);
-        updateAlgorithmState(0);
         generateHistory();
+        updateAlgorithmState(0);
         initializeMergeSort();
         mainController.applyCommand();
     }
 
-    private void changeArraySizes(int newArraySize) {
+/*    private void changeArraySizes(int newArraySize) {
         if (selectedArraySize != newArraySize) {
             if (selectedArraySize < newArraySize) {
                 for (int i = 0; i < newArraySize - selectedArraySize; i++) {
@@ -140,12 +146,70 @@ public class MergeSortController extends GridPane implements AlgorithmController
                 }
             }
         }
+    }*/
+
+    private void generateHistory() {
+        fullCommandHistory.clear();
+        commandHistory.clear();
+
+        var a = new ArrayList<>(initialMergeSortArray.subList(0, selectedArraySize));
+        treeState = new MergeSortTreeState(calculateMergeSortDepth(), a);
+
+        highestCommandId = 0;
+        selectedCommandId.set(0);
+
+        initialCommand = new MergeSortCommand("Initial State", selectedCommandId.getValue(), treeState.getNumbers(),
+                treeState.getVisibilities(), treeState.getHighlights());
+
+        sort(a, 0, selectedArraySize, 0);
     }
 
-    private void updateBindings(List<Integer> numbers) {
-        for (int i = 0; i < numbers.size(); i++) {
-            updatedMergeSortArray.get(i).set(numbers.get(i));
+    private void sort(List<Integer> a, int beg, int end, int row) {
+        treeState.touch(row, beg, end);
+        recordSnapshot("sort(a, " + beg + ", " + end + ")");
+
+        if (end - beg > 1) {
+            int m = (beg + end) / 2;
+            sort(a, beg, m, row + 1);
+            sort(a, m, end, row + 1);
+            merge(a, beg, m, end, row);
         }
+    }
+
+    private void merge(List<Integer> a, int beg, int m, int end, int row) {
+        int i = 0, j = beg, k = m;
+        var b = new int[end - beg];
+        int childRow = row + 1;
+
+        while (i < end - beg) {
+            if (k == end || (j < m && compare(a, j, k, childRow))) {
+                b[i++] = a.get(j++);
+            } else {
+                b[i++] = a.get(k++);
+            }
+        }
+
+        i = 0;
+        for (int y = beg; y < end; y++) a.set(y, b[i++]);
+
+
+        treeState.completeMerge(row, beg, end, a);
+        recordSnapshot("merge(a, " + beg + ", " + m + ", " + end + ")");
+    }
+
+    private boolean compare(List<Integer> a, int j, int k, int childRow) {
+        treeState.clearHighlights(childRow);
+        treeState.highlight[childRow][j] = true;
+        treeState.highlight[childRow][k] = true;
+        recordSnapshot("a[" + j + "] < a[" + k + "]");
+        return a.get(j) < a.get(k);
+    }
+
+    private void recordSnapshot(String description) {
+        selectedCommandId.set(selectedCommandId.getValue() + 1);
+        var cmd = new MergeSortCommand(description, selectedCommandId.getValue(), treeState.getNumbers(),
+                treeState.getVisibilities(), treeState.getHighlights());
+        fullCommandHistory.add(cmd);
     }
 
     private int calculateMergeSortDepth() {
@@ -155,63 +219,6 @@ public class MergeSortController extends GridPane implements AlgorithmController
 
     private boolean isPowerOfTwo(int n) {
         return n > 0 && (n & (n - 1)) == 0;
-    }
-
-    private void generateHistory() {
-        fullCommandHistory.clear();
-        commandHistory.clear();
-
-        var a = new ArrayList<>(initialMergeSortArray.subList(0, selectedArraySize));
-        sort(a, 0, selectedArraySize);
-
-        highestCommandId = 0;
-        selectedCommandId.set(0);
-    }
-
-    private void sort(List<Integer> a, int beg, int end) {
-        if (end - beg > 1) {
-            int m = (beg + end) / 2;
-            recordSnapshot(a, "sort(a, " + beg + ", " + end + ")");
-            sort(a, beg, m);
-            sort(a, m, end);
-            merge(a, beg, m, end);
-        }
-    }
-
-    private void merge(List<Integer> a, int beg, int m, int end) {
-        int i = 0, j = beg, k = m;
-        var b = new int[end - beg];
-
-        while (i < end - beg) {
-            if (k == end || (j < m && compare(a, j, k))) {
-                b[i] = a.get(j);
-                recordSnapshot(a, "b[" + i + "] = a[" + j + "]");
-                j++;
-            } else {
-                b[i] = a.get(k);
-                recordSnapshot(a, "b[" + i + "] = a[" + k + "]");
-                k++;
-            }
-            i++;
-        }
-
-        i = 0;
-        for (int y = beg; y < end; y++) {
-            a.set(y, b[i]);
-            recordSnapshot(a, "a[" + y + "] = b[" + i + "]");
-            i++;
-        }
-    }
-
-    private boolean compare(List<Integer> a, int j, int k) {
-        recordSnapshot(a, "a[" + j + "] < a[" + k + "]");
-        return a.get(j) < a.get(k);
-    }
-
-    private void recordSnapshot(List<Integer> a, String description) {
-        selectedCommandId.set(selectedCommandId.getValue() + 1);
-        var cmd = new MergeSortCommand(description, selectedCommandId.getValue(), new ArrayList<>(a));
-        fullCommandHistory.add(cmd);
     }
 
     private void configureNavigationButtons() {
@@ -292,12 +299,6 @@ public class MergeSortController extends GridPane implements AlgorithmController
         } else if (event.getCode() == KeyCode.ESCAPE && arraySizeChoiceBox.isShowing()) {
             arraySizeChoiceBox.hide();
             event.consume();
-        }
-    }
-
-    private void initializeMergeSortArray() {
-        for (Integer number : initialMergeSortArray) {
-            updatedMergeSortArray.add(new SimpleIntegerProperty(number));
         }
     }
 

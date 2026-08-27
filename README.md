@@ -467,9 +467,10 @@
 - - [ ] Hide Copy Button for MergeSort
 - [ ] JavaFX: Properties mit UIElementen binden
   - [x] bind Visibility of ActionButtons to Properties
-  - [ ] Änderungen der Zahlen im Array nach Mockup umsetzen
-  - [ ] Nur Zahlen anzeigen, welche im Tree of Action sind, wie im Mockup.
-  - [ ] Add Yellow Highlights in Cells that are being compared.
+  - [x] Nur Zahlen anzeigen, welche im Tree of Action sind, wie im Mockup.
+  - [x] Add Yellow Highlights in Cells that are being compared.
+  - [x] Änderungen der Zahlen im Array nach Mockup umsetzen
+  - [ ] One für One nach oben schreiben visualisieren(dafür benötigt es mehr states). Schreiben mit grüner HG Farbe visualisieren.
 - [ ] Zahlen im initialen Array veränderbar machen. Alle anderen Arrays unbearbeitbar machen.  
 - [ ] Trennlinie zwischen dem obersten Array und den anderen implementieren
 - [ ] Index Variablen unter den Arrays veranschaulichen

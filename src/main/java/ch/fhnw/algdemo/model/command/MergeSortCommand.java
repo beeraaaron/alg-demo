@@ -4,12 +4,19 @@ import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class MergeSortCommand extends Command {
-    @Getter
-    private final List<Integer> snapshot;
+    private final List<List<Integer>> numbers;
+    private final List<List<Boolean>> visibilities;
+    private final List<List<Boolean>> highlights;
 
-    public MergeSortCommand(String command, int id, List<Integer> snapshot) {
+    public MergeSortCommand(String command, int id,
+                            List<List<Integer>> numbers,
+                            List<List<Boolean>> visibilities,
+                            List<List<Boolean>> highlights) {
         super(command, id);
-        this.snapshot = snapshot;
+        this.numbers = numbers;
+        this.visibilities = visibilities;
+        this.highlights = highlights;
     }
 }

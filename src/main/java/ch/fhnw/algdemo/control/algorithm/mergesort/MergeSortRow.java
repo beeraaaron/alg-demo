@@ -1,6 +1,9 @@
 package ch.fhnw.algdemo.control.algorithm.mergesort;
 
+import ch.fhnw.algdemo.model.command.MergeSortCommand;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.ColumnConstraints;
@@ -11,25 +14,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MergeSortRow extends GridPane {
-    private final List<SimpleIntegerProperty> mergeSortArray;
+    private final SimpleObjectProperty<MergeSortCommand> command;
+    private final int length;
     private final int rowDepth;
     private final int maxDepth;
+
+    private final SimpleIntegerProperty[] numberProperties;
+    private final SimpleBooleanProperty[] visibilityProperties;
+    private final SimpleBooleanProperty[] highlightProperties;
 
     @FXML
     GridPane rootGridPane;
 
-    public MergeSortRow(List<SimpleIntegerProperty> mergeSortArray, int rowDepth, int maxDepth) {
-        this.mergeSortArray = mergeSortArray;
+    public MergeSortRow(SimpleObjectProperty<MergeSortCommand> command, int length, int rowDepth, int maxDepth) {
+        this.command = command;
+        this.length = length;
         this.rowDepth = rowDepth;
         this.maxDepth = maxDepth;
+
+        this.numberProperties = new SimpleIntegerProperty[length];
+        this.visibilityProperties = new SimpleBooleanProperty[length];
+        this.highlightProperties = new SimpleBooleanProperty[length];
+        for (int i = 0; i < length; i++) {
+            numberProperties[i] = new SimpleIntegerProperty();
+            visibilityProperties[i] = new SimpleBooleanProperty();
+            highlightProperties[i] = new SimpleBooleanProperty();
+        }
+
         loadFxController();
         initializeRow();
+
+        this.command.addListener((obs, oldCmd, newCmd) -> applyCommand(newCmd));
+        applyCommand(this.command.getValue());
     }
 
     private void initializeRow() {
-        List<int[]> ranges = splitRanges(0, mergeSortArray.size(), rowDepth);
+        List<int[]> ranges = splitRanges(0, length, rowDepth);
 
-        int columnAmount = mergeSortArray.size() * 3;
+        int columnAmount = length * 3;
         var percentWidth = 100.0 / columnAmount;
         for (int i = 0; i < columnAmount; i++) {
             var cc = new ColumnConstraints();
@@ -44,7 +66,7 @@ public class MergeSortRow extends GridPane {
             int column = 3 * beg + (end - beg);
             for (int j = beg; j < end; j++) {
                 if (visible) {
-                    var col = new MergeSortColumn(mergeSortArray.get(j));
+                    var col = new MergeSortColumn(numberProperties[j], visibilityProperties[j], highlightProperties[j]);
                     rootGridPane.add(col, column, 0);
                 }
                 column++;
@@ -64,6 +86,19 @@ public class MergeSortRow extends GridPane {
         var result = new ArrayList<>(splitRanges(beg, m, depth - 1));
         result.addAll(splitRanges(m, end, depth - 1));
         return result;
+    }
+
+    private void applyCommand(MergeSortCommand cmd) {
+        if (cmd == null) return;
+        var numbers = cmd.getNumbers().get(rowDepth);
+        var visibilities = cmd.getVisibilities().get(rowDepth);
+        var highlights = cmd.getHighlights().get(rowDepth);
+
+        for (int i = 0; i < length; i++) {
+            numberProperties[i].set(numbers.get(i));
+            visibilityProperties[i].set(visibilities.get(i));
+            highlightProperties[i].set(highlights.get(i));
+        }
     }
 
     @SneakyThrows
