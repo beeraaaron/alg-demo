@@ -36,9 +36,9 @@ public class HistoryController extends ScrollPane {
 
     private void changeState(KeyEvent keyEvent) {
         if (keyEvent == null || keyEvent.getCode() == KeyCode.ENTER) {
-            onStateClicked.accept(1);
+            onStateClicked.accept(0);
             historyBox.getChildren().clear();
-            initializeHistory(commandHistory, 1);
+            initializeHistory(commandHistory, 0);
             if (keyEvent != null) {
                 keyEvent.consume();
             }
@@ -49,7 +49,7 @@ public class HistoryController extends ScrollPane {
     public void initializeHistory(List<Command> commandHistory, int selectedCommandId) {
         historyBox.getChildren().clear();
         this.commandHistory = commandHistory;
-        if (commandHistory.isEmpty() || selectedCommandId == 1) {
+        if (commandHistory.isEmpty() || selectedCommandId == 0) {
             initialStateLabel.getStyleClass().add("element-selected");
         } else {
             initialStateLabel.getStyleClass().remove("element-selected");

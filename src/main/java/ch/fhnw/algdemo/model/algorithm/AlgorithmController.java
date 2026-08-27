@@ -9,6 +9,6 @@ public interface AlgorithmController {
     List<AlgorithmVariable<?>> getVariables();
     List<Command> getCommandHistory();
     void onCommandCopied(String commandExpression);
-    void updateAlgorithmState(int selectedCommandId);
-    int getHighestCommandId();
+    void updateAlgorithmState(int commandId);
+    int getSelectedCommandId();
 }

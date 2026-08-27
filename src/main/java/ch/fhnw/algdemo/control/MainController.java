@@ -89,15 +89,14 @@ public class MainController {
         this.selectedAlgorithm = newValue;
         variableController.clear();
         midBox.getChildren().clear();
+        variableController.initializeVariables(selectedAlgorithm.getVariables());
+        historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getSelectedCommandId());
+        // TODO: AlgorithmController -> sollte Pane sein dann kann Property gebindet werden.
         if (newValue instanceof BinarySearchController bsc) {
-            variableController.initializeVariables(bsc.getVariables());
-            historyController.initializeHistory(bsc.getCommandHistory(), bsc.getHighestCommandId());
             midBox.getChildren().addAll(bsc);
             bsc.prefWidthProperty().bind(midBox.widthProperty());
             bsc.prefHeightProperty().bind(midBox.heightProperty());
         } else if (newValue instanceof MergeSortController msc) {
-            variableController.initializeVariables(msc.getVariables());
-            historyController.initializeHistory(msc.getCommandHistory(), msc.getHighestCommandId());
             midBox.getChildren().addAll(msc);
             msc.prefWidthProperty().bind(midBox.widthProperty());
             msc.prefHeightProperty().bind(midBox.heightProperty());
@@ -107,6 +106,6 @@ public class MainController {
     public void applyCommand() {
         variableController.clear();
         variableController.initializeVariables(selectedAlgorithm.getVariables());
-        historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getHighestCommandId());
+        historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getSelectedCommandId());
     }
 }

@@ -460,25 +460,22 @@
   - Als eigener Algorithmus macht mehr Sinn. -> Applikation umsetzen, so dass es einfach erweiterbar ist.
 - [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
 - [x] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
-- [ ] MergeSort Veranschaulichung mit CommandHistory umsetzen
-  - [ ] CommandHistory visualisieren
-    - [ ] Add End-State
-    - [ ] Fix SelectedCommandId Highlighting
-    - [ ] Hide Copy Button for MergeSort 
-  - [ ] MergeSort mit schrittweiser Veranschaulichung implementieren
-    - [ ] fix Behaviour of Buttons: Stop, Start, Previous & Next
-    - [ ] Only Show Cells that are in Tree of Action
-    - [ ] Add Yellow Highlights in Cells that are being compared.
+- [x] Bei ArrayGrössen zwischen 2er Potenzen, die 2er resp. die 3er Gruppen nochmals splitten.
+- [ ] CommandHistory visualisieren
+  - [x] Fix SelectedCommandId Highlighting
+  - [x] fix Behaviour of Buttons: Stop, Start, Previous & Next
+- - [ ] Hide Copy Button for MergeSort
+- [ ] JavaFX: Properties mit UIElementen binden
+  - [x] bind Visibility of ActionButtons to Properties
+  - [ ] Änderungen der Zahlen im Array nach Mockup umsetzen
+  - [ ] Nur Zahlen anzeigen, welche im Tree of Action sind, wie im Mockup.
+  - [ ] Add Yellow Highlights in Cells that are being compared.
 - [ ] Zahlen im initialen Array veränderbar machen. Alle anderen Arrays unbearbeitbar machen.  
 - [ ] Trennlinie zwischen dem obersten Array und den anderen implementieren
 - [ ] Index Variablen unter den Arrays veranschaulichen
 - [ ] Variable-View für MergeSort umsetzen
-- [ ] Refactor Applikation
-  - [x] Commands müssen neu unter dem BinarySearch Algorithmus angesiedelt werden
-  - [ ] SOLID Principles: Wo werden diese violated?
-    - [x] Models haben viele Variablen mit Sichtbarkeit public -> zu private ändern und benötigte Accessors implementieren
-    - [ ] Interface AlgorithmController hat zu viele Responsibilities -> in kleinere Interfaces mit einzelnen Responsibilities schneiden
-- [ ] 
+- [ ] Grösse der Boxen immer gleich gross oder zumindest die Grösse der Box grösser als die Lücken
+- [ ] FontGrösse der Box anpassen -> grösser.
 
 - [ ] Was will ich nun machen mit welcher Priorität?
   - Applikation refactoren, so dass sie optimal bereit ist um den neuen Algorithmus MergeSort zu implementieren.

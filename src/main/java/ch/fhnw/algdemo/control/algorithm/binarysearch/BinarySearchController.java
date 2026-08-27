@@ -120,7 +120,7 @@ public class BinarySearchController extends GridPane implements AlgorithmControl
     }
 
     @Override
-    public int getHighestCommandId() {
+    public int getSelectedCommandId() {
         return highestCommandId;
     }
 
