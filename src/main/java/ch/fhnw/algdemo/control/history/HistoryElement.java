@@ -39,27 +39,26 @@ public class HistoryElement extends GridPane {
 
     @FXML
     public void initialize() {
-        this.commandLabel.setText(">> " + command.getCommand());
+        commandLabel.setText(">> " + command.getCommand());
+        historyElement.getStyleClass().add("clickable-history-element");
+        configureChangeState();
+        configureCopyButton(command);
         if (command instanceof BinarySearchCommand bsc) {
             if (!bsc.isSuccess()) {
                 configureError();
-            } else {
-                configureCopyButton();
-                configureChangeState();
-                historyElement.getStyleClass().add("clickable-history-element");
             }
             this.resultLabel.setText(bsc.getResult());
-        } else {
-            configureCopyButton();
-            configureChangeState();
-            historyElement.getStyleClass().add("clickable-history-element");
         }
         if (isSelected) configureSelected();
     }
 
-    private void configureCopyButton() {
-        copyButton.setOnMouseClicked(event -> copyCommand(null));
-        copyButton.addEventFilter(KeyEvent.KEY_PRESSED, this::copyCommand);
+    private void configureCopyButton(Command command) {
+        copyButton.setManaged(command instanceof BinarySearchCommand);
+        copyButton.setVisible(command instanceof BinarySearchCommand);
+        if (command instanceof BinarySearchCommand) {
+            copyButton.setOnMouseClicked(event -> copyCommand(null));
+            copyButton.addEventFilter(KeyEvent.KEY_PRESSED, this::copyCommand);
+        }
     }
 
     private void configureChangeState() {

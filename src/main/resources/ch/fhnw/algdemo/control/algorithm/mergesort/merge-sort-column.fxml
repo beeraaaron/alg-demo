@@ -5,11 +5,12 @@
         <ColumnConstraints percentWidth="100"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints percentHeight="40" />
+        <RowConstraints percentHeight="5" />
         <RowConstraints percentHeight="45" />
-        <RowConstraints percentHeight="15" />
+        <RowConstraints percentHeight="40" />
+        <RowConstraints percentHeight="10" />
     </rowConstraints>
     <TextField fx:id="valueField" alignment="CENTER" maxWidth="Infinity" maxHeight="Infinity"
-               GridPane.rowIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
+               GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
         <!--<Label fx:id="variableLabel" alignment="CENTER" prefWidth="Infinity" prefHeight="Infinity"  GridPane.rowIndex="1"/>-->
 </fx:root>

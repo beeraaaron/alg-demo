@@ -13,9 +13,24 @@
 }
 
 #valueField {
+    -fx-font-size: 16;
     -fx-padding: 0;
 }
 
-.cell-highlight {
-    -fx-control-inner-background: yellow;
+.border-bottom {
+    -fx-border-color: black;
+    -fx-border-width: 0 0 0.5 0;
+    -fx-border-style: solid;
+}
+
+.text-field:disabled {
+    -fx-opacity: 0.8;
+}
+
+.cell-comparison {
+    -fx-control-inner-background: #ffdf62;
+}
+
+.cell-overwrite {
+    -fx-control-inner-background: #1ec90a;
 }

@@ -11,28 +11,88 @@ import lombok.SneakyThrows;
 public class MergeSortColumn extends GridPane {
     private final SimpleIntegerProperty number;
     private final SimpleBooleanProperty visibility;
-    private final SimpleBooleanProperty highlighted;
+    private final SimpleBooleanProperty comparison;
+    private final SimpleBooleanProperty overwrite;
+    private final SimpleBooleanProperty editable;
 
     @FXML
     TextField valueField;
 
-    public MergeSortColumn(SimpleIntegerProperty number, SimpleBooleanProperty visibility, SimpleBooleanProperty highlighted) {
+    public MergeSortColumn(SimpleIntegerProperty number, SimpleBooleanProperty visibility,
+                           SimpleBooleanProperty comparison, SimpleBooleanProperty overwrite, boolean isEditable) {
         this.number = number;
         this.visibility = visibility;
-        this.highlighted = highlighted;
+        this.comparison = comparison;
+        this.overwrite = overwrite;
+        this.editable = new SimpleBooleanProperty(isEditable);
         loadFxController();
     }
 
     @FXML
     public void initialize() {
-        valueField.textProperty().bind(this.number.asString());
+        configureValueField();
+        configureComparisonHighlighting();
+        configureOverwriteHighlighting();
+    }
+
+    public void enableValueField() {
+        editable.set(true);
+    }
+
+    public void disableValueField() {
+        editable.set(false);
+    }
+
+    private void configureValueField() {
         valueField.visibleProperty().bind(this.visibility);
         valueField.managedProperty().bind(this.visibility);
-        highlighted.addListener((observable, oldValue, newValue) -> {
+        valueField.disableProperty().bind(this.editable.not());
+        if (editable.getValue()) {
+            this.number.addListener((obs, oldVal, newVal) -> {
+                if (!valueField.isFocused()) {
+                    valueField.setText(newVal.toString());
+                }
+            });
+            valueField.setOnAction(e -> commitValue());
+            valueField.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
+                if (!isFocused) {
+                    commitValue();
+                }
+            });
+            valueField.setText(String.valueOf(this.number.get()));
+        } else {
+            valueField.textProperty().bind(this.number.asString());
+        }
+    }
+
+    private void commitValue() {
+        try {
+            int i = Integer.parseInt(valueField.getText());
+            if (i >= 0 && i < 100) {
+                number.set(i);
+            }
+        } catch (NumberFormatException e) {
+            // ignore, fall through to reset
+        }
+        valueField.setText(String.valueOf(number.get()));
+    }
+
+    private void configureComparisonHighlighting() {
+        comparison.addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                valueField.getStyleClass().add("cell-highlight");
+                valueField.getStyleClass().add("cell-comparison");
             } else {
-                valueField.getStyleClass().remove("cell-highlight");
+                valueField.getStyleClass().remove("cell-comparison");
+            }
+        });
+    }
+
+    private void configureOverwriteHighlighting() {
+        overwrite.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                valueField.getStyleClass().add("cell-overwrite");
+            } else {
+                valueField.getStyleClass().remove("cell-overwrite");
             }
         });
     }

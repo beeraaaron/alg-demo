@@ -461,22 +461,22 @@
 - [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
 - [x] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
 - [x] Bei ArrayGrössen zwischen 2er Potenzen, die 2er resp. die 3er Gruppen nochmals splitten.
-- [ ] CommandHistory visualisieren
-  - [x] Fix SelectedCommandId Highlighting
-  - [x] fix Behaviour of Buttons: Stop, Start, Previous & Next
-- - [ ] Hide Copy Button for MergeSort
-- [ ] JavaFX: Properties mit UIElementen binden
+- [x] JavaFX: Properties mit UIElementen binden
   - [x] bind Visibility of ActionButtons to Properties
   - [x] Nur Zahlen anzeigen, welche im Tree of Action sind, wie im Mockup.
   - [x] Add Yellow Highlights in Cells that are being compared.
   - [x] Änderungen der Zahlen im Array nach Mockup umsetzen
-  - [ ] One für One nach oben schreiben visualisieren(dafür benötigt es mehr states). Schreiben mit grüner HG Farbe visualisieren.
-- [ ] Zahlen im initialen Array veränderbar machen. Alle anderen Arrays unbearbeitbar machen.  
-- [ ] Trennlinie zwischen dem obersten Array und den anderen implementieren
+  - [x] One für One nach oben schreiben visualisieren(dafür benötigt es mehr states). Schreiben mit grüner HG Farbe visualisieren.
+- [x] CommandHistory visualisieren
+  - [x] Fix SelectedCommandId Highlighting
+  - [x] fix Behaviour of Buttons: Stop, Start, Previous & Next
+- - [x] Hide Copy Button for MergeSort
+- [x] Zahlen im initialen Array veränderbar machen. Alle anderen Arrays unbearbeitbar machen.  
+- [x] Trennlinie zwischen dem obersten Array und den anderen implementieren
+- [x] FontGrösse der Box anpassen -> grösser.
+- [x] Grösse der Boxen immer gleich gross oder zumindest die Grösse der Box grösser als die Lücken
 - [ ] Index Variablen unter den Arrays veranschaulichen
 - [ ] Variable-View für MergeSort umsetzen
-- [ ] Grösse der Boxen immer gleich gross oder zumindest die Grösse der Box grösser als die Lücken
-- [ ] FontGrösse der Box anpassen -> grösser.
 
 - [ ] Was will ich nun machen mit welcher Priorität?
   - Applikation refactoren, so dass sie optimal bereit ist um den neuen Algorithmus MergeSort zu implementieren.

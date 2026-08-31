@@ -5,51 +5,80 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MergeSortTreeState {
-    final int depth;
-    final int length;
-    final int[][] numbers;
-    final boolean[][] visible;
-    final boolean[][] highlight;
+    private final int depth;
+    private final int[][] numbers;
+    private final boolean[][] visibilities;
+    private final boolean[][] comparisons;
+    private final boolean[][] overwrites;
 
     public MergeSortTreeState(int depth, List<Integer> a) {
+        var length = a.size();
         this.depth = depth;
-        length = a.size();
         numbers = new int[depth][length];
-        visible = new boolean[depth][length];
-        highlight = new boolean[depth][length];
+        visibilities = new boolean[depth][length];
+        comparisons = new boolean[depth][length];
+        overwrites = new boolean[depth][length];
 
         for (int d = 0; d < depth; d++) {
             for (int l = 0; l < length; l++) {
                 numbers[d][l] = a.get(l);
             }
         }
-        Arrays.fill(visible[0], true);
+        Arrays.fill(visibilities[0], true);
     }
 
     public void touch(int row, int beg, int end) {
         for (int i = beg; i < end; i++) {
-            //numbers[row][i] = a.get(i);
-            visible[row][i] = true;
+            visibilities[row][i] = true;
         }
     }
 
-    public void clearHighlights(int row) {
-        Arrays.fill(highlight[row], false);
+    public void compare(int j, int k, int childRow) {
+        clearComparisons(childRow);
+        comparisons[childRow][j] = true;
+        comparisons[childRow][k] = true;
     }
 
-    public void completeMerge(int row, int beg, int end, List<Integer> a) {
-        for (int i = beg; i < end; i++) {
-            numbers[row][i] = a.get(i);
-            visible[row][i] = true;
-            highlight[row][i] = false;
+    public void editTempArray(Integer number, int lower, int upper, int boundary, int i, int row, int childRow) {
+        if (upper == boundary) {
+            clearComparisons(childRow);
+            comparisons[childRow][lower] = true;
+            comparisons[childRow][upper - 1] = false;
+        }
+        overwrites[row][i] = true;
+        numbers[row][i] = number;
+    }
 
-            numbers[0][i] = a.get(i);
+    public void editArray(Integer number, int y) {
+        numbers[0][y] = number;
+        overwrites[0][y] = true;
+    }
+
+    public void completeMerge(int row, int beg, int end) {
+        for (int i = beg; i < end; i++) {
+            visibilities[row][i] = true;
+            comparisons[row][i] = false;
 
             if (row + 1 < depth) {
-                visible[row + 1][i] = false;
-                highlight[row + 1][i] = false;
+                visibilities[row + 1][i] = false;
+                comparisons[row + 1][i] = false;
             }
         }
+    }
+
+    public void hideRow(int row, int beg, int end) {
+        for (int y = beg; y < end; y++) {
+            visibilities[row][y] = false;
+        }
+        clearComparisons(row);
+    }
+
+    public void clearComparisons(int row) {
+        Arrays.fill(comparisons[row], false);
+    }
+
+    public void clearOverwrites(int row) {
+        Arrays.fill(overwrites[row], false);
     }
 
     public List<List<Integer>> getNumbers() {
@@ -58,11 +87,15 @@ public class MergeSortTreeState {
     }
 
     public List<List<Boolean>> getVisibilities() {
-        return deepCopy(visible);
+        return deepCopy(visibilities);
     }
 
-    public List<List<Boolean>> getHighlights() {
-        return deepCopy(highlight);
+    public List<List<Boolean>> getComparisons() {
+        return deepCopy(comparisons);
+    }
+
+    public List<List<Boolean>> getOverwrites() {
+        return deepCopy(overwrites);
     }
 
     private static List<List<Integer>> deepCopy(int[][] sourceArray) {
