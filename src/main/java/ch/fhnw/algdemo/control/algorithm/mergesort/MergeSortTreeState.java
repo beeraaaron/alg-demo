@@ -7,8 +7,9 @@ import java.util.List;
 
 public class MergeSortTreeState {
     private final int depth;
-    private final int[][] numbers;
+    private final Integer[][] numbers;
     private final List<List<String>> indexes;
+    private final List<List<String>> arrayMarkers;
     private final boolean[][] visibilities;
     private final boolean[][] comparisons;
     private final boolean[][] overwrites;
@@ -16,22 +17,27 @@ public class MergeSortTreeState {
     public MergeSortTreeState(int depth, List<Integer> a) {
         var length = a.size();
         this.depth = depth;
-        numbers = new int[depth][length];
+        numbers = new Integer[depth][length];
         indexes = new ArrayList<>();
+        arrayMarkers = new ArrayList<>();
         visibilities = new boolean[depth][length];
         comparisons = new boolean[depth][length];
         overwrites = new boolean[depth][length];
 
         for (int d = 0; d < depth; d++) {
-            int rowSize = length + countRanges(0, length, d);
-            List<String> row = new ArrayList<>(rowSize);
-            for (int l = 0; l < rowSize; l++) {
-                if (l < length) {
-                    numbers[d][l] = a.get(l);
+            int ranges = countRanges(0, length, d);
+            int maxRowSize = length + ranges;
+
+            List<String> indexRow = new ArrayList<>(maxRowSize);
+            for (int i = 0; i < maxRowSize; i++) {
+                if (i < length) {
+                    numbers[d][i] = a.get(i);
                 }
-                row.add("");
+                indexRow.add("");
             }
-            indexes.add(row);
+            indexes.add(indexRow);
+
+            initializeArrayMarkers(ranges);
         }
         Arrays.fill(visibilities[0], true);
     }
@@ -44,15 +50,21 @@ public class MergeSortTreeState {
 
     public void compare(int j, int k, int childRow) {
         clearComparisons(childRow);
+        clearComparisons(0);
         comparisons[childRow][j] = true;
         comparisons[childRow][k] = true;
+        comparisons[0][j] = true;
+        comparisons[0][k] = true;
     }
 
     public void editTempArray(Integer number, int lower, int upper, int boundary, int i, int row, int childRow) {
         if (upper == boundary) {
             clearComparisons(childRow);
+            clearComparisons(0);
             comparisons[childRow][lower] = true;
             comparisons[childRow][upper - 1] = false;
+            comparisons[0][lower] = true;
+            comparisons[0][upper - 1] = false;
         }
         overwrites[row][i] = true;
         numbers[row][i] = number;
@@ -88,12 +100,34 @@ public class MergeSortTreeState {
         indexes.get(row).set(beg + offset, "beg");
         indexes.get(row).set(end + offset, "end");
         indexes.get(row).set(m + offset, "m");
+
+        for (int i = 1; i < arrayMarkers.size(); i++) {
+            Collections.fill(arrayMarkers.get(i), "");
+        }
     }
 
-    public void initializeChildIndexes(int beg, int end, int j, int k, int row, int length) {
-        int offset = computeOffset(length, beg, end, row);
-        indexes.get(row).set(j + offset, "j");
-        indexes.get(row).set(k + offset + 1, "k");
+    public void initializeMerge(int beg, int end, int j, int k, int row, int length) {
+        var childRow = row + 1;
+        int offset = computeOffset(length, beg, end, childRow);
+        indexes.get(childRow).set(j + offset, "j");
+        indexes.get(childRow).set(k + offset + 1, "k");
+
+        if (row != 0) {
+            int index = findRangeIndex(0, length, row, beg);
+            for (int i = 1; i < arrayMarkers.size(); i++) {
+                var arrayMarkerRow = arrayMarkers.get(i);
+                for (int y = 0; y < arrayMarkerRow.size(); y++) {
+                    if (i == row && y == index) {
+                        arrayMarkerRow.set(y, "b");
+                    } else {
+                        arrayMarkerRow.set(y, "");
+                    }
+                }
+            }
+            for (int i = beg; i < end; i++) {
+                numbers[row][i] = null;
+            }
+        }
     }
 
     public void updateChildIndexes(int beg, int end, int index, String indexName, int row, int length) {
@@ -108,6 +142,10 @@ public class MergeSortTreeState {
             visibilities[row][y] = false;
         }
         clearComparisons(row);
+    }
+
+    public void initializeArrayMarkerA() {
+        arrayMarkers.getFirst().set(0, "a");
     }
 
     public void clearComparisons(int row) {
@@ -130,6 +168,10 @@ public class MergeSortTreeState {
     public List<List<String>> getIndexes() {
         return deepCopy(indexes);
 
+    }
+
+    public List<List<String>> getArrayMarkers() {
+        return deepCopy(arrayMarkers);
     }
 
     public List<List<Boolean>> getVisibilities() {
@@ -159,19 +201,36 @@ public class MergeSortTreeState {
         return countRanges(rangeBeg, m, depth - 1) + computeOffset(m, rangeEnd, depth - 1, targetBeg, targetEnd);
     }
 
+    private int findRangeIndex(int rangeBeg, int rangeEnd, int depth, int target) {
+        if (depth == 0 || rangeEnd - rangeBeg <= 1) {
+            return 0;
+        }
+        int m = (rangeBeg + rangeEnd) / 2;
+        if (target < m) {
+            return findRangeIndex(rangeBeg, m, depth - 1, target);
+        }
+        return countRanges(rangeBeg, m, depth - 1) + findRangeIndex(m, rangeEnd, depth - 1, target);
+    }
+
     private int countRanges(int beg, int end, int depth) {
         if (depth == 0 || end - beg <= 1) return 1;
         int m = (beg + end) / 2;
         return countRanges(beg, m, depth - 1) + countRanges(m, end, depth - 1);
     }
 
-    private static List<List<Integer>> deepCopy(int[][] sourceArray) {
+    private void initializeArrayMarkers(int ranges) {
+        List<String> arrayMarkersRow = new ArrayList<>(ranges);
+        for (int i = 0; i < ranges; i++) {
+            arrayMarkersRow.add("");
+        }
+        arrayMarkers.add(arrayMarkersRow);
+    }
+
+    private static List<List<Integer>> deepCopy(Integer[][] sourceArray) {
         var outputArray = new ArrayList<List<Integer>>(sourceArray.length);
-        for (int[] row : sourceArray) {
+        for (Integer[] row : sourceArray) {
             var outputRow = new ArrayList<Integer>(row.length);
-            for (int i : row) {
-                outputRow.add(i);
-            }
+            outputRow.addAll(Arrays.asList(row));
             outputArray.add(outputRow);
         }
         return outputArray;

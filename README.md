@@ -476,7 +476,11 @@
 - [x] FontGrösse der Box anpassen -> grösser.
 - [x] Grösse der Boxen immer gleich gross oder zumindest die Grösse der Box grösser als die Lücken
 - [x] Index Variablen unter den Arrays veranschaulichen
+- [x] Die Vergleiche im obersten a-Array auch gelb markieren
+- [x] Beim Vergleich/Zwischenspeicher b-Array zuerst leeren und dann hineinmergen: mit state namen b
+- [x] In der Visualisation die Arrays jeweils mit A & B markieren.
 - [ ] Variable-View für MergeSort umsetzen
+- [ ] Textgrösse mitskalieren: (kann man das anhand der boxgrösse rechnen)
 
 - [ ] Was will ich nun machen mit welcher Priorität?
   - Applikation refactoren, so dass sie optimal bereit ist um den neuen Algorithmus MergeSort zu implementieren.

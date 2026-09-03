@@ -1,7 +1,8 @@
 package ch.fhnw.algdemo.control.algorithm.mergesort;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import lombok.SneakyThrows;
 
 public class MergeSortColumn extends GridPane {
-    private final SimpleIntegerProperty number;
+    private final SimpleObjectProperty<Integer> number;
     private final SimpleStringProperty index;
     private final SimpleBooleanProperty visibility;
     private final SimpleBooleanProperty comparison;
@@ -25,7 +26,7 @@ public class MergeSortColumn extends GridPane {
     @FXML
     Label indexLabel;
 
-    public MergeSortColumn(SimpleIntegerProperty number, SimpleStringProperty index, SimpleBooleanProperty visibility,
+    public MergeSortColumn(SimpleObjectProperty<Integer> number, SimpleStringProperty index, SimpleBooleanProperty visibility,
                            SimpleBooleanProperty comparison, SimpleBooleanProperty overwrite, boolean isEditable) {
         this.number = number;
         this.index = index;
@@ -39,7 +40,7 @@ public class MergeSortColumn extends GridPane {
     public MergeSortColumn(SimpleStringProperty index) {
         this.isLabelOnlyColumn = true;
         this.index = index;
-        this.number = new SimpleIntegerProperty();
+        this.number = new SimpleObjectProperty<>();
         this.visibility = new SimpleBooleanProperty();
         this.comparison = new SimpleBooleanProperty();
         this.overwrite = new SimpleBooleanProperty();
@@ -74,7 +75,7 @@ public class MergeSortColumn extends GridPane {
         if (editable.getValue()) {
             this.number.addListener((obs, oldVal, newVal) -> {
                 if (!valueField.isFocused()) {
-                    valueField.setText(newVal.toString());
+                    valueField.setText(newVal == null ? "" : newVal.toString());
                 }
             });
             valueField.setOnAction(e -> commitValue());
@@ -83,22 +84,28 @@ public class MergeSortColumn extends GridPane {
                     commitValue();
                 }
             });
-            valueField.setText(String.valueOf(this.number.get()));
+            valueField.setText(this.number.get() == null ? "" : this.number.get().toString());
         } else {
-            valueField.textProperty().bind(this.number.asString());
+            valueField.textProperty().bind(Bindings.createStringBinding(() ->
+                    this.number.get() == null ? "" : this.number.get().toString(), this.number));
         }
     }
 
     private void commitValue() {
         try {
-            int i = Integer.parseInt(valueField.getText());
-            if (i >= 0 && i < 100) {
-                number.set(i);
+            String txt = valueField.getText();
+            if (txt == null || txt.isBlank()) {
+                number.set(null);
+            } else {
+                int i = Integer.parseInt(txt);
+                if (i >= 0 && i < 100) {
+                    number.set(i);
+                }
             }
         } catch (NumberFormatException e) {
             // ignore, fall through to reset
         }
-        valueField.setText(String.valueOf(number.get()));
+        valueField.setText(number.get() == null ? "" : number.get().toString());
     }
 
     private void configureComparisonHighlighting() {

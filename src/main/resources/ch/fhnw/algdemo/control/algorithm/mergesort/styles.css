@@ -35,6 +35,11 @@
     -fx-control-inner-background: #1ec90a;
 }
 
+.array-marker-label {
+    -fx-text-fill: #e50000;
+    -fx-font-size: 16;
+}
+
 #indexLabel {
     -fx-text-fill: #e50000;
     -fx-font-size: 16;

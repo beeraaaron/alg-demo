@@ -2,17 +2,15 @@ package ch.fhnw.algdemo.control.algorithm.mergesort;
 
 import ch.fhnw.algdemo.model.command.MergeSortCommand;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;
@@ -27,15 +25,16 @@ public class MergeSortRow extends GridPane {
 
     private final List<MergeSortColumn> mergeSortColumns = new ArrayList<>();
 
-    private SimpleIntegerProperty[] numberProperties;
+    private SimpleObjectProperty<Integer>[] numberProperties;
     private SimpleStringProperty[] indexProperties;
+    private SimpleStringProperty[] arrayMarkerProperties;
     private SimpleBooleanProperty[] visibilityProperties;
     private SimpleBooleanProperty[] comparisonProperties;
     private SimpleBooleanProperty[] overwriteProperties;
 
     private final ChangeListener<MergeSortCommand> commandListener;
     private BiConsumer<Integer, Integer> onNumberChanged;
-    private List<ChangeListener<Number>> numberPropertyListeners;
+    private List<javafx.beans.value.ChangeListener<Integer>> numberPropertyListeners;
 
     @FXML
     GridPane rootGridPane;
@@ -63,8 +62,8 @@ public class MergeSortRow extends GridPane {
     private void initializeRow() {
         double rangeGap = computeRangeGap(length);
 
-        var percentWidth = 100.0 / (length + ranges.size());
-        for (int i = 0; i < length + ranges.size(); i++) {
+        var percentWidth = 100.0 / (length + ranges.size() + 1);
+        for (int i = 0; i < length + ranges.size() + 1; i++) {
             var cc = new ColumnConstraints();
             cc.setPercentWidth(percentWidth);
             rootGridPane.getColumnConstraints().add(cc);
@@ -74,6 +73,14 @@ public class MergeSortRow extends GridPane {
             var range = ranges.get(i);
             int beg = range[0];
             int end = range[1];
+
+            var arrayMarkerLabel = new Label();
+            arrayMarkerLabel.textProperty().bind(arrayMarkerProperties[i]);
+            arrayMarkerLabel.getStyleClass().add("array-marker-label");
+            var labelBox = new VBox(arrayMarkerLabel);
+            labelBox.setAlignment(Pos.CENTER);
+            rootGridPane.add(labelBox, beg + i, 0, 1, 1);
+
             var container = new HBox();
             container.setSpacing(0);
             container.setFillHeight(true);
@@ -94,24 +101,8 @@ public class MergeSortRow extends GridPane {
             }
             GridPane.setMargin(container, new Insets(0, rangeGap / 2, 0, rangeGap / 2));
 
-            rootGridPane.add(container, beg + i, 0, end - beg + 1, 1);
+            rootGridPane.add(container, beg + i + 1, 0, end - beg + 1, 1);
         }
-    }
-
-    private List<int[]> splitRanges(int beg, int end, int depth) {
-        if (depth == 0 || end - beg <= 1) {
-            return new ArrayList<>(List.of(new int[]{beg, end}));
-        }
-        int m = (beg + end) / 2;
-        var result = new ArrayList<>(splitRanges(beg, m, depth - 1));
-        result.addAll(splitRanges(m, end, depth - 1));
-        return result;
-    }
-
-    private static double computeRangeGap(int length) {
-        double slope = (15.0 - 40.0) / (16.0 - 4.0);
-        double gap = 40.0 + slope * (length - 4);
-        return Math.max(gap, 15);
     }
 
     public void setOnNumberChanged(BiConsumer<Integer, Integer> callback) {
@@ -120,9 +111,13 @@ public class MergeSortRow extends GridPane {
         this.numberPropertyListeners = new ArrayList<>();
         for (int i = 0; i < this.length; i++) {
             final int index = i;
-            ChangeListener<Number> listener = (obs, oldVal, newVal) -> {
+            javafx.beans.value.ChangeListener<Integer> listener = (obs, oldVal, newVal) -> {
                 if (this.onNumberChanged != null) {
-                    this.onNumberChanged.accept(index, newVal.intValue());
+                    if (newVal != null) {
+                        this.onNumberChanged.accept(index, newVal);
+                    } else  {
+                        this.onNumberChanged.accept(index, oldVal);
+                    }
                 }
             };
             this.numberProperties[i].addListener(listener);
@@ -155,10 +150,21 @@ public class MergeSortRow extends GridPane {
         }
     }
 
+    private List<int[]> splitRanges(int beg, int end, int depth) {
+        if (depth == 0 || end - beg <= 1) {
+            return new ArrayList<>(List.of(new int[]{beg, end}));
+        }
+        int m = (beg + end) / 2;
+        var result = new ArrayList<>(splitRanges(beg, m, depth - 1));
+        result.addAll(splitRanges(m, end, depth - 1));
+        return result;
+    }
+
     private void applyCommand(MergeSortCommand cmd) {
         if (cmd == null) return;
         var numbers = cmd.getNumbers().get(rowDepth);
         var indexes = cmd.getIndexes().get(rowDepth);
+        var arrayMarkers = cmd.getArrayMarkers().get(rowDepth);
         var visibilities = cmd.getVisibilities().get(rowDepth);
         var comparisons = cmd.getComparisons().get(rowDepth);
         var overwrites = cmd.getOverwrites().get(rowDepth);
@@ -172,24 +178,37 @@ public class MergeSortRow extends GridPane {
             }
             indexProperties[i].set(indexes.get(i));
         }
+        for (int i = 0; i < ranges.size(); i++) {
+            arrayMarkerProperties[i].set(arrayMarkers.get(i));
+        }
     }
 
     private void initializeProperties() {
-        this.numberProperties = new SimpleIntegerProperty[length];
-        this.visibilityProperties = new SimpleBooleanProperty[length];
-        this.comparisonProperties = new SimpleBooleanProperty[length];
-        this.overwriteProperties = new SimpleBooleanProperty[length];
-        this.indexProperties = new SimpleStringProperty[length + ranges.size()];
+        numberProperties = (SimpleObjectProperty<Integer>[]) new SimpleObjectProperty[length];
+        indexProperties = new SimpleStringProperty[length + ranges.size()];
+        arrayMarkerProperties = new SimpleStringProperty[ranges.size()];
+        visibilityProperties = new SimpleBooleanProperty[length];
+        comparisonProperties = new SimpleBooleanProperty[length];
+        overwriteProperties = new SimpleBooleanProperty[length];
 
         for (int i = 0; i < length + ranges.size(); i++) {
             if (i < length) {
-                numberProperties[i] = new SimpleIntegerProperty();
+                numberProperties[i] = new SimpleObjectProperty<>();
                 visibilityProperties[i] = new SimpleBooleanProperty();
                 comparisonProperties[i] = new SimpleBooleanProperty();
                 overwriteProperties[i] = new SimpleBooleanProperty();
             }
             indexProperties[i] = new SimpleStringProperty();
         }
+        for (int i = 0; i < ranges.size(); i++) {
+            arrayMarkerProperties[i] = new SimpleStringProperty();
+        }
+    }
+
+    private static double computeRangeGap(int length) {
+        double slope = (15.0 - 40.0) / (16.0 - 4.0);
+        double gap = 40.0 + slope * (length - 4);
+        return Math.max(gap, 15);
     }
 
     @SneakyThrows

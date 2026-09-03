@@ -148,7 +148,8 @@ public class MergeSortController extends GridPane implements AlgorithmController
         selectedCommandId.set(0);
 
         initialCommand = new MergeSortCommand("Initial State", selectedCommandId.getValue(), treeState.getNumbers(),
-                treeState.getIndexes(), treeState.getVisibilities(), treeState.getComparisons(), treeState.getOverwrites());
+                treeState.getIndexes(), treeState.getArrayMarkers(), treeState.getVisibilities(),
+                treeState.getComparisons(), treeState.getOverwrites());
 
         sort(a, 0, selectedArraySize, 0);
 
@@ -175,6 +176,9 @@ public class MergeSortController extends GridPane implements AlgorithmController
     }
 
     private void sort(List<Integer> a, int beg, int end, int row) {
+        if (row == 0) {
+            treeState.initializeArrayMarkerA();
+        }
         treeState.touch(row, beg, end);
 
         if (end - beg > 1) {
@@ -193,7 +197,8 @@ public class MergeSortController extends GridPane implements AlgorithmController
         var b = new int[end - beg];
         int childRow = row + 1;
 
-        treeState.initializeChildIndexes(beg, end, j, k, childRow, selectedArraySize);
+        treeState.initializeMerge(beg, end, j, k, row, selectedArraySize);
+        recordSnapshot("merge(a, " + beg + ", " + m + ", " + end + ")");
         while (i < end - beg) {
             if (k == end || (j < m && compare(a, j, k, childRow))) {
                 b[i] = a.get(j);
@@ -221,6 +226,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
         } else {
             treeState.clearComparisons(childRow);
         }
+        treeState.clearComparisons(0);
         treeState.clearOverwrites(row);
         treeState.clearIndexes(childRow);
 
@@ -244,7 +250,8 @@ public class MergeSortController extends GridPane implements AlgorithmController
     private void recordSnapshot(String description) {
         selectedCommandId.set(selectedCommandId.getValue() + 1);
         var cmd = new MergeSortCommand(description, selectedCommandId.getValue(), treeState.getNumbers(),
-                treeState.getIndexes(), treeState.getVisibilities(), treeState.getComparisons(), treeState.getOverwrites());
+                treeState.getIndexes(), treeState.getArrayMarkers(), treeState.getVisibilities(),
+                treeState.getComparisons(), treeState.getOverwrites());
         fullCommandHistory.add(cmd);
     }
 
