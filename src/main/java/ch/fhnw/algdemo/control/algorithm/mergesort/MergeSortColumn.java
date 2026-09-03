@@ -2,25 +2,33 @@ package ch.fhnw.algdemo.control.algorithm.mergesort;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import lombok.SneakyThrows;
 
 public class MergeSortColumn extends GridPane {
     private final SimpleIntegerProperty number;
+    private final SimpleStringProperty index;
     private final SimpleBooleanProperty visibility;
     private final SimpleBooleanProperty comparison;
     private final SimpleBooleanProperty overwrite;
     private final SimpleBooleanProperty editable;
 
+    private boolean isLabelOnlyColumn = false;
+
     @FXML
     TextField valueField;
+    @FXML
+    Label indexLabel;
 
-    public MergeSortColumn(SimpleIntegerProperty number, SimpleBooleanProperty visibility,
+    public MergeSortColumn(SimpleIntegerProperty number, SimpleStringProperty index, SimpleBooleanProperty visibility,
                            SimpleBooleanProperty comparison, SimpleBooleanProperty overwrite, boolean isEditable) {
         this.number = number;
+        this.index = index;
         this.visibility = visibility;
         this.comparison = comparison;
         this.overwrite = overwrite;
@@ -28,11 +36,27 @@ public class MergeSortColumn extends GridPane {
         loadFxController();
     }
 
+    public MergeSortColumn(SimpleStringProperty index) {
+        this.isLabelOnlyColumn = true;
+        this.index = index;
+        this.number = new SimpleIntegerProperty();
+        this.visibility = new SimpleBooleanProperty();
+        this.comparison = new SimpleBooleanProperty();
+        this.overwrite = new SimpleBooleanProperty();
+        this.editable = new SimpleBooleanProperty();
+        loadFxController();
+    }
+
     @FXML
     public void initialize() {
-        configureValueField();
-        configureComparisonHighlighting();
-        configureOverwriteHighlighting();
+        this.indexLabel.textProperty().bind(this.index);
+        if (!isLabelOnlyColumn) {
+            configureValueField();
+            configureComparisonHighlighting();
+            configureOverwriteHighlighting();
+        } else  {
+            valueField.setVisible(false);
+        }
     }
 
     public void enableValueField() {

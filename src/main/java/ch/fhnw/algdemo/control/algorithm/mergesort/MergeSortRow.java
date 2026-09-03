@@ -4,6 +4,7 @@ import ch.fhnw.algdemo.model.command.MergeSortCommand;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +23,12 @@ public class MergeSortRow extends GridPane {
     private final SimpleObjectProperty<MergeSortCommand> command;
     private final int length;
     private final int rowDepth;
+    private final List<int[]> ranges;
 
     private final List<MergeSortColumn> mergeSortColumns = new ArrayList<>();
 
     private SimpleIntegerProperty[] numberProperties;
+    private SimpleStringProperty[] indexProperties;
     private SimpleBooleanProperty[] visibilityProperties;
     private SimpleBooleanProperty[] comparisonProperties;
     private SimpleBooleanProperty[] overwriteProperties;
@@ -41,6 +44,8 @@ public class MergeSortRow extends GridPane {
         this.command = command;
         this.length = length;
         this.rowDepth = rowDepth;
+        this.ranges = splitRanges(0, length, rowDepth);
+
 
         initializeProperties();
         loadFxController();
@@ -56,36 +61,40 @@ public class MergeSortRow extends GridPane {
     }
 
     private void initializeRow() {
-        List<int[]> ranges = splitRanges(0, length, rowDepth);
         double rangeGap = computeRangeGap(length);
 
-        var percentWidth = 100.0 / length;
-        for (int i = 0; i < length; i++) {
+        var percentWidth = 100.0 / (length + ranges.size());
+        for (int i = 0; i < length + ranges.size(); i++) {
             var cc = new ColumnConstraints();
             cc.setPercentWidth(percentWidth);
             rootGridPane.getColumnConstraints().add(cc);
         }
 
-        for (int[] range : ranges) {
+        for (int i = 0; i < ranges.size(); i++) {
+            var range = ranges.get(i);
             int beg = range[0];
             int end = range[1];
             var container = new HBox();
             container.setSpacing(0);
             container.setFillHeight(true);
-            for (int j = beg; j < end; j++) {
-                var col = new MergeSortColumn(numberProperties[j], visibilityProperties[j],
-                        comparisonProperties[j], overwriteProperties[j], rowDepth == 0);
+
+            for (int j = beg; j < end + 1; j++) {
+                MergeSortColumn col;
+                if (j == end) {
+                    col = new MergeSortColumn(indexProperties[j + i]);
+                } else {
+                    col = new MergeSortColumn(numberProperties[j], indexProperties[j + i], visibilityProperties[j],
+                            comparisonProperties[j], overwriteProperties[j], rowDepth == 0);
+                }
 
                 HBox.setHgrow(col, Priority.ALWAYS);
                 col.setMaxWidth(Double.MAX_VALUE);
                 mergeSortColumns.add(col);
                 container.getChildren().add(col);
             }
-            double left = rangeGap / 2;
-            double right = rangeGap / 2;
-            GridPane.setMargin(container, new Insets(0, right, 0, left));
+            GridPane.setMargin(container, new Insets(0, rangeGap / 2, 0, rangeGap / 2));
 
-            rootGridPane.add(container, beg, 0, end - beg, 1);
+            rootGridPane.add(container, beg + i, 0, end - beg + 1, 1);
         }
     }
 
@@ -149,15 +158,19 @@ public class MergeSortRow extends GridPane {
     private void applyCommand(MergeSortCommand cmd) {
         if (cmd == null) return;
         var numbers = cmd.getNumbers().get(rowDepth);
+        var indexes = cmd.getIndexes().get(rowDepth);
         var visibilities = cmd.getVisibilities().get(rowDepth);
         var comparisons = cmd.getComparisons().get(rowDepth);
         var overwrites = cmd.getOverwrites().get(rowDepth);
 
-        for (int i = 0; i < length; i++) {
-            numberProperties[i].set(numbers.get(i));
-            visibilityProperties[i].set(visibilities.get(i));
-            comparisonProperties[i].set(comparisons.get(i));
-            overwriteProperties[i].set(overwrites.get(i));
+        for (int i = 0; i < length + ranges.size(); i++) {
+            if (i < length) {
+                numberProperties[i].set(numbers.get(i));
+                visibilityProperties[i].set(visibilities.get(i));
+                comparisonProperties[i].set(comparisons.get(i));
+                overwriteProperties[i].set(overwrites.get(i));
+            }
+            indexProperties[i].set(indexes.get(i));
         }
     }
 
@@ -166,11 +179,16 @@ public class MergeSortRow extends GridPane {
         this.visibilityProperties = new SimpleBooleanProperty[length];
         this.comparisonProperties = new SimpleBooleanProperty[length];
         this.overwriteProperties = new SimpleBooleanProperty[length];
-        for (int i = 0; i < length; i++) {
-            numberProperties[i] = new SimpleIntegerProperty();
-            visibilityProperties[i] = new SimpleBooleanProperty();
-            comparisonProperties[i] = new SimpleBooleanProperty();
-            overwriteProperties[i] = new SimpleBooleanProperty();
+        this.indexProperties = new SimpleStringProperty[length + ranges.size()];
+
+        for (int i = 0; i < length + ranges.size(); i++) {
+            if (i < length) {
+                numberProperties[i] = new SimpleIntegerProperty();
+                visibilityProperties[i] = new SimpleBooleanProperty();
+                comparisonProperties[i] = new SimpleBooleanProperty();
+                overwriteProperties[i] = new SimpleBooleanProperty();
+            }
+            indexProperties[i] = new SimpleStringProperty();
         }
     }
 

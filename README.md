@@ -475,7 +475,7 @@
 - [x] Trennlinie zwischen dem obersten Array und den anderen implementieren
 - [x] FontGrösse der Box anpassen -> grösser.
 - [x] Grösse der Boxen immer gleich gross oder zumindest die Grösse der Box grösser als die Lücken
-- [ ] Index Variablen unter den Arrays veranschaulichen
+- [x] Index Variablen unter den Arrays veranschaulichen
 - [ ] Variable-View für MergeSort umsetzen
 
 - [ ] Was will ich nun machen mit welcher Priorität?
