@@ -1,5 +1,6 @@
 package ch.fhnw.algdemo.model.command;
 
+import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class MergeSortCommand extends Command {
     private final List<List<Boolean>> visibilities;
     private final List<List<Boolean>> comparisons;
     private final List<List<Boolean>> overwrites;
+    private final List<AlgorithmVariable<?>> variables;
 
     public MergeSortCommand(String command, int id,
                             List<List<Integer>> numbers,
@@ -19,7 +21,8 @@ public class MergeSortCommand extends Command {
                             List<List<String>> arrayMarkers,
                             List<List<Boolean>> visibilities,
                             List<List<Boolean>> comparisons,
-                            List<List<Boolean>> overwrites) {
+                            List<List<Boolean>> overwrites,
+                            List<AlgorithmVariable<?>> variables) {
         super(command, id);
         this.numbers = numbers;
         this.indexes = indexes;
@@ -27,5 +30,6 @@ public class MergeSortCommand extends Command {
         this.visibilities = visibilities;
         this.comparisons = comparisons;
         this.overwrites = overwrites;
+        this.variables = variables;
     }
 }

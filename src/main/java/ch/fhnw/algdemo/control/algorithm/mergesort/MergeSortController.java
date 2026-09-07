@@ -89,7 +89,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
 
     @Override
     public List<AlgorithmVariable<?>> getVariables() {
-        return List.of();
+        return selectedCommand.getValue().getVariables();
     }
 
     @Override
@@ -149,7 +149,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
 
         initialCommand = new MergeSortCommand("Initial State", selectedCommandId.getValue(), treeState.getNumbers(),
                 treeState.getIndexes(), treeState.getArrayMarkers(), treeState.getVisibilities(),
-                treeState.getComparisons(), treeState.getOverwrites());
+                treeState.getComparisons(), treeState.getOverwrites(), treeState.getVariables());
 
         sort(a, 0, selectedArraySize, 0);
 
@@ -184,6 +184,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
         if (end - beg > 1) {
             int m = (beg + end) / 2;
             treeState.updateParentIndexes(beg, end, m, row, selectedArraySize, false);
+            treeState.setSortVariables(beg, end, m);
             recordSnapshot("sort(a, " + beg + ", " + end + ")");
             sort(a, beg, m, row + 1);
             sort(a, m, end, row + 1);
@@ -197,6 +198,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
         var b = new int[end - beg];
         int childRow = row + 1;
 
+        treeState.setMergeVariables(beg, end, m, j, k);
         treeState.initializeMerge(beg, end, j, k, row, selectedArraySize);
         recordSnapshot("merge(a, " + beg + ", " + m + ", " + end + ")");
         while (i < end - beg) {
@@ -207,6 +209,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
                     recordSnapshot("b[" + i + "] = a[j]");
                 }
                 j++;
+                treeState.updateMergeVariables(j, k);
                 treeState.updateChildIndexes(beg, end, j, "j", childRow, selectedArraySize);
             } else {
                 b[i] = a.get(k);
@@ -215,6 +218,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
                     recordSnapshot("b[" + i + "] = a[k]");
                 }
                 k++;
+                treeState.updateMergeVariables(j, k);
                 treeState.updateChildIndexes(beg, end, k + 1, "k", childRow, selectedArraySize);
             }
             treeState.clearOverwrites(row);
@@ -251,7 +255,7 @@ public class MergeSortController extends GridPane implements AlgorithmController
         selectedCommandId.set(selectedCommandId.getValue() + 1);
         var cmd = new MergeSortCommand(description, selectedCommandId.getValue(), treeState.getNumbers(),
                 treeState.getIndexes(), treeState.getArrayMarkers(), treeState.getVisibilities(),
-                treeState.getComparisons(), treeState.getOverwrites());
+                treeState.getComparisons(), treeState.getOverwrites(), treeState.getVariables());
         fullCommandHistory.add(cmd);
     }
 

@@ -1,9 +1,9 @@
 package ch.fhnw.algdemo.control.algorithm.mergesort;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
+import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
+
+import java.util.*;
 
 public class MergeSortTreeState {
     private final int depth;
@@ -14,6 +14,8 @@ public class MergeSortTreeState {
     private final boolean[][] comparisons;
     private final boolean[][] overwrites;
 
+    private final List<AlgorithmVariable<?>> variables;
+
     public MergeSortTreeState(int depth, List<Integer> a) {
         var length = a.size();
         this.depth = depth;
@@ -23,6 +25,7 @@ public class MergeSortTreeState {
         visibilities = new boolean[depth][length];
         comparisons = new boolean[depth][length];
         overwrites = new boolean[depth][length];
+        variables = new ArrayList<>();
 
         for (int d = 0; d < depth; d++) {
             int ranges = countRanges(0, length, d);
@@ -148,6 +151,27 @@ public class MergeSortTreeState {
         arrayMarkers.getFirst().set(0, "a");
     }
 
+    public void setSortVariables(int beg, int end, int m) {
+        variables.removeIf(v -> v.getName().equals("j"));
+        variables.removeIf(v -> v.getName().equals("k"));
+        updateArrayVariable("beg", beg);
+        updateArrayVariable("end", end);
+        updateArrayVariable("m", m);
+    }
+
+    public void setMergeVariables(int beg, int end, int m, int j, int k) {
+        updateArrayVariable("beg", beg);
+        updateArrayVariable("end", end);
+        updateArrayVariable("m", m);
+        updateArrayVariable("j", j);
+        updateArrayVariable("k", k);
+    }
+
+    public void updateMergeVariables(int j, int k) {
+        updateArrayVariable("j", j);
+        updateArrayVariable("k", k);
+    }
+
     public void clearComparisons(int row) {
         Arrays.fill(comparisons[row], false);
     }
@@ -184,6 +208,10 @@ public class MergeSortTreeState {
 
     public List<List<Boolean>> getOverwrites() {
         return deepCopy(overwrites);
+    }
+
+    public List<AlgorithmVariable<?>> getVariables() {
+        return new ArrayList<>(variables);
     }
 
     private int computeOffset(int length, int beg, int end, int row) {
@@ -256,5 +284,10 @@ public class MergeSortTreeState {
             outputArray.add(outputRow);
         }
         return outputArray;
+    }
+
+    private void updateArrayVariable(String name, Integer value) {
+        variables.removeIf(v -> v.getName().equals(name));
+        variables.add(new IntegerAlgorithmVariable(name, value));
     }
 }
