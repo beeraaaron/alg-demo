@@ -7,9 +7,7 @@ import ch.fhnw.algdemo.control.algorithm.binarysearch.BinarySearchController;
 import ch.fhnw.algdemo.control.algorithm.mergesort.MergeSortController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -19,43 +17,31 @@ import java.util.List;
 
 public class MainController {
     @FXML
-    private VBox leftBox;
+    VBox leftBox;
     @FXML
-    private ChoiceBox<AlgorithmController> algorithmChoiceBox;
+    ChoiceBox<AlgorithmController> algorithmChoiceBox;
     @FXML
-    private VariableController variableController;
+    VariableController variableController;
     @FXML
-    private VBox variable;
+    VBox variable;
+    @FXML
+    VBox midBox;
+    @FXML
+    HistoryController historyController;
 
-    @FXML
-    private VBox midBox;
-    @FXML
-    private ComboBox<String> commandInput;
-    @FXML
-    private Button sendCommandButton;
-
-    @FXML
-    private HistoryController historyController;
-
-    private final List<AlgorithmController> algorithms = List.of(new BinarySearchController(), new MergeSortController());
+    private final List<AlgorithmController> algorithms = List.of(
+            new BinarySearchController(this), new MergeSortController(this));
     private AlgorithmController selectedAlgorithm;
 
     @FXML
     public void initialize() {
-        configureSendCommandButton();
         configureHistory();
         configureChoiceBox();
-        configureCommandInput();
         variable.prefWidthProperty().bind(leftBox.widthProperty());
     }
 
-    private void configureSendCommandButton() {
-        sendCommandButton.setOnMouseClicked(event -> sendCommand(null));
-        sendCommandButton.setOnKeyPressed(this::sendCommand);
-    }
-
     private void configureHistory() {
-        historyController.setOnCommandCopied(command -> commandInput.getEditor().setText(command));
+        historyController.setOnCommandCopied(command -> selectedAlgorithm.onCommandCopied(command));
         historyController.setOnStateClicked(id -> {
             selectedAlgorithm.updateAlgorithmState(id);
             variableController.clear();
@@ -82,7 +68,7 @@ public class MainController {
         algorithmChoiceBox.setItems(FXCollections.observableArrayList(algorithms));
         algorithmChoiceBox.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateChoiceBox);
         algorithmChoiceBox.prefWidthProperty().bind(leftBox.widthProperty());
-        algorithmChoiceBox.getSelectionModel().select(0);
+        algorithmChoiceBox.getSelectionModel().select(1);
     }
 
     private void navigateChoiceBox(KeyEvent event) {
@@ -99,57 +85,27 @@ public class MainController {
         }
     }
 
-
-    private void configureCommandInput() {
-        commandInput.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateComboBox);
-        commandInput.setOnShowing(event -> {
-            commandInput.getItems().clear();
-            commandInput.getItems().addAll(selectedAlgorithm.getCommandSuggestions());
-        });
-    }
-
-    private void navigateComboBox(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            if (!commandInput.isShowing()) {
-                commandInput.show();
-            } else {
-                commandInput.hide();
-            }
-            event.consume();
-        } else if (event.getCode() == KeyCode.ESCAPE && commandInput.isShowing()) {
-            commandInput.hide();
-            event.consume();
-        }
-    }
-
-    private void sendCommand(KeyEvent event) {
-        if (event == null || event.getCode() == KeyCode.ENTER) {
-            String commandExpression = commandInput.getEditor().getText();
-            selectedAlgorithm.applyCommand(commandExpression);
-            variableController.clear();
-            variableController.initializeVariables(selectedAlgorithm.getVariables());
-            historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getHighestCommandId());
-            commandInput.getEditor().clear();
-        }
-    }
-
     private void changeAlgorithm(AlgorithmController newValue) {
         this.selectedAlgorithm = newValue;
         variableController.clear();
         midBox.getChildren().clear();
-        commandInput.getItems().clear();
+        variableController.initializeVariables(selectedAlgorithm.getVariables());
+        historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getSelectedCommandId());
+        // TODO: AlgorithmController -> sollte Pane sein dann kann Property gebindet werden.
         if (newValue instanceof BinarySearchController bsc) {
-            variableController.initializeVariables(bsc.getVariables());
-            historyController.initializeHistory(bsc.getCommandHistory(), bsc.getHighestCommandId());
             midBox.getChildren().addAll(bsc);
             bsc.prefWidthProperty().bind(midBox.widthProperty());
             bsc.prefHeightProperty().bind(midBox.heightProperty());
         } else if (newValue instanceof MergeSortController msc) {
-            variableController.initializeVariables(msc.getVariables());
-            historyController.initializeHistory(msc.getCommandHistory(), msc.getHighestCommandId());
             midBox.getChildren().addAll(msc);
             msc.prefWidthProperty().bind(midBox.widthProperty());
             msc.prefHeightProperty().bind(midBox.heightProperty());
         }
+    }
+
+    public void applyCommand() {
+        variableController.clear();
+        variableController.initializeVariables(selectedAlgorithm.getVariables());
+        historyController.initializeHistory(selectedAlgorithm.getCommandHistory(), selectedAlgorithm.getSelectedCommandId());
     }
 }

@@ -8,8 +8,7 @@ public interface AlgorithmController {
     String getName();
     List<AlgorithmVariable<?>> getVariables();
     List<Command> getCommandHistory();
-    List<String> getCommandSuggestions();
-    void applyCommand(String commandExpression);
-    void updateAlgorithmState(int selectedCommandId);
-    int getHighestCommandId();
+    void onCommandCopied(String commandExpression);
+    void updateAlgorithmState(int commandId);
+    int getSelectedCommandId();
 }

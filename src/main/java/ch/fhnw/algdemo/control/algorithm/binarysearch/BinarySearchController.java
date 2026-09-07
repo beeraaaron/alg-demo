@@ -1,16 +1,21 @@
 package ch.fhnw.algdemo.control.algorithm.binarysearch;
 
+import ch.fhnw.algdemo.control.MainController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmController;
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 import ch.fhnw.algdemo.model.command.Command;
 import ch.fhnw.algdemo.model.algorithm.IntegerAlgorithmVariable;
 import ch.fhnw.algdemo.util.BinarySearchCommandParser;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import lombok.SneakyThrows;
 
@@ -19,33 +24,39 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BinarySearchController extends HBox implements AlgorithmController {
-    List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
-    List<AlgorithmVariable<?>> variables =  List.of(
+public class BinarySearchController extends GridPane implements AlgorithmController {
+    private final List<Integer> data = new ArrayList<>(List.of(5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 75, 86, 91, 97));
+    private final List<AlgorithmVariable<?>> variables =  List.of(
             new IntegerAlgorithmVariable("i",  null),
             new IntegerAlgorithmVariable("j", null),
             new IntegerAlgorithmVariable("m", null)
     );
-    List<String> algorithmOptions = List.of(
+    private final List<String> algorithmOptions = List.of(
             "1: i=0, j=n-1",
             "2: i=0, j=n",
             "3: i=-1, j=n-1",
             "4: i=-1, j=n"
     );
-    int selectedAlgorithmOption = 1;
+    private int selectedAlgorithmOption = 1;
+    private final List<Command> commandHistory = new ArrayList<>();
+    private final List<BinarySearchColumn> columns = new ArrayList<>();
+    private Set<Integer> searchedIndexes = new HashSet<>();
+    private int selectedCommandId = 1;
+    private int highestCommandId = 1;
 
-    List<Command> commandHistory = new ArrayList<>();
-    List<BinarySearchColumn> columns = new ArrayList<>();
-    Set<Integer> searchedIndexes = new HashSet<>();
-    int selectedCommandId = 1;
-    int highestCommandId = 1;
+    private final MainController mainController;
 
     @FXML
     HBox columnBox;
     @FXML
     ChoiceBox<String> optionsChoiceBox;
+    @FXML
+    ComboBox<String> commandInput;
+    @FXML
+    Button sendCommandButton;
 
-    public BinarySearchController() {
+    public BinarySearchController(MainController mainController) {
+        this.mainController = mainController;
         loadFxController();
         configureChoiceBox();
         columnBox.prefWidthProperty().bind(this.widthProperty());
@@ -53,6 +64,8 @@ public class BinarySearchController extends HBox implements AlgorithmController 
 
     @FXML
     public void initialize() {
+        configureSendCommandButton();
+        configureCommandInput();
         resetAlgorithmState();
     }
 
@@ -72,46 +85,8 @@ public class BinarySearchController extends HBox implements AlgorithmController 
     }
 
     @Override
-    public List<String> getCommandSuggestions() {
-        var suggestions = new ArrayList<String>();
-        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) {
-            suggestions.add(variables.getFirst().name + " = 0");
-        } else {
-            suggestions.add(variables.getFirst().name + " = -1");
-        }
-
-        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) {
-            suggestions.add(variables.get(1).name + " = " + (data.size() - 1));
-        } else {
-            suggestions.add(variables.get(1).name + " = " + data.size());
-        }
-        suggestions.add(variables.get(2).name + " = (" + variables.getFirst().name + " + " + variables.get(1).name + ") / 2");
-        return suggestions;
-    }
-
-    @Override
-    public void applyCommand(String commandExpression) {
-        deleteUnsuccessfulCommands();
-        try {
-            updateStateToSelectedCommand();
-            var commandParser = new BinarySearchCommandParser(variables, data);
-            var command = commandParser.createCommand(commandExpression);
-            if (selectedCommandId < highestCommandId) {
-                commandHistory.removeIf(c -> selectedCommandId < c.id);
-                highestCommandId = selectedCommandId + 1;
-            } else {
-                highestCommandId++;
-            }
-            command.id = highestCommandId;
-            commandHistory.add(command);
-            updateAlgorithmState(highestCommandId);
-        } catch (IllegalArgumentException e) {
-            if (selectedCommandId < highestCommandId) {
-                commandHistory.removeIf(c -> selectedCommandId < c.id);
-                highestCommandId = selectedCommandId;
-            }
-            commandHistory.add(new Command(commandExpression, e.getMessage(), false));
-        }
+    public void onCommandCopied(String commandExpression) {
+        commandInput.getEditor().setText(commandExpression);
     }
 
     @Override
@@ -123,14 +98,14 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         var m = variables.get(2);
         for (var column : columns) {
             var filteredVariables = variables.stream()
-                    .filter(v -> column.getIndex().equals(v.value))
-                    .map(v -> v.name)
+                    .filter(v -> column.getIndex().equals(v.getValue()))
+                    .map(AlgorithmVariable::getName)
                     .toList();
             column.setVariables(filteredVariables);
 
             defineColumnColor(column);
 
-            if (m.value != null && searchedIndexes.contains(column.getIndex())) {
+            if (m.getValue() != null && searchedIndexes.contains(column.getIndex())) {
                 column.enableValueField();
             } else {
                 column.disableValueField();
@@ -144,47 +119,124 @@ public class BinarySearchController extends HBox implements AlgorithmController 
         }
     }
 
+    @Override
+    public int getSelectedCommandId() {
+        return highestCommandId;
+    }
+
+    private void configureSendCommandButton() {
+        sendCommandButton.setOnMouseClicked(event -> sendCommand(null));
+        sendCommandButton.setOnKeyPressed(this::sendCommand);
+    }
+
+    private void configureCommandInput() {
+        commandInput.addEventFilter(KeyEvent.KEY_PRESSED, this::navigateComboBox);
+        commandInput.setOnShowing(event -> {
+            commandInput.getItems().clear();
+            commandInput.getItems().addAll(getCommandSuggestions());
+        });
+    }
+
+    private void navigateComboBox(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (!commandInput.isShowing()) {
+                commandInput.show();
+            } else {
+                commandInput.hide();
+            }
+            event.consume();
+        } else if (event.getCode() == KeyCode.ESCAPE && commandInput.isShowing()) {
+            commandInput.hide();
+            event.consume();
+        }
+    }
+
+    private void sendCommand(KeyEvent event) {
+        if (event == null || event.getCode() == KeyCode.ENTER) {
+            String commandExpression = commandInput.getEditor().getText();
+            applyCommand(commandExpression);
+            mainController.applyCommand();
+            commandInput.getEditor().clear();
+        }
+    }
+
+    private List<String> getCommandSuggestions() {
+        var suggestions = new ArrayList<String>();
+        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) {
+            suggestions.add(variables.getFirst().getName() + " = 0");
+        } else {
+            suggestions.add(variables.getFirst().getName() + " = -1");
+        }
+
+        if (selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) {
+            suggestions.add(variables.get(1).getName() + " = " + (data.size() - 1));
+        } else {
+            suggestions.add(variables.get(1).getName() + " = " + data.size());
+        }
+        suggestions.add(variables.get(2).getName() + " = (" + variables.getFirst().getName() + " + " + variables.get(1).getName() + ") / 2");
+        return suggestions;
+    }
+
+    private void applyCommand(String commandExpression) {
+        deleteUnsuccessfulCommands();
+        try {
+            updateStateToSelectedCommand();
+            var commandParser = new BinarySearchCommandParser(variables, data);
+            var command = commandParser.createCommand(commandExpression);
+            if (selectedCommandId < highestCommandId) {
+                commandHistory.removeIf(c -> selectedCommandId < c.getId());
+                highestCommandId = selectedCommandId + 1;
+            } else {
+                highestCommandId++;
+            }
+            command.setId(highestCommandId);
+            commandHistory.add(command);
+            updateAlgorithmState(highestCommandId);
+        } catch (IllegalArgumentException e) {
+            if (selectedCommandId < highestCommandId) {
+                commandHistory.removeIf(c -> selectedCommandId < c.getId());
+                highestCommandId = selectedCommandId;
+            }
+            commandHistory.add(new BinarySearchCommand(commandExpression, e.getMessage(), false));
+        }
+    }
+
     private void defineColumnColor(BinarySearchColumn column) {
         var i = variables.getFirst();
         var j = variables.get(1);
 
         if ((selectedAlgorithmOption == 1 || selectedAlgorithmOption == 2) &&
-                i.value != null && column.getIndex() < (Integer) i.value) {
+                i.getValue() != null && column.getIndex() < (Integer) i.getValue()) {
             column.setMinColor();
         } else if ((selectedAlgorithmOption == 3 || selectedAlgorithmOption == 4) &&
-                i.value != null && column.getIndex() <= (Integer) i.value) {
+                i.getValue() != null && column.getIndex() <= (Integer) i.getValue()) {
             column.setMinColor();
         } else if ((selectedAlgorithmOption == 1 || selectedAlgorithmOption == 3) &&
-                j.value != null && column.getIndex() > (Integer) j.value) {
+                j.getValue() != null && column.getIndex() > (Integer) j.getValue()) {
             column.setMaxColor();
         } else if ((selectedAlgorithmOption == 2 || selectedAlgorithmOption == 4) &&
-                j.value != null && column.getIndex() >= (Integer) j.value) {
+                j.getValue() != null && column.getIndex() >= (Integer) j.getValue()) {
             column.setMaxColor();
         } else {
             column.removeColors();
         }
     }
 
-    @Override
-    public int getHighestCommandId() {
-        return highestCommandId;
-    }
-
     private void deleteUnsuccessfulCommands() {
-        commandHistory.removeIf(command -> !command.success);
+        commandHistory.removeIf(command -> !((BinarySearchCommand) command).isSuccess());
     }
 
     private void updateStateToSelectedCommand() {
         searchedIndexes = new HashSet<>();
         var x = 1;
         while (x < selectedCommandId) {
-            var command =  commandHistory.get(x - 1);
+            var command = (BinarySearchCommand) commandHistory.get(x - 1);
             var variable = variables.stream()
-                    .filter(v -> v.name.equals(command.variableName))
+                    .filter(v -> v.getName().equals(command.getVariableName()))
                     .findFirst().orElseThrow();
-            variable.setValueFromString(command.value);
-            if (variable.name.equals(variables.get(2).name)) {
-                searchedIndexes.add((Integer) variable.value);
+            variable.setValueFromString(command.getValue());
+            if (variable.getName().equals(variables.get(2).getName())) {
+                searchedIndexes.add((Integer) variable.getValue());
             }
             x++;
         }
@@ -199,7 +251,7 @@ public class BinarySearchController extends HBox implements AlgorithmController 
             columnBox.getChildren().add(column);
         }
         for (var variable : variables) {
-            variable.value = null;
+            variable.setValue(null);
         }
     }
 

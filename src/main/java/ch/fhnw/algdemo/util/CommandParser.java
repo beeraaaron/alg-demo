@@ -1,9 +1,8 @@
 package ch.fhnw.algdemo.util;
 
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
-import ch.fhnw.algdemo.model.command.Command;
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -11,21 +10,17 @@ public class CommandParser {
     @Getter
     private final List<AlgorithmVariable<?>> variables;
     private final List<String> variableNames;
-    @Setter
-    @Getter
     private String input;
-    @Setter
-    @Getter
     private int pos;
 
     public CommandParser(List<AlgorithmVariable<?>> variables) {
         this.variables = variables;
-        this.variableNames = variables.stream().map(v -> v.name).toList();
+        this.variableNames = variables.stream().map(AlgorithmVariable::getName).toList();
     }
 
-    public Command createCommand(String expression) throws IllegalArgumentException {
-        setInput(expression.replaceAll("\\s+", ""));
-        setPos(0);
+    public BinarySearchCommand createCommand(String expression) throws IllegalArgumentException {
+        input = expression.replaceAll("\\s+", "");
+        pos = 0;
         var variable = parseVariable();
 
         if (!(peek() == '=')) {
@@ -35,12 +30,12 @@ public class CommandParser {
 
         var value = parseExpression();
 
-        if (getPos() < getInput().length()) {
+        if (pos < input.length()) {
             throw new IllegalArgumentException("Unexpected characters in expression. Allowed are whitespaces, variables, " +
                     "whole numbers, '(', ')' and operators: '+', '-', '/', '*'");
         }
 
-        return new Command(expression, variable.name + " = " + value, variable.name, String.valueOf(value), true);
+        return new BinarySearchCommand(expression, variable.getName() + " = " + value, variable.getName(), String.valueOf(value), true);
     }
 
     public AlgorithmVariable<?> parseVariable() throws IllegalArgumentException {
@@ -106,9 +101,9 @@ public class CommandParser {
                 throw new IllegalArgumentException("Expression is invalid. Expected ')' to close parenthesis.");
             }
             consume();
-
             return result;
-        } else if (isAsciiNumber(peek())) {
+        } else if (((peek() == '+' || peek() == '-') && (pos + 1 < input.length() && Character.isDigit(input.charAt(pos + 1))))
+                || isAsciiNumber(peek())) {
             return parseNumber();
         } else if (isAsciiLetter(peek())) {
             return parseVariableValue();
@@ -119,21 +114,24 @@ public class CommandParser {
     public int parseVariableValue() throws IllegalArgumentException {
         var variable = parseVariable();
 
-        if (variable.value == null) {
-            throw new IllegalArgumentException("Variable '" + variable.name + "' is null and thus cannot be used in the expression");
+        if (variable.getValue() == null) {
+            throw new IllegalArgumentException("Variable '" + variable.getName() + "' is null and thus cannot be used in the expression");
         }
 
-        return (Integer) variable.value;
+        return (Integer) variable.getValue();
     }
 
     public int parseNumber() throws IllegalArgumentException {
         int start = pos;
 
-        while (pos < input.length() && isAsciiNumber(peek())) {
+        if (peek() == '+' || peek() == '-') {
+            pos++;
+        }
+        while (pos < input.length() && isAsciiNumber(input.charAt(pos))) {
             pos++;
         }
 
-        if (start == pos) {
+        if (start == pos || (start + 1 == pos && (input.charAt(start) == '+' || input.charAt(start) == '-'))) {
             throw new IllegalArgumentException("Expression is invalid. Expected number, variable, or '(' at position " + pos);
         }
 
@@ -145,7 +143,7 @@ public class CommandParser {
     }
 
     private boolean isAsciiNumber(char c) {
-        return (c >= '0' && c <= '9') || c == '-' || c == '+';
+        return c >= '0' && c <= '9';
     }
 
     public char peek() {

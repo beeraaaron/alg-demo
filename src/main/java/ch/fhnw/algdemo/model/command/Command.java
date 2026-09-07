@@ -1,24 +1,20 @@
 package ch.fhnw.algdemo.model.command;
 
-public class Command {
-    public final String command;
-    public final String result;
-    public final boolean success;
-    public String variableName;
-    public String value;
-    public int id;
+import lombok.Getter;
+import lombok.Setter;
 
-    public Command(String command, String result, String variableName, String value, boolean success) {
+@Getter
+public abstract class Command {
+    private final String command;
+    @Setter
+    private int id;
+
+    public Command(String command) {
         this.command = command;
-        this.result = result;
-        this.variableName = variableName;
-        this.value = value;
-        this.success = success;
     }
 
-    public Command(String command, String result, boolean success) {
+    public Command(String command, int id) {
         this.command = command;
-        this.result = result;
-        this.success = success;
+        this.id = id;
     }
 }

@@ -4,19 +4,31 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Label?>
-<fx:root type="javafx.scene.layout.Pane" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
-    <GridPane alignment="BOTTOM_CENTER" >
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Button?>
+<fx:root type="javafx.scene.layout.GridPane" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="85" />
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="10" />
+    </rowConstraints>
+    <HBox fx:id="columnBox" alignment="CENTER" GridPane.rowIndex="0"/>
+    <HBox fx:id="optionsBox" alignment="CENTER_LEFT" GridPane.rowIndex="1" translateX="25">
+        <Label fx:id="optionsLabel" text="Variable Options"/>
+        <ChoiceBox fx:id="optionsChoiceBox" prefHeight="30" prefWidth="150"/>
+    </HBox>
+    <GridPane GridPane.rowIndex="2">
         <columnConstraints>
-            <ColumnConstraints percentWidth="100" />
+            <ColumnConstraints percentWidth="80" />
+            <ColumnConstraints percentWidth="20" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="85" />
-            <RowConstraints percentHeight="15" />
+            <RowConstraints percentHeight="100" />
         </rowConstraints>
-        <HBox fx:id="columnBox" alignment="CENTER" GridPane.rowIndex="0"/>
-        <HBox fx:id="optionsBox" alignment="CENTER_LEFT" GridPane.rowIndex="1" translateX="25">
-            <Label fx:id="optionsLabel" text="Variable Options"/>
-            <ChoiceBox fx:id="optionsChoiceBox" prefHeight="30" prefWidth="150"/>
-        </HBox>
+        <ComboBox fx:id="commandInput" editable="true" prefWidth="Infinity" GridPane.columnIndex="0"/>
+        <Button fx:id="sendCommandButton" text="Execute" prefWidth="Infinity" GridPane.columnIndex="1"/>
     </GridPane>
 </fx:root>

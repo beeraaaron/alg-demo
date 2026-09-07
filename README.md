@@ -15,40 +15,65 @@
 
 ## Mockups
 
+### Merge Sort
+
+<details>
+  <summary>Merge Sort:</summary>
+  <img src="images/merge-sort/merge-sort-top-down-1.png" alt="MergeSort 1"/>
+  <img src="images/merge-sort/merge-sort-top-down-2.png" alt="MergeSort 2"/>
+  <img src="images/merge-sort/merge-sort-top-down-3.png" alt="MergeSort 3"/>
+  <img src="images/merge-sort/merge-sort-top-down-4.png" alt="MergeSort 4"/>
+  <img src="images/merge-sort/merge-sort-top-down-5.png" alt="MergeSort 5"/>
+  <img src="images/merge-sort/merge-sort-top-down-6.png" alt="MergeSort 6"/>
+  <img src="images/merge-sort/merge-sort-top-down-7.png" alt="MergeSort 7"/>
+  <img src="images/merge-sort/merge-sort-top-down-8.png" alt="MergeSort 8"/>
+  <img src="images/merge-sort/merge-sort-top-down-9.png" alt="MergeSort 9"/>
+  <img src="images/merge-sort/merge-sort-top-down-10.png" alt="MergeSort 10"/>
+  <img src="images/merge-sort/merge-sort-top-down-11.png" alt="MergeSort 11"/>
+  <img src="images/merge-sort/merge-sort-top-down-12.png" alt="MergeSort 12"/>
+  <img src="images/merge-sort/merge-sort-top-down-13.png" alt="MergeSort 13"/>
+  <img src="images/merge-sort/merge-sort-top-down-14.png" alt="MergeSort 14"/>
+  <img src="images/merge-sort/merge-sort-top-down-15.png" alt="MergeSort 15"/>
+  <img src="images/merge-sort/merge-sort-top-down-16.png" alt="MergeSort 16"/>
+  <img src="images/merge-sort/merge-sort-top-down-17.png" alt="MergeSort 17"/>
+</details>
+
+### Binary Search
+
 <details>
   <summary>Command durch Auswahl wählen:</summary>
-  <img src="images/command-1.png" alt="Command 1"/>
-  <img src="images/command-2.png" alt="Command 2"/>
-  <img src="images/command-3.png" alt="Command 3"/>
+  <img src="images/binary-search/command-1.png" alt="Command 1"/>
+  <img src="images/binary-search/command-2.png" alt="Command 2"/>
+  <img src="images/binary-search/command-3.png" alt="Command 3"/>
 </details>
 
 
 <details>
   <summary>Fehlerhafter Command ausführen:</summary>
-  <img src="images/command-error-1.png" alt="Fehlerhafter Command 1"/>
-  <img src="images/command-error-2.png" alt="Fehlerhafter Command 2"/>
-  <img src="images/command-error-3.png" alt="Fehlerhafter Command 3"/>
-  <img src="images/command-error-4.png" alt="Fehlerhafter Command 4"/>
+  <img src="images/binary-search/command-error-1.png" alt="Fehlerhafter Command 1"/>
+  <img src="images/binary-search/command-error-2.png" alt="Fehlerhafter Command 2"/>
+  <img src="images/binary-search/command-error-3.png" alt="Fehlerhafter Command 3"/>
+  <img src="images/binary-search/command-error-4.png" alt="Fehlerhafter Command 4"/>
 </details>
 
 
 <details>
   <summary>Durch History zurückspringen:</summary>
-  <img src="images/history-1.png" alt="History 1"/>
-  <img src="images/history-2.png" alt="History 2"/>
-  <img src="images/history-3.png" alt="History 3"/>
-  <img src="images/history-4.png" alt="History 4"/>
-  <img src="images/history-5.png" alt="History 5"/>
+  <img src="images/binary-search/history-1.png" alt="History 1"/>
+  <img src="images/binary-search/history-2.png" alt="History 2"/>
+  <img src="images/binary-search/history-3.png" alt="History 3"/>
+  <img src="images/binary-search/history-4.png" alt="History 4"/>
+  <img src="images/binary-search/history-5.png" alt="History 5"/>
 </details>
 
 
 <details>
   <summary>Durch History zurückspringen (abbrechen):</summary>
-  <img src="images/history-1.png" alt="History abbrechen 1"/>
-  <img src="images/history-2.png" alt="History abbrechen 2"/>
-  <img src="images/history-3.png" alt="History abbrechen 3"/>
-  <img src="images/history-abort-1.png" alt="History abbrechen 4"/>
-  <img src="images/history-abort-2.png" alt="History abbrechen 5"/>
+  <img src="images/binary-search/history-1.png" alt="History abbrechen 1"/>
+  <img src="images/binary-search/history-2.png" alt="History abbrechen 2"/>
+  <img src="images/binary-search/history-3.png" alt="History abbrechen 3"/>
+  <img src="images/binary-search/history-abort-1.png" alt="History abbrechen 4"/>
+  <img src="images/binary-search/history-abort-2.png" alt="History abbrechen 5"/>
 </details>
 
 ### Funktionalitäten
@@ -426,17 +451,61 @@
 - [x] Benutzer darauf hinweisen, wenn ein Command angewendet wird, welcher im Kontext von BinarySearch keinen Sinn macht resp. das Suchintervall ungültig macht
 - [x] Benutzer kann entscheiden, welche Variable von i & j welchen schon gesuchten Bereich abdecken.
   - [x] zuerst herausfinden was die verschiedenen Möglichkeiten sind
-      - <details><summary>Möglichkeiten</summary><img src="images/binary-search-options.jpeg" alt="Options"/></details>
+      - <details><summary>Möglichkeiten</summary><img src="images/binary-search/binary-search-options.jpeg" alt="Options"/></details>
 - [x] Manuelle Test Szenarien Liste erstellen
-- [ ] Package Diagramm - oder Tabelle. Was ist für was zuständig.
-- [ ] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation.
-- [ ] Wieder auf Wolfgang zugehen im August.
-- [ ] Das Bearbeiten des Arrays wird validiert.
-- [ ] Die Arraygrösse kann verändert werden.
+- [x] Package Diagramm - oder Tabelle. Was ist für was zuständig.
+- [x] Wieder auf Wolfgang zugehen im August.
+- [x] Wie geht es mir dann in einem halben Jahr beim Wiedereinstieg ins Projekt? Half mir die Dokumentation?
+- [x] Bottom-Up Merge Sort Mockups erstellen, um herauszufinden ob besser als eigener Algorithmus behandeln oder als Variante.
+  - Als eigener Algorithmus macht mehr Sinn. -> Applikation umsetzen, so dass es einfach erweiterbar ist.
+- [x] Top-Down Merge Sort Mockups verbessern mit Feedback von Wolfgang umgesetzt.
+- [x] Mockups für Präsentation aufbereiten und klare Fragestellungen überlegen.
+- [x] Bei ArrayGrössen zwischen 2er Potenzen, die 2er resp. die 3er Gruppen nochmals splitten.
+- [x] JavaFX: Properties mit UIElementen binden
+  - [x] bind Visibility of ActionButtons to Properties
+  - [x] Nur Zahlen anzeigen, welche im Tree of Action sind, wie im Mockup.
+  - [x] Add Yellow Highlights in Cells that are being compared.
+  - [x] Änderungen der Zahlen im Array nach Mockup umsetzen
+  - [x] One für One nach oben schreiben visualisieren(dafür benötigt es mehr states). Schreiben mit grüner HG Farbe visualisieren.
+- [x] CommandHistory visualisieren
+  - [x] Fix SelectedCommandId Highlighting
+  - [x] fix Behaviour of Buttons: Stop, Start, Previous & Next
+- - [x] Hide Copy Button for MergeSort
+- [x] Zahlen im initialen Array veränderbar machen. Alle anderen Arrays unbearbeitbar machen.  
+- [x] Trennlinie zwischen dem obersten Array und den anderen implementieren
+- [x] FontGrösse der Box anpassen -> grösser.
+- [x] Grösse der Boxen immer gleich gross oder zumindest die Grösse der Box grösser als die Lücken
+- [x] Index Variablen unter den Arrays veranschaulichen
+- [x] Die Vergleiche im obersten a-Array auch gelb markieren
+- [x] Beim Vergleich/Zwischenspeicher b-Array zuerst leeren und dann hineinmergen: mit state namen b
+- [x] In der Visualisation die Arrays jeweils mit A & B markieren.
+- [x] Variable-View für MergeSort umsetzen
+- [ ] Textgrösse mitskalieren: (kann man das anhand der boxgrösse rechnen)
 
+- [ ] Was will ich nun machen mit welcher Priorität?
+  - Applikation refactoren, so dass sie optimal bereit ist um den neuen Algorithmus MergeSort zu implementieren.
+  - MergeSort Demonstrator Top-Down implementieren.
+  - (Merge Sort Demonstrator Bottom-Up implementieren.)
+- [ ] Was will ich vom nächsten Feedbackmarkt mitnehmen?
+    - Feedback zum BinarySearch Demonstrator einholen.
+      - Was ist nicht intuitiv? Was erscheint unlogisch? (& müsste geändert werden)?
+      - Feedback zu Usability & Experience?
+- [ ] Macht MergeSort zum Demonstrieren überhaupt Sinn? Welche Aspekte davon vielleicht mehr und welche weniger?
+  - Operationen:
+    - int m = (beg + end) / 2;
+    - int i = 0, j = beg, k = m;
+    - var b = new double[end - beg];
+    - b[i++] = a[j++];
+    - b[i++] = a[k++];
+    - a[y] = b[i];
+  - Ich möchte bei MergeSort eher ein Veranschaulichen der verschiedenen Varianten Top-Down und Bottom-Up Merge Sort
+    implementieren. Selbst die Länge des Arrays bestimmen können und die eigenen Zahlen vorgeben, aber dann durchklicken
+    und schauen was geschieht bei jedem Schritt. DIe History soll auch mit integriert werden, um bei den verschiedenen Schritten
+    zurückspulen zu können.
 
+## Feedback HS25
 
-## Feedback Learnshop #1
+### Feedback Learnshop
   - HauptPart des Algorithmus noch grösser machen.
   - Es ist nicht wirklich klar was für Commands eingesetzt werden können.
     Eine weitere Hilfe wäre toll!
@@ -454,10 +523,40 @@
     Zahl gefunden wurde.
   - Es kann ausgewählt werden ob i &/ j inklusiv/exklusiv des momentanen Indexes sind.
   - Mehr Gameification: Es soll mehr Spass machen. User soll mehr zum Handeln motiviert sein.
+
+### Feedback Wolfgang
+
 <details>
   <summary>Feedback Wolfgang</summary>
   <img src="images/feedback.png" alt="Feedback"/>
 </details>
+
+## Feedback FS26
+
+### Feedback Wolfgang Sync Nr.1
+- Binary Search:
+  - Der Button für Variable-Options zu bestimmen, wurde als eine andere Funktion interpretiert vom Aussehen & Platzierung her.
+    Vielleicht könnte man es klarer Darstellen mit entsprechenden Bildern, welche Inklusiv & Exklusiv darstellen.
+- Merge Sort:
+  - Die Zahlen in den gesplitteten Blöcken, welche bereits verglichen wurden, leeren. Damit nicht rote & schwarze Zahlen im selben Block stehen und es die Wahrheit im Rechenspeicher besser widerspiegelt. 
+  - Evt. macht es Sinn die Zahlen im Ursprungsarray für die Visualisierung anders zu behandeln. Dass man bspw. immer den aktuellen Stand des Ursprungsarray sieht.
+  - Da Bottom-Up Merge Sort recht stark in der Visualisierung vom Top-Down Merge Sort abweicht, sollte man ihn besser als eignen Algorithmus behandeln und nicht mit einem Varianten-Drop-Down wechseln können.
+  - In der Variable-View den Rekursionsstack der genutzen Variablen ersichtlich machen. Z.B. durch Einrücken oder faltbarkeit.
+- Feedbackmarkt: Mockups mit bestimmten Fragestellungen mitnehmen und so Feedback einholen.
+
+### Feedback Learnshop
+- Welche Elemente des MergeSorts sind nicht klar oder vielleicht auch verwirrend?
+  - evt. History benennen
+- Was müsste anders sein, dass dir diese Applikation hilft, den MergeSort optimal zu verstehen?
+  - Die Variablen, welche auf Indexe der Arrays zeigen, sollten auch visualisiert werden. x2
+- Wie gross ist der Mehrwert der angezeigten Variablen (da der Applikationscode des Algorithmus nicht ersichtlich ist)?
+  - Hilft etwas, vor allem wenn die Indexe auch unter den Arrays visualisiert werden.
+    - -> evt. nur die Variablen anzeigen, welche auch visualisiert werden.
+
+### Feedback Wolfgang Sync Nr.1
+- Im MergeSort soll das Ursprungsarray auf der obersten Ebene immer den aktuellen Stand des Arrays widerspiegeln (so wie dies im Speicher des Algos in echt auch der Fall ist).
+- Arrays in der Visualisierung benennen mit a & b.
+- Historyeinträge mit Referenzen auf die Arrays a & b benennen (so wie dies im Algo in echt auch der Fall ist).
 
 ## Fragen & Antworten
 ### Was kann der Benutzer machen, was falsch ist? Wie reagiert das System?

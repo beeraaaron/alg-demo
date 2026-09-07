@@ -14,17 +14,17 @@ import java.util.function.Consumer;
 
 public class HistoryController extends ScrollPane {
     @FXML
-    private VBox historyBox;
+    VBox historyBox;
     @FXML
-    private Label initialStateLabel;
+    Label initialStateLabel;
     @FXML
-    private ScrollPane scrollPane;
+    ScrollPane scrollPane;
 
     @Setter
     private Consumer<String> onCommandCopied;
     @Setter
     private Consumer<Integer> onStateClicked;
-    List<Command> commandHistory;
+    private List<Command> commandHistory;
 
     @FXML
     public void initialize() {
@@ -36,9 +36,9 @@ public class HistoryController extends ScrollPane {
 
     private void changeState(KeyEvent keyEvent) {
         if (keyEvent == null || keyEvent.getCode() == KeyCode.ENTER) {
-            onStateClicked.accept(1);
+            onStateClicked.accept(0);
             historyBox.getChildren().clear();
-            initializeHistory(commandHistory, 1);
+            initializeHistory(commandHistory, 0);
             if (keyEvent != null) {
                 keyEvent.consume();
             }
@@ -49,14 +49,14 @@ public class HistoryController extends ScrollPane {
     public void initializeHistory(List<Command> commandHistory, int selectedCommandId) {
         historyBox.getChildren().clear();
         this.commandHistory = commandHistory;
-        if (commandHistory.isEmpty() || selectedCommandId == 1) {
+        if (commandHistory.isEmpty() || selectedCommandId == 0) {
             initialStateLabel.getStyleClass().add("element-selected");
         } else {
             initialStateLabel.getStyleClass().remove("element-selected");
         }
 
         for (var command : this.commandHistory) {
-            var historyElement = new HistoryElement(command, command.id == selectedCommandId);
+            var historyElement = new HistoryElement(command, command.getId() == selectedCommandId);
             historyElement.prefWidthProperty().bind(historyBox.widthProperty());
             historyElement.setOnCommandCopied(c -> onCommandCopied.accept(c));
             historyElement.setOnStateClicked(id -> {

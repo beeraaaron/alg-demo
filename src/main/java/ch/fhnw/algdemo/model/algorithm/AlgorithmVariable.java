@@ -1,8 +1,14 @@
 package ch.fhnw.algdemo.model.algorithm;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public abstract class AlgorithmVariable<T> {
-    public final String name;
-    public T value;
+    @Getter
+    private final String name;
+    @Getter
+    @Setter
+    private T value;
 
     public AlgorithmVariable(String name, T value) {
         this.name = name;
@@ -10,6 +16,4 @@ public abstract class AlgorithmVariable<T> {
     }
 
     public abstract void setValueFromString(String stringValue);
-
-    public abstract T parseValue(String stringValue);
 }

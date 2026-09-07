@@ -1,7 +1,7 @@
 package ch.fhnw.algdemo.util;
 
 import ch.fhnw.algdemo.model.algorithm.AlgorithmVariable;
-import ch.fhnw.algdemo.model.command.Command;
+import ch.fhnw.algdemo.model.command.BinarySearchCommand;
 
 import java.util.List;
 
@@ -13,22 +13,22 @@ public class BinarySearchCommandParser extends CommandParser{
         this.data = data;
     }
 
-    public Command createCommand(String expression) throws IllegalArgumentException {
+    public BinarySearchCommand createCommand(String expression) throws IllegalArgumentException {
         var command = super.createCommand(expression);
         parseVariableAssignment(command);
         return command;
     }
 
 
-    private void parseVariableAssignment(Command command) throws IllegalArgumentException {
-        int value = Integer.parseInt(command.value);
+    private void parseVariableAssignment(BinarySearchCommand command) throws IllegalArgumentException {
+        int value = Integer.parseInt(command.getValue());
         if (value < -1 || value > data.size()) {
             throw new IllegalArgumentException("Assignment seems illogical. Value " + value + " should be between -1 and " +  data.size());
         }
 
-        if (command.variableName.equals("i")) {
+        if (command.getVariableName().equals("i")) {
             parseLowEndPointerAssignment(value);
-        } else if (command.variableName.equals("j")) {
+        } else if (command.getVariableName().equals("j")) {
             parseHighEndPointerAssignment(value);
         } else {
             parseValuePointerAssignment(value);
@@ -39,8 +39,8 @@ public class BinarySearchCommandParser extends CommandParser{
         var i = getVariables().getFirst();
         var j = getVariables().get(1);
 
-        if (j.value != null && commandValue > (Integer) j.value) {
-            throw new IllegalArgumentException("Assignment seems illogical. Variable " + i.name + " should not be greater than Variable " +  j.name);
+        if (j.getValue() != null && commandValue > (Integer) j.getValue()) {
+            throw new IllegalArgumentException("Assignment seems illogical. Variable " + i.getName() + " should not be greater than Variable " +  j.getName());
         }
     }
 
@@ -48,8 +48,8 @@ public class BinarySearchCommandParser extends CommandParser{
         var i = getVariables().getFirst();
         var j = getVariables().get(1);
 
-        if (i.value != null && commandValue < (Integer) i.value) {
-            throw new IllegalArgumentException("Assignment seems illogical. Variable " + j.name + " should not be smaller than Variable " +  i.name);
+        if (i.getValue() != null && commandValue < (Integer) i.getValue()) {
+            throw new IllegalArgumentException("Assignment seems illogical. Variable " + j.getName() + " should not be smaller than Variable " +  i.getName());
         }
     }
 
@@ -58,8 +58,8 @@ public class BinarySearchCommandParser extends CommandParser{
         var j = getVariables().get(1);
         var m = getVariables().get(2);
 
-        if (i.value != null && j.value != null && (commandValue < (Integer) i.value || commandValue > (Integer) j.value)) {
-            throw new IllegalArgumentException("Assignment seems illogical. Variable " + m.name + " should be between Variables " +  i.name + " & " + j.name);
+        if (i.getValue() != null && j.getValue() != null && (commandValue < (Integer) i.getValue() || commandValue > (Integer) j.getValue())) {
+            throw new IllegalArgumentException("Assignment seems illogical. Variable " + m.getName() + " should be between Variables " +  i.getName() + " & " + j.getName());
         }
     }
 }
