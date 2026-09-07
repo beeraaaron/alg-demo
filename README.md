@@ -479,7 +479,7 @@
 - [x] Die Vergleiche im obersten a-Array auch gelb markieren
 - [x] Beim Vergleich/Zwischenspeicher b-Array zuerst leeren und dann hineinmergen: mit state namen b
 - [x] In der Visualisation die Arrays jeweils mit A & B markieren.
-- [ ] Variable-View für MergeSort umsetzen
+- [x] Variable-View für MergeSort umsetzen
 - [ ] Textgrösse mitskalieren: (kann man das anhand der boxgrösse rechnen)
 
 - [ ] Was will ich nun machen mit welcher Priorität?
